@@ -2,6 +2,7 @@ package unitedway.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by david492000 on 6/9/15.
@@ -9,7 +10,7 @@ import java.io.Serializable;
 
 
 @Entity
-public class Donation implements Serializable {
+public class UnitedWayDonation implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -56,10 +57,15 @@ public class Donation implements Serializable {
     @Column(nullable = true)
     private double healthPercentage;
 
+    @Column(nullable = false)
+    private Date created;
+
+    @Column(nullable = true)
+    private Date updated;
 
 
 
-    public Donation() {}
+    public UnitedWayDonation() {}
 
     public Long getId() {
         return id;
@@ -179,5 +185,21 @@ public class Donation implements Serializable {
 
     public void setHealthPercentage(double healthPercentage) {
         this.healthPercentage = healthPercentage;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
     }
 }

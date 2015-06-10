@@ -3,8 +3,10 @@ package unitedway.bootstrap;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import unitedway.models.Donation;
+import unitedway.models.UnitedWayDonation;
 import unitedway.repo.DonationRepo;
+
+import java.util.Date;
 
 /**
  * Created by david492000 on 6/9/15.
@@ -17,9 +19,12 @@ public class Bootstrap implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception{
-        Donation donation = new Donation();
-        donation.setEid("123456");
-        donation.setEmail("david492000@yahoo.com");
-        donations.save(donation);
+
+
+        UnitedWayDonation unitedWayDonation = new UnitedWayDonation();
+        unitedWayDonation.setEid("123456");
+        unitedWayDonation.setEmail("david492000@yahoo.com");
+        unitedWayDonation.setCreated(new Date());
+        donations.save(unitedWayDonation);
     }
 }
