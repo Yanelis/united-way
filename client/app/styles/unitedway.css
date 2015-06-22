@@ -1,0 +1,159 @@
+.clear::after, .section::after, #body::after, #content::after, #content .copy::after, .intro::after, .features::after, .clients::after, .pricing::after, .vbox::after, .hbox::after, .community::after, #screen-cast-filter::after, #screencasts-list::after, #email-clients::after, #email-templates-filter::after, #email-templates-filter ul::after, #email-templates::after, #email-templates p::after, .giving-back .sub-copy::after, .pagination::after, .categories::after, .hentry::after, form div.text::after, form div.textarea::after, .gt::after, .gr::after, #links #related-screencasts li::after, #comment-form .textarea::after, #forums #comments .entry::after, #forums .post-meta::after, .two-col #content .sub-copy::after, #customers .using #content ul::after {
+  clear:both;
+  content:".";
+  display:block;
+  height:0;
+  visibility:hidden;
+
+}
+
+strong{
+  font: 13px/18px Arial, sans-serif;
+  color: #3E434A;
+  font-weight: bold;
+
+}
+
+body{
+
+}
+
+#body{
+  color: #636B75;
+  font: 13px/18px Arial, sans-serif;
+  padding: 25px 0 0 100px;
+  text-align: left;
+  width: 910px;
+}
+
+#content{
+  float:left;
+  width:790px;
+  margin-bottom:36px;
+}
+
+#content .copy{
+  float:none;
+  width:auto;
+}
+
+form{
+  margin:0;
+  padding:0;
+
+}
+
+fieldset{
+  border:none;
+  margin:0;
+  padding:0;
+
+}
+
+#form-sign-up #employee, #form-sign-up #leadership, #form-sign-up #excellencefieldset, #form-sign-up #applicable, #form-sign-up #lasting {
+  padding-bottom:36px;
+}
+
+#form-sign-up #employee h2 {
+  background-image: url('https://www.miamidade.gov/images/eNet/unitedwayform/title-employee-information.png');
+  height: 47px;
+  width: 600px; margin-left:-60px; margin-right:0; margin-top:27px; margin-bottom:9px
+
+}
+
+#leadership h2 {
+  background-image: url('https://www.miamidade.gov/images/eNet/unitedwayform/title-county-leadership-circle.png');
+  height: 47px;
+  width: 600px; margin-left:-60px; margin-right:0; margin-top:27px; margin-bottom:9px
+}
+
+#excellencefieldset h2 {
+  background-image: url('https://www.miamidade.gov/images/eNet/unitedwayform/title-excellence-club.png');
+  height: 47px;
+  width: 600px; margin-left:-60px; margin-right:0; margin-top:27px; margin-bottom:9px
+}
+
+#applicable h2 {
+  background-image: url('https://www.miamidade.gov/images/eNet/unitedwayform/title-complete-if-applicable.png');
+  height: 47px;
+  width: 600px; margin-left:-60px; margin-right:0; margin-top:27px; margin-bottom:9px
+}
+
+#lasting h2 {
+  background-image: url('https://www.miamidade.gov/images/eNet/unitedwayform/title-making-lasting-difference.png');
+  height: 47px;
+  width: 600px; margin-left:-60px; margin-right:0; margin-top:27px; margin-bottom:9px
+}
+
+
+
+h2{
+  background: no-repeat 0 0;
+  display: block;
+  overflow: hidden;
+  text-indent: -9999em;
+}
+
+
+
+#form-sign-up fieldset{
+  background:url('https://www.miamidade.gov/images/eNet/unitedwayform/bg_fieldset-wide.png');
+  margin-bottom:8px;
+  padding-left:90px; padding-right:20px; padding-top:27px; padding-bottom:36px
+
+}
+
+#form-sign-up fieldset .top{
+  background:url('https://www.miamidade.gov/images/eNet/unitedwayform/bg_fieldset-wide-top.png') no-repeat;
+  height:10px;
+  /*padding-bottom:17px;*/
+  width:790px; margin-left:-90px; margin-right:-27px; margin-top:-27px; margin-bottom:-27px
+
+}
+
+.text{
+  margin-bottom:9px;
+
+}
+
+
+#form-sign-up #employee .btm, #form-sign-up #leadership .btm, #form-sign-up #excellencefieldset .btm, #form-sign-up #applicable .btm {
+  background: url('https://www.miamidade.gov/images/eNet/unitedwayform/bg_fieldset-wide-arrow-btm.png') no-repeat left bottom;
+  height: 20px;
+  width: 790px; margin-left:-90px; margin-right:-27px; margin-top:21px; margin-bottom:-36px
+}
+
+#form-sign-up fieldset .btm {
+  background: url('https://www.miamidade.gov/images/eNet/unitedwayform/bg_fieldset-wide-btm.png') no-repeat left bottom;
+
+  height: 10px;
+  width: 790px; margin-left:-90px; margin-right:-27px; margin-top:21px; margin-bottom:-36px
+}
+
+.numberOne{
+  float:left;
+  width:auto;
+  margin-right:30px;
+
+}
+
+.numberOne_2{
+  float:left;
+  width:auto;
+  margin-right:30px;
+
+}
+
+.numberOne_3{
+  float:left;
+  width:auto;
+  margin-right:30px;
+  word-wrap:break-word;
+  display:inline-block;
+
+}
+
+.clear{
+  clear:both;
+
+}

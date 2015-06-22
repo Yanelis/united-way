@@ -4,17 +4,20 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+
 /**
  * Created by david492000 on 6/9/15.
  */
 
 
 @Entity
+@Table(indexes = {@Index(name="eid",columnList = "eid", unique = false)})
 public class UnitedWayDonation implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
+
 
     @Column(nullable = false)
     private String eid;
