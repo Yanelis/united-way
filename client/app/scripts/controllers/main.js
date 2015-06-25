@@ -9,7 +9,8 @@
  */
 angular.module('clientApp')
   .controller('MainCtrl', function ($scope) {
-   $scope.pledge = {};
+   $scope.obj = {};
+    $scope.fasttrackenroll = "N";
 
 
   });

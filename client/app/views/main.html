@@ -15,7 +15,7 @@
 
           <p><label for="email"><strong>Employee Name: </label> &nbsp;</strong></p>
           <p><label for="email"><strong>Employee ID: </label></strong> <strong> &nbsp; &nbsp;  DDL: </label></strong> </p>
-          <p><label for="email"><strong>Email Address: </label><input name="email"  type="text" id="email" size="30" value=></strong></p>
+          <p><label for="email"><strong>Email Address: </label><input name="email"  type="text" id="email" size="30" ng-model="obj.email"></strong></p>
 
 
 
@@ -34,7 +34,7 @@
 
 
 
-              <p> $<input name="biweekly" size="5" type="text" id="biweekly" value="">
+              <p> $<input name="biweekly" size="5" type="text" id="biweekly" value="" ng-model="obj.biweeklyDeduction">
               </p>
 
 
@@ -49,7 +49,7 @@
 
 
               <p>
-                $<input name="onetime" size="5" type="text" id="onetime" value="">
+                $<input name="onetime" size="5" type="text" id="onetime" value="" ng-model="obj.oneTimeDeduction">
                 <br>
 
 
@@ -58,15 +58,15 @@
 
 
 
-                <input type="checkbox" name="donationtypePayroll" id="payroll" value="Y" onClick="enableradio1();" >
+                <input type="radio" name="donationtype" value="payroll" ng-model="obj.deductionType">
                 Payroll Deduction<br>
-                <input type="checkbox" name="donationtypeCash" id="cash" value="Y" onClick="enableradio2();" >
-                Cash*<br>
-                <input type="checkbox" name="donationtypeCheck" id="check" value="Y" onClick="enableradio3();" >
+                <input type="radio" name="donationtype" value="cash" ng-model="obj.deductionType">
+                Cash<br>
+                <input type="radio" name="donationtype" value="check" ng-model="obj.deductionType">
                 Check*<br>
-                <input type="checkbox" name="donationtypeCredit" id="credit" value="Y" onClick="enableradio4();" >
+                <input type="radio" name="donationtype" value="credit" ng-model="obj.deductionType">
                 Credit**<br>
-                <input type="checkbox" name="donationtypeDebit" id="debit" value="Y" onClick="enableradio5();" >
+                <input type="radio" name="donationtype" value="debit" ng-model="obj.deductionType">
                 Debit**            </p>
 
 
@@ -133,18 +133,18 @@
 
           <label for="spouse"><strong>Spouse/Partner Name:</strong><br>
           </label>
-          <input name="spouse" type="text" id="spouse" size="40" value="">
+          <input name="spouse" type="text" id="spouse" size="40" value="" ng-model="obj.spouse">
           <br>
           <label for="employer"><strong>Employer:</strong><br>
           </label>
-          <input name="employer" type="text" id="employer" size="50" value="">
+          <input name="employer" type="text" id="employer" size="50" value="" ng-model="obj.spouseEmployer">
           <br>
           <label for="amount"><strong>Annual Amount of his/her gift:</strong><br>
           </label>
           $
 
 
-          <input name="amount" size="5" type="text" id="amount" onMouseout="populatetotaldonation();" value="">
+          <input name="amount" size="5" type="text" id="amount" ng-model="obj.spouseAmt" value="">
 
           <p><br><hr>
           <br>
@@ -152,107 +152,7 @@
 
 
 
-            <!-- This is to check if user is a fast track member if so values cannot be edited -->
 
-            <!--
-
-
-                  <br>
-                  Fast Track Enrollment</strong></p>
-
-
-                          <script type="text/javascript">
-                              function testtest() {
-
-                                  unitedway_form.biweekly.readOnly = true;
-                                 unitedway_form.onetime.disabled = true;
-                                 unitedway_form.donationtypePayroll.disabled = true;
-                                 unitedway_form.donationtypeCash.disabled = true;
-                                 unitedway_form.donationtypeCheck.disabled = true;
-                                 unitedway_form.donationtypeCredit.disabled = true;
-                                 unitedway_form.donationtypeDebit.disabled = true;
-                                 unitedway_form.excellence1.disabled = true;
-                                 unitedway_form.excellence2.disabled = true;
-                              }
-
-                          testtest();
-
-                          </script>
-
-                <p>The fast track program facilitates membership in the County Leadership Circle. An<br>
-                  individual commits to ascend to a predetermined giving level in three years' time.<br>
-                  Beginning in year one, the individual is recognized at the year three giving level.<strong><br>
-                  </strong><br>
-                 <input name="fasttrackenroll" type="radio" id="1" value="" checked="checked">
-                <strong>You are currently enrolled in the fast track program</strong></p>
-                <table width="600" border="0">
-      <tr>
-        <td width="40">&nbsp;</td>
-        <td width="97">&nbsp;</td>
-        <td colspan="2" ><strong>Year-1 Level</strong></td>
-        <td colspan="2"><strong>Year-2 Level</strong></td>
-        <td colspan="2"><strong>Year-3 Level</strong></td>
-        </tr>
-      <tr>
-        <td>&nbsp;</td>
-        <td><strong> Program</strong></td>
-        <td width="80"><strong>Annual</strong></td>
-        <td width="81"><strong>Biweekly</strong></td>
-        <td width="79"><strong>Annual</strong></td>
-        <td width="80"><strong>Biweekly</strong></td>
-        <td width="80"><strong>Annual</strong></td>
-        <td width="85"><strong>Biweekly</strong></td>
-      </tr>
-     <tr >
-        <td><input type="radio" name="cornerstoneflag" id="fasttrackprogram"  value="Y" onClick="enableradiocornerstoneflag();">
-          <label for="fasttrackprogram"></label></td>
-        <td><strong>Cornerstone</strong></td>
-        <td>$500</td>
-        <td>$19.23</td>
-        <td>$750</td>
-        <td>$28.85</td>
-        <td>$1000</td>
-        <td>$38.46</td>
-      </tr>
-      <tr >
-        <td><input type="radio" name="pillarflag" id="fasttrackprogram2" value="Y" onClick="enableradiopillarflag();"></td>
-        <td><strong>Pillar</strong></td>
-        <td>$1000</td>
-        <td>$38.46</td>
-        <td>$1750</td>
-        <td>$67.31</td>
-        <td>$2500</td>
-        <td>$96.15</td>
-      </tr>
-      <tr>
-        <td><input type="radio" name="pioneerflag" id="fasttrackprogram3" value="Y" onClick="enableradiopioneerflag();"></td>
-        <td><strong>Pioneer</strong></td>
-        <td>$2500</td>
-        <td>$96.15</td>
-        <td>$3750</td>
-        <td>$144.23</td>
-        <td>$5000</td>
-        <td>$192.31</td>
-      </tr>
-      <tr >
-        <td><input type="radio" name="toquevilleflag" id="fasttrackprogram4" value="Y" onClick="enableradiotoquevilleflag();"></td>
-        <td><strong>Tocqueville</strong></td>
-        <td>$5000</td>
-        <td>$192.31</td>
-        <td>$7500</td>
-        <td>$288.46</td>
-        <td>$10000</td>
-        <td>$384.62</td>
-      </tr>
-    </table>
-
-
-            <br>
-          </p>
-
-          -->
-
-            <!-- END OF fast track member check-->
 
             <br>
             Fast Track Enrollment</strong></p>
@@ -260,13 +160,16 @@
             individual commits to ascend to a predetermined giving level in three years' time.<br>
             Beginning in year one, the individual is recognized at the year three giving level.<strong><br>
             </strong><br>
-            <input name="fasttrackenroll" type="radio" id="1" value="">
+            <input name="fasttrackenroll" type="radio" ng-model="fasttrackenroll" value="Y">
             Enroll me in the Fast Track program<br>
-            <input name="fasttrackenroll" type="radio" id="2" value="" onClick="fasttrackenroll5();">
+            <input name="fasttrackenroll" type="radio" ng-model="fasttrackenroll" value="N">
             Do not Enroll me in the Fast Track program
 
           </p>
-          <table width="600" border="0">
+          <div ng-show="fasttrackenroll == 'Y'">
+
+
+            <table width="600" border="0">
             <tr>
               <td width="40">&nbsp;</td>
               <td width="97">&nbsp;</td>
@@ -285,8 +188,8 @@
               <td width="85"><strong>Biweekly</strong></td>
             </tr>
             <tr>
-              <td><input type="radio" name="cornerstoneflag" id="fasttrackprogram"  value="Y" onClick="enableradiocornerstoneflag();">
-                <label for="fasttrackprogram"></label></td>
+              <td><input type="radio" name="fastTrackPlan" value="cornerstone" ng-model="obj.fastTrackPlan">
+                </td>
               <td><strong>Cornerstone</strong></td>
               <td>$500</td>
               <td>$19.23</td>
@@ -296,7 +199,7 @@
               <td>$38.46</td>
             </tr>
             <tr>
-              <td><input type="radio" name="pillarflag" id="fasttrackprogram2" value="Y" onClick="enableradiopillarflag();"></td>
+              <td><input type="radio" name="fastTrackPlan" value="pillar" ng-model="obj.fastTrackPlan"></td>
               <td><strong>Pillar</strong></td>
               <td>$1000</td>
               <td>$38.46</td>
@@ -306,7 +209,7 @@
               <td>$96.15</td>
             </tr>
             <tr>
-              <td><input type="radio" name="pioneerflag" id="fasttrackprogram3" value="Y" onClick="enableradiopioneerflag();" ></td>
+              <td><input type="radio" name="fastTrackPlan" value="pioneer" ng-model="obj.fastTrackPlan"></td>
               <td><strong>Pioneer</strong></td>
               <td>$2500</td>
               <td>$96.15</td>
@@ -316,7 +219,7 @@
               <td>$192.31</td>
             </tr>
             <tr>
-              <td><input type="radio" name="toquevilleflag" id="fasttrackprogram4" value="Y" onClick="enableradiotoquevilleflag();" ></td>
+              <td><input type="radio" name="fastTrackPlan" value="tocqueville" ng-model="obj.fastTrackPlan"></td>
               <td><strong>Tocqueville</strong></td>
               <td>$5000</td>
               <td>$192.31</td>
@@ -326,7 +229,7 @@
               <td>$384.62</td>
             </tr>
           </table>
-
+          </div>
 
           <br>
           </p>
@@ -347,18 +250,18 @@
           <p><strong>PLEASE CHOOSE HOW YOU WANT TO INVEST IN YOUR COMMUNITY</strong></p>
           <p>When you give directly to United Way, you improve lives and make a lasting difference in our community. Please make the appropriate selection.      </p>
           <p>
-            <input type="checkbox" name="unitedway" id="unitedway"  value="Y"  >
+            <input type="checkbox" name="unitedway" id="unitedway" ng-model="obj.communityPlan" value="true"   >
             <strong>UNITED WAY COMMUNITY PLAN</strong></p>
           <p>I  want to make the most of every dollar I give!&nbsp; I want to improve lives and  make a lasting, positive difference where help is needed most in my community  by contributing to the United Way Community Plan which supports United Way&rsquo;s  efforts in Education, Financial Stability and Health.</p>
           <p>Percentage:
             <label for="unitedamount"></label>
-            <input name="unitedamount" size="3" type="text" id="unitedamount"   value="">%
+            <input name="unitedamount" size="3" type="text" id="unitedamount" ng-model="obj.communityPlanPercentage" value="">%
             <br>
             <br>
             <input type="checkbox" name="areas" id="unitedway2"  value="Y" >
             <strong> I  WANT TO FOCUS MY GIFT TO ONE OR MORE OF THE FOLLOWING UNITED WAY AREAS:</strong></p>
           <p><strong>EDUCATION:</strong>
-            <input type="text" name="education" id="education" size="3"  value="">
+            <input type="text" name="education" id="education" size="3" ng-model="obj.educationPercentage"  value="">
             % <br>
             Helping  children and youth achieve their potential<br>
           </p>
@@ -369,7 +272,7 @@
           </ul>
           <p><strong>FINANCIAL STABILITY:&nbsp;&nbsp;&nbsp;</strong>
             <label for="income"></label>
-            <input type="text" name="income" id="income" size="3"  value="">
+            <input type="text" name="income" id="income" size="3"  value="" ng-model="obj.financialStabilityPercentage">
             %<br>
             Paving  a path to financial independence<br>
           </p>
@@ -379,7 +282,7 @@
             <li>Financial education</li>
           </ul>
           <p><strong>HEALTH:&nbsp;&nbsp;&nbsp;&nbsp;</strong> <label for="health"></label>
-            <input type="text" name="health" id="health" size="3"  value="">
+            <input type="text" name="health" id="health" size="3"  value="" ng-model="obj.healthPercentage">
             %<br>
             Improving  people&rsquo;s health<br>
           </p>

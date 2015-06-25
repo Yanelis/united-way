@@ -34,8 +34,7 @@ public class UnitedWayDonation implements Serializable {
     @Column(nullable = true)
     private String deductionType;
 
-    @Column(nullable = true)
-    private int salaryPercentage;
+
 
     @Column(nullable = true)
     private String spouse;
@@ -45,6 +44,9 @@ public class UnitedWayDonation implements Serializable {
 
     @Column(nullable = true)
     private double spouseAmt;
+
+    @Column(nullable = true)
+    private String fastTrackPlan;
 
     @Column(nullable = true)
     private boolean communityPlan;
@@ -118,13 +120,6 @@ public class UnitedWayDonation implements Serializable {
         this.deductionType = deductionType;
     }
 
-    public int getSalaryPercentage() {
-        return salaryPercentage;
-    }
-
-    public void setSalaryPercentage(int salaryPercentage) {
-        this.salaryPercentage = salaryPercentage;
-    }
 
     public String getSpouse() {
         return spouse;
