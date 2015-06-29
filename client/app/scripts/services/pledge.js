@@ -18,8 +18,9 @@ function pledge_obj(json){
   this.created = null;
   this.updated = null;
 
-  if(_.isNull(json) || _.isUndefined(json)){
+  if(!_.isNull(json) && !_.isUndefined(json)){
 
+    console.log(json);
     this.id = json.id;
     this.eid = json.eid;
     this.email = json.email;
@@ -66,7 +67,6 @@ angular.module('clientApp').factory('pledge', function($resource, endpoints){
   }
 
   return {
-
-
+  new_pledge : new_pledge
   }
 })

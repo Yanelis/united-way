@@ -62,6 +62,10 @@ public class UnitedWayDonation implements Serializable {
     @Column(nullable = true)
     private double healthPercentage;
 
+    @Column(nullable = true)
+    private boolean specificAgencyPlan;
+
+
     @Column(nullable = false)
     private Date created;
 
@@ -199,5 +203,13 @@ public class UnitedWayDonation implements Serializable {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public String getFastTrackPlan() {
+        return fastTrackPlan;
+    }
+
+    public void setFastTrackPlan(String fastTrackPlan) {
+        this.fastTrackPlan = fastTrackPlan;
     }
 }

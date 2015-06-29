@@ -3,5 +3,5 @@
  */
 angular.module('clientApp').constant('endpoints',{
 
-  pledgeUrl: 'http://localhost:8080/api/pledge'
+  pledgeUrl: 'http://localhost:8080/api/donations'
 })

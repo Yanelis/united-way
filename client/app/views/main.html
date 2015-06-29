@@ -2,9 +2,9 @@
   <div id="content">
     <div class="copy">
       <img src="https://www.miamidade.gov/images/eNet/unitedwayform/title-main.png" border="0" style="margin-left:43px; margin-bottom:5px;" alt="Give. Adocate. Volunteer. Live United. United Way">
-      <form name="unitedway_form" method="put" action="http://www.miamidade.gov/info/process_donation.asp" id="form-sign-up" onSubmit="return FrontPage_Form1_Validator(this)" onMouseMove="populatetotaldonation();">
+      <form name="unitedway">
+        <fieldset>
 
-        <fieldset id="employee">
           <div class="top"></div>
           <h2>Contribution Information</h2>
           <input name="employeename" type="hidden" id="employeename" value="" />
@@ -94,11 +94,12 @@
 
             <div class="clear"></div>
             <div class="btm"></div>
-        </fieldset>
+            </div>
 
 
 
-        <fieldset id="leadership">
+
+
           <div class="top"></div>
           <h2>Leadership Circle</h2>
 
@@ -241,10 +242,10 @@
 
 
           <div class="btm"></div>
-        </fieldset>
 
 
-        <fieldset id="excellencefieldset">
+
+
           <div class="top"></div>
           <h2>Making a lasting difference</h2>
           <p><strong>PLEASE CHOOSE HOW YOU WANT TO INVEST IN YOUR COMMUNITY</strong></p>
@@ -331,9 +332,9 @@
 
 
           <div class="btm"></div>
-        </fieldset>
 
-        <fieldset id="applicable">
+
+
           <div class="top"></div>
           <h2>Miscellaneous Information</h2>
           <p>
@@ -348,14 +349,14 @@
             check this box if you are a loyal contributor (giving to United Way for more than 10 years)</p>
 
           <div class="btm"></div>
-        </fieldset>
 
-        <fieldset id="lasting">
+
           <div class="top"></div>
 
 
           <p align="center"><br>
-            <input type="image"  src="https://www.miamidade.gov/images/eNet/unitedwayform/submit-button.png" name="Submit" id="Submit" value="Submit" onmouseover="format_values();" >
+           <!-- <input type="image"  src="https://www.miamidade.gov/images/eNet/unitedwayform/submit-button.png" name="Submit" id="Submit" value="Submitzzz" ng-submit="save()" >-->
+            <button class="btn btn-primary" ng-click="save()"><span class="glyphicon glyphicon-thumbs-up"></span> Submit</button>
 
           <div class="btm"></div>
         </fieldset>
