@@ -6,21 +6,21 @@
 angular.module('clientApp')
 
   .factory('AuthenticationService',
-  ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
-    function (Base64, $http, $cookieStore, $rootScope, $timeout) {
+  ['Base64', '$http', '$cookieStore', '$rootScope','endpoints', '$q',
+    function (Base64, $http, $cookieStore, $rootScope, endpoints, $q) {
       var service = {};
 
       service.Login = function (username, password, callback) {
 
         /* Dummy authentication for testing, uses $timeout to simulate api call
          ----------------------------------------------*/
-        $timeout(function () {
+      /*  $timeout(function () {
           var response = { success: username === 'test' && password === 'test' };
           if (!response.success) {
             response.message = 'Username or password is incorrect';
           }
           callback(response);
-        }, 1000);
+        }, 1000);*/
 
 
         /* Use this for real authentication
@@ -29,6 +29,20 @@ angular.module('clientApp')
         //    .success(function (response) {
         //        callback(response);
         //    });
+
+        var response = {};
+        var promise = $http.get(endpoints.authenticateUrl);
+        promise.then(function(data){
+          response.success = true;
+          callback(response);
+        }, function(error){
+          response.success = false;
+          response.message = 'Username or password is incorrect';
+          callback(response);
+          $q.reject(error);
+
+        });
+
 
       };
 
