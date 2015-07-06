@@ -20,7 +20,10 @@ angular.module('clientApp')
           } else {
             $scope.error = response.message;
             $scope.dataLoading = false;
+            AuthenticationService.ClearCredentials();
           }
         });
       };
-    }]);
+    }]).controller('LogoutController', ['$scope','AuthenticationService', function($scope, AuthenticationService ){
+    AuthenticationService.ClearCredentials();
+  }]);

@@ -60,6 +60,9 @@
             <artifactId>spring-security-ldap</artifactId>
         </dependency>
 
+        
+
+
         <dependency>
             <groupId>org.apache.directory.server</groupId>
             <artifactId>apacheds-server-jndi</artifactId>

@@ -12,24 +12,9 @@ angular.module('clientApp')
 
       service.Login = function (username, password, callback) {
 
-        /* Dummy authentication for testing, uses $timeout to simulate api call
-         ----------------------------------------------*/
-      /*  $timeout(function () {
-          var response = { success: username === 'test' && password === 'test' };
-          if (!response.success) {
-            response.message = 'Username or password is incorrect';
-          }
-          callback(response);
-        }, 1000);*/
 
 
-        /* Use this for real authentication
-         ----------------------------------------------*/
-        //$http.post('/api/authenticate', { username: username, password: password })
-        //    .success(function (response) {
-        //        callback(response);
-        //    });
-
+        this.SetCredentials(username, password);
         var response = {};
         var promise = $http.get(endpoints.authenticateUrl);
         promise.then(function(data){

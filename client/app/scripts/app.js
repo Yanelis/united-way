@@ -25,7 +25,10 @@ angular
         controller: 'LoginController',
         templateUrl: 'views/login.html'
       })
-
+      .when('/logout',{
+        controller: 'LogoutController',
+        templateUrl: 'views/login.html'
+      })
       .when('/', {
         controller: 'MainCtrl',
         templateUrl: 'views/main.html'
