@@ -1,6 +1,22 @@
+
+function unitedWayOrganization(json){
+  this.id = null;
+  this.organization = null;
+  this.percentage = null;
+
+  if(!_.isNull(json) && !_.isUndefined(json)){
+
+    this.id = json.id;
+    this.organization = json.organization;
+    this.percentage = json.percentage;
+  }
+
+}
+
 function pledge_obj(json){
   this.id = null;
   this.eid = null;
+  this.organizationDonations = [];
   this.email = null;
   this.biweeklyDeduction = null;
   this.oneTimeDeduction = null;
@@ -23,6 +39,8 @@ function pledge_obj(json){
     console.log(json);
     this.id = json.id;
     this.eid = json.eid;
+    this.organizationDonations = json.organizationDonations;
+
     this.email = json.email;
     this.biweeklyDeduction = json.biweeklyDeduction;
     this.oneTimeDeduction = json.oneTimeDeduction;
@@ -54,8 +72,12 @@ angular.module('clientApp').factory('pledge', function($resource, endpoints){
     return new pledge_obj(json);
   }
 
-  var resource = $resource(endpoints.pledgeUrl, {id: "@_id"}, {"update":{method:'PUT'}});
+  function new_organization(json){
+    return new unitedWayOrganization(json);
+  }
 
+  var resource = $resource(endpoints.pledgeUrl, {id: "@_id"}, {"update":{method:'PUT'}});
+  console.log("url " + endpoints.pledgeUrl);
 
   pledge_obj.prototype = {
 
@@ -67,6 +89,7 @@ angular.module('clientApp').factory('pledge', function($resource, endpoints){
   }
 
   return {
-  new_pledge : new_pledge
+  new_pledge : new_pledge,
+    new_organization: new_organization
   }
 })

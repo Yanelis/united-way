@@ -1,8 +1,10 @@
 package unitedway.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.*;
 
 
 /**
@@ -21,6 +23,10 @@ public class UnitedWayDonation implements Serializable {
 
     @Column(nullable = false)
     private String eid;
+
+   @JsonManagedReference
+   @OneToMany(mappedBy = "donation", fetch=FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    private Set<UnitedWayOrganization> organizationDonations;
 
     @Column(nullable = true)
     private String email;
@@ -80,9 +86,9 @@ public class UnitedWayDonation implements Serializable {
         return id;
     }
 
-    /*public void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
-    }*/
+    }
 
     public String getEid() {
         return eid;
@@ -212,4 +218,21 @@ public class UnitedWayDonation implements Serializable {
     public void setFastTrackPlan(String fastTrackPlan) {
         this.fastTrackPlan = fastTrackPlan;
     }
+
+    public Set<UnitedWayOrganization> getOrganizationDonations() {
+        return organizationDonations;
+
+    }
+
+    public void setOrganizationDonations(Set<UnitedWayOrganization> organizationDonations) {
+        this.organizationDonations = organizationDonations;
+    }
+   /* public void addUnitedWayOrganization(UnitedWayOrganization obj){
+        if(organizationDonations == null)
+            organizationDonations = new HashSet<UnitedWayOrganization>();
+
+        organizationDonations.add(obj);
+    }*/
+
+
 }

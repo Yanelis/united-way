@@ -23,5 +23,11 @@ angular.module('clientApp')
      })
     }
 
+    $scope.addOrganization = function(){
+
+      var newOrg = pledge.new_organization(null);
+      $scope.obj.organizationDonations.push(newOrg);
+    }
+
 
   });

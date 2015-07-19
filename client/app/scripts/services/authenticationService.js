@@ -6,12 +6,24 @@
 angular.module('clientApp')
 
   .factory('AuthenticationService',
-  ['Base64', '$http', '$cookieStore', '$rootScope','endpoints', '$q',
-    function (Base64, $http, $cookieStore, $rootScope, endpoints, $q) {
+  ['Base64', '$http', '$cookieStore', '$rootScope','endpoints', '$q','$cookies',
+    function (Base64, $http, $cookieStore, $rootScope, endpoints, $q, $cookies) {
       var service = {};
 
       service.Login = function (username, password, callback) {
 
+       var enetcookie = $cookies.get('LtpaToken');
+        if(!_.isNull(enetcookie) && !_.isEmpty(enetcookie))
+        {
+          console.log('found the enet cookie');
+          var enetpromise = $http.get('https://secure.miamidade.gov/enet/wps/PA_Service_Direct/profile.jsp');
+          enetpromise.then(function(data){
+            response.success = true;
+            callback(response);
+          }, function(error){
+
+          })
+        }
 
 
         this.SetCredentials(username, password);
