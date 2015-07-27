@@ -1,0 +1,366 @@
+
+<div id="body">
+  <div id="content">
+    <div class="row"><a href="#/logout" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-send"></span> Log out</a></div>
+    <div class="copy">
+      <img src="https://www.miamidade.gov/images/eNet/unitedwayform/title-main.png" border="0" style="margin-left:43px; margin-bottom:5px;" alt="Give. Adocate. Volunteer. Live United. United Way">
+      <form name="unitedway">
+        <fieldset>
+
+          <div class="top"></div>
+          <h2>Contribution Information</h2>
+          <input name="employeename" type="hidden" id="employeename" value="" />
+          <input name="employeelastname" type="hidden" id="employeelastname" value="" />
+          <input name="employeeid" value="" type="hidden"/>
+          <input name="groupid" value="unitedway" type="hidden" />
+          <input type="hidden" name="employeedept"  value="" id="employeedept" />
+
+          <p><label for="email"><strong>Employee Name: </label> &nbsp;</strong></p>
+          <p><label for="email"><strong>Employee ID: </label></strong> <strong> &nbsp; &nbsp;  DDL: </label></strong> </p>
+          <p><label for="email"><strong>Email Address: </label><input name="email"  type="text" id="email" size="30" ng-model="obj.email"></strong></p>
+
+
+
+          <p>Please review the full form before completing. If you would like your giving levels to remain<br>
+            the same, it is not necessary to submit a contribution form. Only your bi-weekly <br>deduction giving level will  automatically roll forward, one-time donations will not. </p>
+
+          <p>If you would like to make an adjustment to your contribution, please fill in only one box below.<br>
+          </p>
+
+
+
+          <div style="width:100%;">
+            <div class="numberOne">
+              <p><strong>My bi-weekly deduction:</strong><br>
+                <label for="biweekly"></label>
+
+
+
+              <p> $<input name="biweekly" size="5" type="text" id="biweekly" value="" ng-model="obj.biweeklyDeduction">
+              </p>
+
+
+            </div>
+
+
+
+
+            <div class="numberOne_2">
+              <p><strong>My one-time donation:</strong></p>
+
+
+
+              <p>
+                $<input name="onetime" size="5" type="text" id="onetime" value="" ng-model="obj.oneTimeDeduction">
+                <br>
+
+
+
+                <br>
+
+
+
+                <input type="radio" name="donationtype" value="payroll" ng-model="obj.deductionType">
+                Payroll Deduction<br>
+                <input type="radio" name="donationtype" value="cash" ng-model="obj.deductionType">
+                Cash<br>
+                <input type="radio" name="donationtype" value="check" ng-model="obj.deductionType">
+                Check*<br>
+                <input type="radio" name="donationtype" value="credit" ng-model="obj.deductionType">
+                Credit**<br>
+                <input type="radio" name="donationtype" value="debit" ng-model="obj.deductionType">
+                Debit**            </p>
+
+
+              <br>
+
+              <p><em><strong style="font-size: 8px">* If you are choosing to
+                contribute a one-time gift by cash or check, payment must be
+                submitted<br>
+                to the </strong></em><strong style="font-size:8px"><em> <a href="https://www.miamidade.gov/unitedway/coordinators.asp" target="_new">department coordinator</a>.</em></strong>
+                <em><strong style="font-size: 8px">after the online form is
+                  submitted<br>
+                  <br>
+                  ** If you are choosing to contribute a one-time gift by credit
+                  or debit, the United Way will be contacting you directly to
+                  process your one-time gift via credit/debit card after the
+                  online form is</strong></em> <em>
+                  <strong style="font-size: 8px">submitted</strong></em><br>
+                &nbsp;</p>
+
+            </div>
+
+
+            <!-- excellence club deleted -->
+
+
+            <div class="clear"></div>
+            <div class="btm"></div>
+          </div>
+
+
+
+
+
+          <div class="top"></div>
+          <h2>Leadership Circle</h2>
+
+
+          <p><input name="countyleader"  type="radio" id="1000" value="Y"  > Individuals who make a United Way gift of $1,000 or more a year are considered<br>
+            County Leadership Circle members and are invited to special events in recognition of<br>
+            their dedication to helping others. When you become a member of the County<br>
+            Leadership Circle, you also become a member of the United Way of<br>
+            Miami-Dade Leadership &amp; Endowment Circle.<br></p>
+          <br>
+
+
+          Your total annual donation is:  <input type="text" name="totaldonation" id="totaldonation"  size="70"  />
+          <label id="labelmessage" ></label>&nbsp;
+          <br>
+
+
+
+
+
+          <p>If you are 40 years old or younger and give at the Leadership level,
+            you will be considered a Young Leader, a United Way recognition group offering networking, volunteer and leadership development opportunities.</p>
+
+
+          <p> If you are a woman and give at the Leadership level, you will be considered a Women's Leader, a United Way recognition group offering opportunities for networking, intergenerational
+            volunteerism and more.</p>
+
+          <br><hr><br>
+
+          <br><strong>Family Gift</strong>
+          <p><input name="familyflag"  type="checkbox"  value="Y"  > If your gift above, combined with the gift of your spouse/parther, totals at least $1000 per year, you will be considered a member of the County Leadership Circle.</p>
+
+          <label for="spouse"><strong>Spouse/Partner Name:</strong><br>
+          </label>
+          <input name="spouse" type="text" id="spouse" size="40" value="" ng-model="obj.spouse">
+          <br>
+          <label for="employer"><strong>Employer:</strong><br>
+          </label>
+          <input name="employer" type="text" id="employer" size="50" value="" ng-model="obj.spouseEmployer">
+          <br>
+          <label for="amount"><strong>Annual Amount of his/her gift:</strong><br>
+          </label>
+          $
+
+
+          <input name="amount" size="5" type="text" id="amount" ng-model="obj.spouseAmt" value="">
+
+          <p><br><hr>
+          <br>
+          <strong>
+
+
+
+
+
+            <br>
+            Fast Track Enrollment</strong></p>
+          <p>The fast track program facilitates membership in the County Leadership Circle. An<br>
+            individual commits to ascend to a predetermined giving level in three years' time.<br>
+            Beginning in year one, the individual is recognized at the year three giving level.<strong><br>
+            </strong><br>
+            <input name="fasttrackenroll" type="radio" ng-model="fasttrackenroll" value="Y">
+            Enroll me in the Fast Track program<br>
+            <input name="fasttrackenroll" type="radio" ng-model="fasttrackenroll" value="N">
+            Do not Enroll me in the Fast Track program
+
+          </p>
+          <div ng-show="fasttrackenroll == 'Y'">
+
+
+            <table width="600" border="0">
+              <tr>
+                <td width="40">&nbsp;</td>
+                <td width="97">&nbsp;</td>
+                <td colspan="2" ><strong>Year-1 Level</strong></td>
+                <td colspan="2"><strong>Year-2 Level</strong></td>
+                <td colspan="2"><strong>Year-3 Level</strong></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td><strong> Program</strong></td>
+                <td width="80"><strong>Annual</strong></td>
+                <td width="81"><strong>Biweekly</strong></td>
+                <td width="79"><strong>Annual</strong></td>
+                <td width="80"><strong>Biweekly</strong></td>
+                <td width="80"><strong>Annual</strong></td>
+                <td width="85"><strong>Biweekly</strong></td>
+              </tr>
+              <tr>
+                <td><input type="radio" name="fastTrackPlan" value="cornerstone" ng-model="obj.fastTrackPlan">
+                </td>
+                <td><strong>Cornerstone</strong></td>
+                <td>$500</td>
+                <td>$19.23</td>
+                <td>$750</td>
+                <td>$28.85</td>
+                <td>$1000</td>
+                <td>$38.46</td>
+              </tr>
+              <tr>
+                <td><input type="radio" name="fastTrackPlan" value="pillar" ng-model="obj.fastTrackPlan"></td>
+                <td><strong>Pillar</strong></td>
+                <td>$1000</td>
+                <td>$38.46</td>
+                <td>$1750</td>
+                <td>$67.31</td>
+                <td>$2500</td>
+                <td>$96.15</td>
+              </tr>
+              <tr>
+                <td><input type="radio" name="fastTrackPlan" value="pioneer" ng-model="obj.fastTrackPlan"></td>
+                <td><strong>Pioneer</strong></td>
+                <td>$2500</td>
+                <td>$96.15</td>
+                <td>$3750</td>
+                <td>$144.23</td>
+                <td>$5000</td>
+                <td>$192.31</td>
+              </tr>
+              <tr>
+                <td><input type="radio" name="fastTrackPlan" value="tocqueville" ng-model="obj.fastTrackPlan"></td>
+                <td><strong>Tocqueville</strong></td>
+                <td>$5000</td>
+                <td>$192.31</td>
+                <td>$7500</td>
+                <td>$288.46</td>
+                <td>$10000</td>
+                <td>$384.62</td>
+              </tr>
+            </table>
+          </div>
+
+          <br>
+          </p>
+
+
+
+
+
+
+
+          <div class="btm"></div>
+
+
+
+
+          <div class="top"></div>
+          <h2>Making a lasting difference</h2>
+          <p><strong>PLEASE CHOOSE HOW YOU WANT TO INVEST IN YOUR COMMUNITY</strong></p>
+          <p>When you give directly to United Way, you improve lives and make a lasting difference in our community. Please make the appropriate selection.      </p>
+          <p>
+            <input type="checkbox" name="unitedway" id="unitedway" ng-model="obj.communityPlan" value="true"   >
+            <strong>UNITED WAY COMMUNITY PLAN</strong></p>
+          <p>I  want to make the most of every dollar I give!&nbsp; I want to improve lives and  make a lasting, positive difference where help is needed most in my community  by contributing to the United Way Community Plan which supports United Way&rsquo;s  efforts in Education, Financial Stability and Health.</p>
+          <p>Percentage:
+            <label for="unitedamount"></label>
+            <input name="unitedamount" size="3" type="text" id="unitedamount" ng-model="obj.communityPlanPercentage" value="">%
+            <br>
+            <br>
+            <input type="checkbox" name="areas" id="unitedway2"  value="Y" >
+            <strong> I  WANT TO FOCUS MY GIFT TO ONE OR MORE OF THE FOLLOWING UNITED WAY AREAS:</strong></p>
+          <p><strong>EDUCATION:</strong>
+            <input type="text" name="education" id="education" size="3" ng-model="obj.educationPercentage"  value="">
+            % <br>
+            Helping  children and youth achieve their potential<br>
+          </p>
+          <ul>
+            <li>A quality early education that leads to school  readiness</li>
+            <li>Academic achievement</li>
+            <li>Productive and engaged youth</li>
+          </ul>
+          <p><strong>FINANCIAL STABILITY:&nbsp;&nbsp;&nbsp;</strong>
+            <label for="income"></label>
+            <input type="text" name="income" id="income" size="3"  value="" ng-model="obj.financialStabilityPercentage">
+            %<br>
+            Paving  a path to financial independence<br>
+          </p>
+          <ul>
+            <li>Job readiness skills, training and employment  opportunities</li>
+            <li>Permanent and transitional housing</li>
+            <li>Financial education</li>
+          </ul>
+          <p><strong>HEALTH:&nbsp;&nbsp;&nbsp;&nbsp;</strong> <label for="health"></label>
+            <input type="text" name="health" id="health" size="3"  value="" ng-model="obj.healthPercentage">
+            %<br>
+            Improving  people&rsquo;s health<br>
+          </p>
+          <ul>
+            <li>Preventive health screenings</li>
+            <li>Productive older adults</li>
+            <li>Caregiver respite and support</li>
+          </ul>
+          <p><br>
+            <input type="checkbox" name="otherorg" id="unitedway3" value="Y" >
+            <strong>Other*:</strong>
+          <p> If  you would like to designate your contribution to a specific agency in the  community or if you would like to support United Way&rsquo;s work AND also support  your agency of choice, please complete the OTHER section.&nbsp; If you&rsquo;re  splitting your gift, you will need to type in United Way Community Plan or  United Way – Focus Area on one of the lines plus the name of your agency of  choice on another line.&nbsp; </p>
+          <p>For  example:<br>
+            United  Way Community Plan – 50%<br>
+            Agency  of choice – 50%</p>
+          <p>OR</p>
+          <p>United  Way – Education – 50% <br>
+            Agency of choice –  50%</p>
+
+
+          <button class="btn btn-primary" ng-click="addOrganization()"><span class="glyphicon glyphicon-plus"></span> Add organization</button>
+
+          <div ng-repeat="organization in obj.organizationDonations">
+
+
+            <p>
+              <strong>Organization</strong>
+              <input name="designation" type="text" id="other" size="50"   value="" ng-model="organization.organization">
+              <strong>Percent:</strong>
+              <input type="text" name="otherpercent" id="otherpercent" value="" ng-model="organization.percentage">%
+              <br>
+
+            </p>
+          </div>
+
+
+          <p>
+            <input type="checkbox" name="additionalAgency" id="additionalAgency" value="Y" >
+            <label for="additionalAgency"></label>
+            I want to designate more than three agencies, please contact me<br>
+            <br>
+            <strong></strong></p>
+
+
+          <div class="btm"></div>
+
+
+
+          <div class="top"></div>
+          <h2>Miscellaneous Information</h2>
+          <p>
+            <input name="willandestate" type="checkbox" id="1%5" value="Y"  >
+            <strong>I have</strong> included United Way in my will and estate plans. Please contact me.<br>
+            <input name="willandestateinfo" type="checkbox" id="1%6" value="Y" >
+            <strong>I would like</strong> to include United Way in my will and estate plans. Please contact me.
+          </p>
+          <p>
+            <input type="checkbox" name="loyalContributor" id="loyalContributor" value="Y" >
+            <label for="loyalContributor"></label>
+            check this box if you are a loyal contributor (giving to United Way for more than 10 years)</p>
+
+          <div class="btm"></div>
+
+
+          <div class="top"></div>
+
+
+          <p align="center"><br>
+            <!-- <input type="image"  src="https://www.miamidade.gov/images/eNet/unitedwayform/submit-button.png" name="Submit" id="Submit" value="Submitzzz" ng-submit="save()" >-->
+            <button class="btn btn-primary" ng-click="save()"><span class="glyphicon glyphicon-thumbs-up"></span> Submit</button>
+
+          <div class="btm"></div>
+        </fieldset>
+
+      </form>
+    </div>
+  </div>
+</div>
