@@ -10,7 +10,6 @@ function unitedWayOrganization(json){
     this.organization = json.organization;
     this.percentage = json.percentage;
   }
-
 }
 
 function pledge_obj(json){
@@ -59,9 +58,6 @@ function pledge_obj(json){
     this.updated = json.updated;
 
   }
-
-
-
 }
 /**
  * Created by david492000 on 6/22/15.

@@ -1,4 +1,4 @@
-package unitedway.security;
+/*package unitedway.security;
 
 
 
@@ -38,4 +38,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .contextSource().ldif("classpath:test-server.ldif");
         }
     }
-}
+}*/

@@ -86,14 +86,14 @@ fieldset{
 }
 
 
-
+/* No background images used instead of text so I commented this out.
 h2{
   background: no-repeat 0 0;
   display: block;
   overflow: hidden;
   text-indent: -9999em;
 }
-
+*/
 
 
 #form-sign-up fieldset{
@@ -157,3 +157,43 @@ h2{
   clear:both;
 
 }
+
+
+/********************************/
+
+
+  .minHeight{
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: column;
+    flex-flow: column;
+  }
+
+  .minHeight p, .minHeight ul{
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+  }
+
+  .minHeight ul{
+    margin: 0 15px 0 30px;
+    padding: 0;
+  }
+
+  .focus{
+    display: -webkit-flex;
+    display: flex;
+  }
+
+  body{
+    background: #ebebeb;
+  }
+  
+  .container{
+    background: #fff;
+    box-shadow: 0 0 5px #666;
+  }
+
+
+
+
+

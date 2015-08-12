@@ -15,7 +15,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'directives.customvalidation.customValidationTypes'
   ])
 
   .config(['$routeProvider', function ($routeProvider) {
