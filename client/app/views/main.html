@@ -43,9 +43,9 @@
             <div class="input-group">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
                 <input class="form-control col-md-4" name="email"  type="text" id="email" class="form-control" placeholder="Username" 
-                value="" 
-                ng-model="scope.obj.email"
+                ng-model="obj.email"
                 validation-email="true"
+                validation-field-required="true"
                 />
             </div>
             </div>
@@ -69,7 +69,7 @@
             <label for="biweekly">My bi-weekly deduction:</label>             
             <div class="input-group">
                 <span class="input-group-addon">$</span>
-                <input id="biweekly" name="biweekly" type="text" class="form-control" placeholder="US Dollar">
+                <input id="biweekly" name="biweekly" type="text" class="form-control" placeholder="US Dollars" ng-model="obj.biweeklyDeduction">
                 <!-- <span class="input-group-addon">.00</span> -->
             </div>
         
@@ -83,7 +83,7 @@
             <label for="onetime">My one-time donation:</label>           
             <div class="input-group">
                 <span class="input-group-addon">$</span>
-                <input name="onetime" size="5" type="text" id="onetime" class="form-control" placeholder="US Dollar">
+                <input name="onetime" size="5" type="text" id="onetime" class="form-control" placeholder="US Dollars" ng-model="obj.oneTimeDeduction">
                 <!-- <span class="input-group-addon">.00</span> -->
             </div>        
             </div>
@@ -91,23 +91,23 @@
             </div>
 
             <div class="form-group">
-                  <input type="radio" name="donationtypePayroll" id="payroll" value="Y" onClick="enableradio1();" />
+                  <input type="radio" name="donationtypePayroll" ng-model="obj.deductionType" id="payroll" value="Y" />
 
                   Payroll Deduction<br>
 
-                  <input type="radio" name="donationtypeCash" id="cash" value="Y" onClick="enableradio2();" />
+                  <input type="radio" name="donationtypeCash" ng-model="obj.deductionType" id="cash" value="Y" />
 
                   Cash*<br>
 
-                  <input type="radio" name="donationtypeCheck" id="check" value="Y" onClick="enableradio3();" />
+                  <input type="radio" name="donationtypeCheck" ng-model="obj.deductionType" id="check" value="Y" />
 
                   Check*<br>
 
-                  <input type="radio" name="donationtypeCredit" id="credit" value="Y" onClick="enableradio4();" />
+                  <input type="radio" name="donationtypeCredit" ng-model="obj.deductionType" id="credit" value="Y" />
 
                   Credit**<br>
 
-                  <input type="radio" name="donationtypeDebit" id="debit" value="Y" onClick="enableradio5();" />
+                  <input type="radio" name="donationtypeDebit" ng-model="obj.deductionType" id="debit" value="Y" />
 
                   Debit**           
                 </div>
@@ -151,7 +151,9 @@
            
             <h2>Leadership Circle</h2>
 
-            <p><input name="countyleader"  type="checkbox" id="1000" value="Y"  > Individuals who make a United Way gift of $1,000 or more a year are considered<br>
+            <p><input name="countyleader"  type="checkbox" id="1000" 
+            ng-checked="leadershipCircleFlag" 
+            ng-model="leadershipCircleFlag" > Individuals who make a United Way gift of $1,000 or more a year are considered<br>
 
               County Leadership Circle members and are invited to special events in recognition of<br>
 
@@ -166,10 +168,14 @@
             <div class="row">
             <div class="col-md-6">
             <div class="form-group">
-            <label for="totaldonation">Your total annual donation is:</label>           
+            <label for="totaldonation" ng-class="{'required': leadershipCircleFlag}" >Your total annual donation is:</label>           
             <div class="input-group">
                 <span class="input-group-addon">$</span>
-                <input name="totaldonation" type="text" id="totaldonation" class="form-control" placeholder="US Dollar">
+                <input name="totaldonation" type="text" id="totaldonation" class="form-control" placeholder="US Dollars"
+                 ng-model="obj.donationAmount"
+                 validation-field-required="{{leadershipCircleFlag}}"
+                 ng-required="leadershipCircleFlag"
+                 >
                 <!-- <span class="input-group-addon">.00</span> -->
             </div>        
             </div>
@@ -196,28 +202,45 @@ volunteerism and more.</p>
 <hr>
 <strong>Family Gift</strong>
 
- <p><input name="familyflag"  type="checkbox"  value="Y"  > If your gift above, combined with the gift of your spouse/parther, totals at least $1000 per year, you will be considered a member of the County Leadership Circle.</p>
+ <p><input name="familyflag"  type="checkbox"  ng-model="familyGiftFlag" > If your gift above, combined with the gift of your spouse/parther, totals at least $1000 per year, you will be considered a member of the County Leadership Circle.</p>
 
             <div class="row">
             <div class="col-md-12">
               <div class="row">
               <div class="col-md-10">
-                <label for="spouse"><strong>Spouse/Partner Name:</strong></label>
-                <input  class="form-control" name="spouse" type="text" id="spouse" size="40" value="">
+                <label for="spouse" ng-class="{'required': familyGiftFlag}"><strong>Spouse/Partner Name:</strong></label>
+                <input  class="form-control" name="spouse" type="text" id="spouse" size="40" value="{{$scope.obj.spouse}}">
               </div>
               </div>
                         <br/>
               <div class="row">
               <div class="col-md-5">
-                <label for="employer"><strong>Employer:</strong></label>
-                <input class="form-control" name="employer" type="text" id="employer" size="50" value="">
+                <label for="employer" ng-class="{'required': familyGiftFlag}"><strong>Employer:</strong></label>
+                <input 
+                  class="form-control" 
+                  name="employer" 
+                  type="text" 
+                  id="employer" 
+                  size="50" 
+                  ng-model="obj.spouseEmployer"
+                  validation-field-required="{{familyGiftFlag}}"
+                  ng-required="famliyGiftFlag">
               </div>
 
               <div class="col-md-5">
-                <label for="amount"><strong>Annual Amount of his/her gift:</strong></label>
+                <label for="amount" ng-class="{'required': familyGiftFlag}"><strong>Annual Amount of his/her gift:</strong></label>
               <div class="input-group">
                 <span class="input-group-addon">$</span>
-                <input class="form-control" name="amount" size="5" type="text" id="amount"  placeholder="US Dollar" value="">
+                <input 
+                  class="form-control" 
+                  name="amount" 
+                  size="5" 
+                  type="text" 
+                  id="amount" 
+                  placeholder="US Dollars" 
+                  ng-model="obj.spouseAmt"
+                  validation-field-required="{{familyGiftFlag}}"
+                  ng-required="familyGiftFlag">
                 <!-- <span class="input-group-addon">.00</span> -->
               </div>        
               </div>
@@ -238,9 +261,9 @@ volunteerism and more.</p>
 
               </strong><br>
 
-             <input name="fasttrackenroll" type="checkbox" id="1" value="">
+             <input name="fasttrackenroll" type="checkbox" id="1" ng-model="fastTrackFlag">
 
-           Enroll me in the Fast Track program<br>
+             <label for="fasttrackenroll" ng-class="{'required': fastTrackFlag}">Enroll me in the Fast Track program</label>
            </p>
 
             <table width="600" border="0">
@@ -281,7 +304,16 @@ volunteerism and more.</p>
 
   <tr>
 
-    <td><input type="radio" name="fastTrack" id="fasttrackprogram"  value="Y" onClick="enableradiocornerstoneflag();">
+    <td>
+      <input 
+        type="radio" 
+        name="fastTrack" 
+        id="fasttrackprogram"
+        value="cornerstone"
+        ng-model="obj.fastTrackPlan"
+        ng-required="fastTrackFlag"
+        validation-field-required="{{fastTrackFlag}}"
+        >
 
       <label for="fasttrackprogram"></label></td>
 
@@ -303,7 +335,17 @@ volunteerism and more.</p>
 
   <tr>
 
-    <td><input type="radio" name="fastTrack" id="fasttrackprogram2" value="Y" onClick="enableradiopillarflag();"></td>
+    <td>
+      <input 
+        type="radio" 
+        name="fastTrack" 
+        id="fasttrackprogram2" 
+        value="pillar" 
+        ng-model="obj.fastTrackPlan"
+        ng-required="fastTrackFlag"
+        validation-field-required="{{fastTrackFlag}}"
+        >
+    </td>
 
     <td><strong>Pillar</strong></td>
 
@@ -323,7 +365,18 @@ volunteerism and more.</p>
 
   <tr>
 
-    <td><input type="radio" name="fastTrack" id="fasttrackprogram3" value="Y" onClick="enableradiopioneerflag();" ></td>
+    <td>
+      <input 
+        type="radio" 
+        name="fastTrack" 
+        id="fasttrackprogram3" 
+        value="pioneer" 
+        ng-model="obj.fastTrackPlan"
+        ng-required="fastTrackFlag"
+        validation-field-required="{{fastTrackFlag}}"
+        >
+
+      </td>
 
     <td><strong>Pioneer</strong></td>
 
@@ -343,7 +396,18 @@ volunteerism and more.</p>
 
   <tr>
 
-    <td><input type="radio" name="fastTrack" id="fasttrackprogram4" value="Y" onClick="enableradiotoquevilleflag();" ></td>
+    <td>
+      <input 
+        type="radio" 
+        name="fastTrack" 
+        id="fasttrackprogram4" 
+        `value="tocqueville
+        " 
+        ng-model="obj.fastTrackPlan"
+        ng-required="fastTrackFlag"
+        validation-field-required="{{fastTrackFlag}}"
+        >
+    </td>
 
     <td><strong>Tocqueville</strong></td>
 
@@ -390,16 +454,24 @@ volunteerism and more.</p>
            </p>
       
         <div class="input-group">
-        <input type="checkbox" name="unitedway" id="unitedway"  value="Y"  />
-
-        <label for="unitedway">UNITED WAY COMMUNITY PLAN</label>
+        <input type="checkbox" name="unitedway" id="unitedway" ng-model="communityPlanFlag"  />
+        <label for="unitedway">&nbsp;UNITED WAY COMMUNITY PLAN</label>
             <p>I  want to make the most of every dollar I give!&nbsp; I want to improve lives and  make a lasting, positive difference where help is needed most in my community  by contributing to the United Way Community Plan which supports United Way&rsquo;s  efforts in Education, Financial Stability and Health.</p>
             
             <div class="row">
               <div class="col-md-8">
-                <label for="unitedamount">Percentage:</label>
+                <label for="unitedamount" ng-class="{'required': communityPlanFlag}">Percentage:</label>
                 <div class="input-group col-md-2">
-                  <input class="form-control" name="unitedamount" size="3" type="text" id="unitedamount"   value="">
+                  <input 
+                    class="form-control" 
+                    name="unitedamount" 
+                    size="3" 
+                    type="text" 
+                    id="unitedamount"
+                    ng-model="obj.communityPlanPercentage"
+                    validation-max-length="3"
+                    validation-no-space="true"
+                    validation-no-special-chars="true">
                   <span class="input-group-addon">%</span>
                 </div>   
               </div>
@@ -407,7 +479,8 @@ volunteerism and more.</p>
           </div>
       <hr/>
           <div class="input-group">
-          <label for="unitedway2"> I  WANT TO FOCUS MY GIFT TO ONE OR MORE OF THE FOLLOWING UNITED WAY AREAS:</label>
+          <input type="checkbox" name="unitedway2" id="unitedway2" ng-model="focusAreas"  /> 
+          <label for="unitedway2">&nbsp;I  WANT TO FOCUS MY GIFT TO ONE OR MORE OF THE FOLLOWING UNITED WAY AREAS:</label>
             </div>
 
 
@@ -433,7 +506,17 @@ volunteerism and more.</p>
 
             <label for="education">Percentage:</label>
             <div class="input-group col-md-4">
-                   <input class="form-control" type="text" name="education" id="education" size="3"  value="">
+                   <input 
+                    class="form-control" 
+                    type="text" 
+                    name="education" 
+                    id="education" 
+                    size="3" 
+                    ng-model="obj.educationPercentage"
+                    validation-max-length="3"
+                    validation-no-space="true"
+                    validation-only-numbers="true"
+                    validation-no-special-chars="true">
                    <span class="input-group-addon">%</span>
                  </div>  
                  </div>
@@ -454,7 +537,17 @@ volunteerism and more.</p>
 
               <label for="income">Percentage:</label>
                 <div class="input-group col-md-4">
-                   <input class="form-control" type="text" name="income" id="income" size="3"  value="">
+                   <input 
+                    class="form-control" 
+                    type="text" 
+                    name="income" 
+                    id="income" 
+                    size="3"  
+                    ng-model="obj.financialStabilityPercentage"
+                    validation-max-length="3"
+                    validation-no-space="true"
+                    validation-only-numbers="true"
+                    validation-no-special-chars="true">
                    <span class="input-group-addon">%</span>
                  </div>  
           </div>
@@ -476,7 +569,17 @@ volunteerism and more.</p>
 
                 <label for="health">Percentage:</label>
                 <div class="input-group col-md-4">
-                   <input class="form-control" type="text" name="health" id="health" size="3"  value="">
+                   <input 
+                    class="form-control" 
+                    type="text" 
+                    name="health" 
+                    id="health" 
+                    size="3" 
+                    ng-model="obj.healthPercentage"
+                    validation-max-length="3"
+                    validation-no-space="true"
+                    validation-only-numbers="true"
+                    validation-no-special-chars="true" />
                    <span class="input-group-addon">%</span>
                  </div>  
                </div>
@@ -484,9 +587,14 @@ volunteerism and more.</p>
 <hr/>
             <p>
 
-              <input type="checkbox" name="otherorg" id="unitedway3" value="Y" >
+              <input 
+                type="checkbox" 
+                name="otherorg" 
+                id="unitedway3" 
+                ng-model="otherOrgFlag" 
+                />
 
-              <strong>Other*:</strong>
+              <strong>Other:</strong>
 
               <p> If  you would like to designate your contribution to a specific agency in the  community or if you would like to support United Way&rsquo;s work AND also support  your agency of choice, please complete the OTHER section.&nbsp; If you&rsquo;re  splitting your gift, you will need to type in United Way Community Plan or  United Way &mdash; Focus Area on one of the lines plus the name of your agency of  choice on another line.&nbsp; </p>
 
@@ -505,13 +613,37 @@ volunteerism and more.</p>
 
 <div class="row">
   <div class="col-md-5">
-    <label for="other">Organization 1</label><br>
-    <input class="form-control" name="designation" type="text" id="other" size="50" onkeypress="clickRadio()" value="">
+    <label for="other" ng-class="{'required': otherOrgFlag}">Organization 1</label><br>
+    <input 
+      class="form-control" 
+      name="designation" 
+      type="text" 
+      id="other" 
+      size="50" 
+      ng-model="obj.otherOrg1Name"
+      validation-max-length="3"
+      validation-no-space="true"
+      validation-only-numbers="true"
+      validation-no-special-chars="true"
+      />
   </div>
   <div class="col-md-5">
-    <label for="otherpercent">Percentage:</label>
+    <label for="otherpercent" ng-class="{'required': otherOrgFlag}">Percentage:</label>
       <div class="input-group col-md-4">
-        <input class="form-control" type="text" name="otherpercent" id="otherpercent" size="3"  value="">
+        <input 
+          class="form-control" 
+          type="text" 
+          name="otherpercent" 
+          id="otherpercent" 
+          size="3"
+          validation-field-required="{otherOrgFlag}"
+          ng-required="otherOrgFlag"
+          ng-model="obj.otherOrg1Percentage"
+          validation-max-length="3"
+          validation-no-space="true"
+          validation-only-numbers="true"
+          validation-no-special-chars="true"
+          />
         <span class="input-group-addon">%</span>
       </div>  
   </div>
@@ -520,11 +652,11 @@ volunteerism and more.</p>
 
 <div class="row">
   <div class="col-md-5">
-    <label for="other">Organization 2</label><br>
+    <label for="other" ng-class="{'required': otherOrgFlag}">Organization 2</label><br>
     <input class="form-control" name="designation2" type="text" id="other2" size="50" onkeypress="clickRadio()" value="">
   </div>
   <div class="col-md-5">
-    <label for="otherpercent2">Percentage:</label>
+    <label for="otherpercent2" ng-class="{'required': otherOrgFlag}">Percentage:</label>
       <div class="input-group col-md-4">
         <input class="form-control" type="text" name="otherpercent2" id="otherpercent2" size="3"  value="">
         <span class="input-group-addon">%</span>

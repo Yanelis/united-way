@@ -21,6 +21,9 @@ function pledge_obj(json){
   this.oneTimeDeduction = null;
   this.deductionType = null;
 
+  this.donationAmount = null;
+  this.areaOfFocus = null;
+
   this.spouse = null;
   this.spouseEmployer = null;
   this.spouseAmt = null;
@@ -33,6 +36,7 @@ function pledge_obj(json){
   this.created = null;
   this.updated = null;
 
+
   if(!_.isNull(json) && !_.isUndefined(json)){
 
     console.log(json);
@@ -44,6 +48,8 @@ function pledge_obj(json){
     this.biweeklyDeduction = json.biweeklyDeduction;
     this.oneTimeDeduction = json.oneTimeDeduction;
     this.deductionType = json.deductionType;
+
+    this.donationAmount = json.donationAmount;
 
     this.spouse = json.spouse;
     this.spouseEmployer = json.spouseEmployer;
@@ -85,7 +91,7 @@ angular.module('clientApp').factory('pledge', function($resource, endpoints){
   }
 
   return {
-  new_pledge : new_pledge,
+    new_pledge : new_pledge,
     new_organization: new_organization
   }
 })
