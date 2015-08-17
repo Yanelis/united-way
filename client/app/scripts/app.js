@@ -16,7 +16,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'directives.customvalidation.customValidationTypes'
+    'ngMessages'
   ])
 
   .config(['$routeProvider', function ($routeProvider) {

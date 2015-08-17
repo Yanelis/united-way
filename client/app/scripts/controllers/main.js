@@ -42,9 +42,4 @@ angular.module('clientApp')
       $scope.obj.organizationDonations.push(newOrg);
     }
 
-    $scope.$broadcast('runCustomValidations', {
-      forms: ['unitedway_form']
-    })
-
-
   });

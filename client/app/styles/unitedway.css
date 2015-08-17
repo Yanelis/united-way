@@ -229,6 +229,8 @@ div.row input.ng-invalid{
 }
 */
 
+
+
 span[data-custom-validation-attribute]{
   position: absolute;
   z-index: 100;

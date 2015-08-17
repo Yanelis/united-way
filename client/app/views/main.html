@@ -40,13 +40,18 @@
 
 
             <label for="email">Email Address: </label>
-            <div class="input-group">
+            <div class="input-group" ng-class="{'has-error': unitedway_form.email.$invalid && unitedway_form.email.$touched}">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-                <input class="form-control col-md-4" name="email"  type="text" id="email" class="form-control" placeholder="Username" 
+                <input class="form-control col-md-4" name="email"  type="email" id="email" 
+                class="form-control" 
+                placeholder="Email"
                 ng-model="obj.email"
-                validation-email="true"
-                validation-field-required="true"
+                ng-minlength="13"
+                required
                 />
+            </div>
+            <div class="help-block" ng-messages="unitedway_form.email.$error" ng-if="unitedway_form.email.$touched">
+              <div ng-messages-include="views/messages.html"></div>
             </div>
             </div>
 
@@ -56,58 +61,94 @@
             <div class="col-md-9">
             <p>Please review the full form before completing. If you would like your giving levels to remain<br>the same, it is not necessary to submit a contribution form. Only your bi-weekly <br>deduction giving level will  automatically roll forward, one-time donations will not. </p>
 
-            <p>If you would like to make an adjustment to your contribution, please fill in only one box below.<br>
+            <p>If you would like to make an adjustment to your contribution, please select an option and fill out the box below.<br>
       
             </p>
       
             </div>
             </div>
 
+
+            <!-- TODO: Create dropdown to select one of the following: -->
+
             <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
             <div class="form-group">
-            <label for="biweekly">My bi-weekly deduction:</label>             
-            <div class="input-group">
+              
+              <div class="row">
+              <div class="col-md-8">
+              <select class="form-control" id="adjustContibution" ng-model="deductionType" type="select">
+                <option value="">Change Type</option>
+                <option value="biweekly">Bi-Weekly Deduction</option>
+                <option value="onetime">One Time Deduction</option>
+              </select>
+              </div>
+              </div>
+            </div> 
+            
+            <div class="row" ng-show="deductionType == 'biweekly'">
+            <div class="col-md-8">
+            <div class="form-group">
+            <label for="biweekly">My bi-weekly deduction:</label>           
+              <div class="input-group" ng-class="{'has-error': unitedway_form.biweekly.$invalid && unitedway_form.biweekly.$touched}">
                 <span class="input-group-addon">$</span>
-                <input id="biweekly" name="biweekly" type="text" class="form-control" placeholder="US Dollars" ng-model="obj.biweeklyDeduction">
+                <input id="biweekly" name="biweekly" type="text" 
+                class="form-control" 
+                placeholder="US Dollars" 
+                ng-model="obj.biweeklyDeduction"
+                ng-required="deductionType == 'biweekly'"
+                >
+              </div>
+              <div class="help-block" ng-messages="unitedway_form.biweekly.$error" ng-if="unitedway_form.biweekly.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+              </div> 
+            </div>
+          </div>
+        </div>
                 <!-- <span class="input-group-addon">.00</span> -->
             </div>
-        
             </div>
             </div>
             </div>
 
-            <div class="row">
+            <div class="row" ng-show="deductionType == 'onetime'">
             <div class="col-md-4">
             <div class="form-group">
             <label for="onetime">My one-time donation:</label>           
-            <div class="input-group">
+            <div class="input-group" ng-class="{'has-error': unitedway_form.onetime.$invalid && unitedway_form.onetime.$touched}">
                 <span class="input-group-addon">$</span>
-                <input name="onetime" size="5" type="text" id="onetime" class="form-control" placeholder="US Dollars" ng-model="obj.oneTimeDeduction">
+                <input name="onetime" size="5" type="text" id="onetime" 
+                class="form-control" 
+                placeholder="US Dollars" 
+                ng-model="obj.oneTimeDeduction"
+                ng-required="deductionType == 'onetime'"
+                >
                 <!-- <span class="input-group-addon">.00</span> -->
-            </div>        
+            </div>  
+
+     
             </div>
             </div>
             </div>
 
-            <div class="form-group">
-                  <input type="radio" name="donationtypePayroll" ng-model="obj.deductionType" id="payroll" value="Y" />
+              <div class="form-group" ng-required="obj.deductionType != null">
+                  <input type="radio" name="donationtype" ng-model="obj.deductionType" id="payroll" value="Payroll"/>
 
                   Payroll Deduction<br>
 
-                  <input type="radio" name="donationtypeCash" ng-model="obj.deductionType" id="cash" value="Y" />
+                  <input type="radio" name="donationtype" ng-model="obj.deductionType" id="cash"  value="Cash"/>
 
                   Cash*<br>
 
-                  <input type="radio" name="donationtypeCheck" ng-model="obj.deductionType" id="check" value="Y" />
+                  <input type="radio" name="donationtype" ng-model="obj.deductionType" id="check" value="Check" />
 
                   Check*<br>
 
-                  <input type="radio" name="donationtypeCredit" ng-model="obj.deductionType" id="credit" value="Y" />
+                  <input type="radio" name="donationtype" ng-model="obj.deductionType" id="credit" value="Credit" />
 
                   Credit**<br>
 
-                  <input type="radio" name="donationtypeDebit" ng-model="obj.deductionType" id="debit" value="Y" />
+                  <input type="radio" name="donationtype" ng-model="obj.deductionType" id="debit" value="Debit" />
 
                   Debit**           
                 </div>
@@ -165,13 +206,15 @@
 
               <br>
 
-            <div class="row">
+            <div class="row" ng-class="{'showError': leadershipCircleFlag}">
             <div class="col-md-6">
             <div class="form-group">
             <label for="totaldonation" ng-class="{'required': leadershipCircleFlag}" >Your total annual donation is:</label>           
             <div class="input-group">
                 <span class="input-group-addon">$</span>
-                <input name="totaldonation" type="text" id="totaldonation" class="form-control" placeholder="US Dollars"
+                <input name="totaldonation" type="text" id="totaldonation" class="form-control" 
+                 ng-class="{'has-error': !obj.donationAmount}"
+                placeholder="US Dollars"
                  ng-model="obj.donationAmount"
                  validation-field-required="{{leadershipCircleFlag}}"
                  ng-required="leadershipCircleFlag"
@@ -186,16 +229,10 @@
            <div class="small">             
 
             <p>If you are 40 years old or younger and give at the Leadership level, 
-
 you will be considered a Young Leader, a United Way recognition group offering networking, volunteer and leadership development opportunities.</p>
 
-           
 
-          
-
-            <p> If you are a woman and give at the Leadership level, you will be considered a Women's Leader, a United Way recognition group offering opportunities for networking, intergenerational
-
-volunteerism and more.</p>
+            <p> If you are a woman and give at the Leadership level, you will be considered a Women's Leader, a United Way recognition group offering opportunities for networking, intergenerational volunteerism and more.</p>
 
           </div>
 
@@ -735,16 +772,10 @@ I would like to include United Way in my will and estate plans. Please contact m
 
       <p align="center"><br>
 
-        <input type="image"  src="https://www.miamidade.gov/images/eNet/unitedwayform/submit-button.png" name="Submit" id="Submit" value="Submit" onmouseover="format_values();" >
-
-
+        <input type="button" class="btn btn-primary"  name="Submit" id="Submit" value="Submit" />
 
 <div class="btm"></div>
-
- </div>
- </div>         
-
-            
+   
 
             </form>
 
