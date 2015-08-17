@@ -15,7 +15,7 @@ angular.module('clientApp')
 
 
     //$scope.obj.organizationDonations.push("test");
-    $scope.obj.spouseAmt = '';
+    //$scope.obj.spouseAmt = '';
 
     //Flags to set required fields on the form. 
     $scope.leadershipCircleFlag = false;
@@ -40,6 +40,13 @@ angular.module('clientApp')
     $scope.addOrganization = function(){
       var newOrg = pledge.new_organization(null);
       $scope.obj.organizationDonations.push(newOrg);
+    }
+
+
+    $scope.correctPercentage = function(){
+      var totalPercent = $scope.obj.educationPercentage + $scope.obj.financialStabilityPercentage + $scope.obj.healthPercentage;
+      if(totalPercent < 100 || totalPercent > 100)
+        return false;
     }
 
   });

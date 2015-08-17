@@ -40,7 +40,8 @@
 
 
             <label for="email">Email Address: </label>
-            <div class="input-group" ng-class="{'has-error': unitedway_form.email.$invalid && unitedway_form.email.$touched}">
+            <div class="input-group" 
+            ng-class="{'has-error': unitedway_form.email.$invalid && unitedway_form.email.$touched}">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
                 <input class="form-control col-md-4" name="email"  type="email" id="email" 
                 class="form-control" 
@@ -108,8 +109,7 @@
                 <!-- <span class="input-group-addon">.00</span> -->
             </div>
             </div>
-            </div>
-            </div>
+
 
             <div class="row" ng-show="deductionType == 'onetime'">
             <div class="col-md-4">
@@ -179,7 +179,7 @@
         </p>
 
 <hr>               
-  </div>
+
 
 
                       
@@ -187,7 +187,7 @@
             
 
      <!-- excellence club deleted -->
-     
+ <div class="row">    
 <div class="col-sm-12">
            
             <h2>Leadership Circle</h2>
@@ -210,17 +210,24 @@
             <div class="col-md-6">
             <div class="form-group">
             <label for="totaldonation" ng-class="{'required': leadershipCircleFlag}" >Your total annual donation is:</label>           
-            <div class="input-group">
+            <div class="input-group" 
+            ng-class="{'has-error': unitedway_form.totaldonation.$invalid && unitedway_form.totaldonation.$touched}">
+
                 <span class="input-group-addon">$</span>
-                <input name="totaldonation" type="text" id="totaldonation" class="form-control" 
-                 ng-class="{'has-error': !obj.donationAmount}"
-                placeholder="US Dollars"
+                <input name="totaldonation" type="text" 
+                 id="totaldonation" 
+                 class="form-control" 
+                 placeholder="US Dollars"
                  ng-model="obj.donationAmount"
-                 validation-field-required="{{leadershipCircleFlag}}"
                  ng-required="leadershipCircleFlag"
                  >
                 <!-- <span class="input-group-addon">.00</span> -->
-            </div>        
+            </div> 
+
+              <div class="help-block" ng-messages="unitedway_form.totaldonation.$error" ng-show="unitedway_form.totaldonation.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+              </div> 
+
             </div>
             </div>
    
@@ -244,47 +251,67 @@ you will be considered a Young Leader, a United Way recognition group offering n
             <div class="row">
             <div class="col-md-12">
               <div class="row">
-              <div class="col-md-10">
+              <div class="col-md-10" 
+              ng-class="{'has-error': unitedway_form.spouse.$invalid && unitedway_form.spouse.$touched}">
                 <label for="spouse" ng-class="{'required': familyGiftFlag}"><strong>Spouse/Partner Name:</strong></label>
-                <input  class="form-control" name="spouse" type="text" id="spouse" size="40" value="{{$scope.obj.spouse}}">
+                <input  
+                  class="form-control" 
+                  name="spouse" 
+                  type="text" 
+                  id="spouse" 
+                  ng-model="obj.spouse"
+                  ng-required="familyGiftFlag">
+              </div>              
               </div>
-              </div>
+              
+              <div class="help-block" ng-messages="unitedway_form.spouse.$error" ng-show="unitedway_form.spouse.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+              </div> 
                         <br/>
               <div class="row">
               <div class="col-md-5">
-                <label for="employer" ng-class="{'required': familyGiftFlag}"><strong>Employer:</strong></label>
+               <label for="employer" ng-class="{'required': familyGiftFlag}"><strong>Employer:</strong></label>
+              <div 
+               ng-class="{'has-error': unitedway_form.employer.$invalid && unitedway_form.employer.$touched}">
                 <input 
                   class="form-control" 
                   name="employer" 
                   type="text" 
                   id="employer" 
-                  size="50" 
                   ng-model="obj.spouseEmployer"
-                  validation-field-required="{{familyGiftFlag}}"
-                  ng-required="famliyGiftFlag">
+                  ng-required="familyGiftFlag">
+              </div>            
+
+              <div class="help-block" ng-messages="unitedway_form.employer.$error" ng-show="unitedway_form.employer.$touched">
+                <div ng-messages-include="views/messages.html"></div>
               </div>
+            </div> 
 
               <div class="col-md-5">
-                <label for="amount" ng-class="{'required': familyGiftFlag}"><strong>Annual Amount of his/her gift:</strong></label>
-              <div class="input-group">
+              <label for="amount" ng-class="{'required': familyGiftFlag}"><strong>Annual Amount of his/her gift:</strong></label>
+              <div class="input-group" ng-class="{'has-error': unitedway_form.amount.$invalid && unitedway_form.amount.$touched}">
+
                 <span class="input-group-addon">$</span>
                 <input 
                   class="form-control" 
-                  name="amount" 
-                  size="5" 
+                  name="amount"
                   type="text" 
                   id="amount" 
                   placeholder="US Dollars" 
                   ng-model="obj.spouseAmt"
-                  validation-field-required="{{familyGiftFlag}}"
                   ng-required="familyGiftFlag">
                 <!-- <span class="input-group-addon">.00</span> -->
-              </div>        
+              </div>
+              <div class="help-block" ng-messages="unitedway_form.amount.$error" ng-show="unitedway_form.amount.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+              </div>
+            </div>         
               </div>
              
               </div>
             </div>
           </div>
+        </div>
             <hr>
 
 
@@ -469,8 +496,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
       
 
-             </div>
-  </div>
+
 
            <div class="btm"></div>
 
@@ -495,28 +521,10 @@ you will be considered a Young Leader, a United Way recognition group offering n
         <label for="unitedway">&nbsp;UNITED WAY COMMUNITY PLAN</label>
             <p>I  want to make the most of every dollar I give!&nbsp; I want to improve lives and  make a lasting, positive difference where help is needed most in my community  by contributing to the United Way Community Plan which supports United Way&rsquo;s  efforts in Education, Financial Stability and Health.</p>
             
-            <div class="row">
-              <div class="col-md-8">
-                <label for="unitedamount" ng-class="{'required': communityPlanFlag}">Percentage:</label>
-                <div class="input-group col-md-2">
-                  <input 
-                    class="form-control" 
-                    name="unitedamount" 
-                    size="3" 
-                    type="text" 
-                    id="unitedamount"
-                    ng-model="obj.communityPlanPercentage"
-                    validation-max-length="3"
-                    validation-no-space="true"
-                    validation-no-special-chars="true">
-                  <span class="input-group-addon">%</span>
-                </div>   
-              </div>
-            </div>
+        
           </div>
-      <hr/>
           <div class="input-group">
-          <input type="checkbox" name="unitedway2" id="unitedway2" ng-model="focusAreas"  /> 
+
           <label for="unitedway2">&nbsp;I  WANT TO FOCUS MY GIFT TO ONE OR MORE OF THE FOLLOWING UNITED WAY AREAS:</label>
             </div>
 
@@ -550,10 +558,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     id="education" 
                     size="3" 
                     ng-model="obj.educationPercentage"
-                    validation-max-length="3"
-                    validation-no-space="true"
-                    validation-only-numbers="true"
-                    validation-no-special-chars="true">
+                    />
                    <span class="input-group-addon">%</span>
                  </div>  
                  </div>
@@ -613,13 +618,18 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     id="health" 
                     size="3" 
                     ng-model="obj.healthPercentage"
-                    validation-max-length="3"
-                    validation-no-space="true"
-                    validation-only-numbers="true"
-                    validation-no-special-chars="true" />
+                     />
                    <span class="input-group-addon">%</span>
                  </div>  
                </div>
+
+    <input type="hidden" name="percentages" ng-class="{'ng-invalid': !correctPercentage}" ng-model="correctPercentage" />
+
+    <div class="help-block" ng-messages="unitedway_form.percentages.$error">
+      <div ng-messages-include="views/messages.html"></div>
+    </div>
+
+
              </div>
 <hr/>
             <p>
@@ -650,6 +660,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
 <div class="row">
   <div class="col-md-5">
+  <div ng-class="{'has-error': unitedway_form.designation.$invalid && unitedway_form.designation.$touched}">
     <label for="other" ng-class="{'required': otherOrgFlag}">Organization 1</label><br>
     <input 
       class="form-control" 
@@ -658,46 +669,75 @@ you will be considered a Young Leader, a United Way recognition group offering n
       id="other" 
       size="50" 
       ng-model="obj.otherOrg1Name"
-      validation-max-length="3"
-      validation-no-space="true"
-      validation-only-numbers="true"
-      validation-no-special-chars="true"
+      ng-required="otherOrgFlag"
       />
+    </div>
+
+    <div class="help-block" ng-messages="unitedway_form.designation.$error" ng-show="unitedway_form.designation.$touched">
+      <div ng-messages-include="views/messages.html"></div>
+    </div>
+
+
   </div>
   <div class="col-md-5">
     <label for="otherpercent" ng-class="{'required': otherOrgFlag}">Percentage:</label>
-      <div class="input-group col-md-4">
+      <div class="input-group col-md-4" ng-class="{'has-error': unitedway_form.otherpercent.$invalid && unitedway_form.otherpercent.$touched}">
         <input 
           class="form-control" 
           type="text" 
           name="otherpercent" 
           id="otherpercent" 
           size="3"
-          validation-field-required="{otherOrgFlag}"
           ng-required="otherOrgFlag"
           ng-model="obj.otherOrg1Percentage"
-          validation-max-length="3"
-          validation-no-space="true"
-          validation-only-numbers="true"
-          validation-no-special-chars="true"
           />
         <span class="input-group-addon">%</span>
       </div>  
+      
+    <div class="help-block" ng-messages="unitedway_form.otherpercent.$error" ng-show="unitedway_form.otherpercent.$touched">
+      <div ng-messages-include="views/messages.html"></div>
+    </div>
+
   </div>
 </div>
 
 
 <div class="row">
   <div class="col-md-5">
+  <div ng-class="{'has-error': unitedway_form.designation2.$invalid && unitedway_form.designation2.$touched}">
     <label for="other" ng-class="{'required': otherOrgFlag}">Organization 2</label><br>
-    <input class="form-control" name="designation2" type="text" id="other2" size="50" onkeypress="clickRadio()" value="">
+    <input 
+    class="form-control" 
+    name="designation2" 
+    type="text" 
+    id="other2" 
+    size="50" 
+    ng-model="obj.otherOrg2Name"
+    ng-required="otherOrgFlag"
+    />
+  </div>
+
+    <div class="help-block" ng-messages="unitedway_form.designation2.$error" ng-show="unitedway_form.designation2.$touched">
+      <div ng-messages-include="views/messages.html"></div>
+    </div>  
+
   </div>
   <div class="col-md-5">
     <label for="otherpercent2" ng-class="{'required': otherOrgFlag}">Percentage:</label>
-      <div class="input-group col-md-4">
-        <input class="form-control" type="text" name="otherpercent2" id="otherpercent2" size="3"  value="">
+      <div class="input-group col-md-4" ng-class="{'has-error': unitedway_form.otherpercent2.$invalid && unitedway_form.otherpercent2.$touched}">
+        <input 
+        class="form-control" 
+        type="text" 
+        name="otherpercent2" 
+        id="otherpercent2" 
+        ng-model="obj.otherOrg2Percent"
+        ng-required="otherOrgFlag"
+        />
         <span class="input-group-addon">%</span>
       </div>  
+      <div class="help-block" ng-messages="unitedway_form.otherpercent2.$error" ng-show="unitedway_form.otherpercent2.$touched">
+        <div ng-messages-include="views/messages.html"></div>
+      </div>
   </div>
 </div>
 
