@@ -9,6 +9,7 @@ import unitedway.repo.DonationRepo;
 
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by david492000 on 6/9/15.
@@ -34,7 +35,7 @@ public class DonationController {
 
     @RequestMapping(method=RequestMethod.POST)
     public UnitedWayDonation create(@RequestBody @Valid UnitedWayDonation donation){
-        System.out.println("got here");
+
         donation.setEid("123456");
         donation.setCreated(new Date());
         return repo.save(donation);
@@ -50,6 +51,14 @@ public class DonationController {
 
         UnitedWayDonation updated = repo.save(donation);
         return new ResponseEntity<UnitedWayDonation>(updated, HttpStatus.OK);
+    }
+
+
+    @RequestMapping("/employee/{eid}")
+    public List<UnitedWayDonation> getByEId(@PathVariable String eid){
+
+
+        return repo.findByEidOrderByCreatedDesc(eid);
     }
 
 }

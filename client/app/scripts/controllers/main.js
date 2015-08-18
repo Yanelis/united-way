@@ -8,18 +8,19 @@
  * Controller of the clientApp
  */
 angular.module('clientApp')
-  .controller('MainCtrl', function ($scope, pledge) {
+  .controller('MainCtrl', function ($scope, pledge, portalService) {
    //$scope.obj = {};
     $scope.fasttrackenroll = "N";
     $scope.obj = pledge.new_pledge(null);
 
+    $scope.obj.eid = portalService.getUserId();
 
     $scope.org1 = pledge.new_organization(null);
     $scope.org2 = pledge.new_organization(null);
     $scope.org3 = pledge.new_organization(null);
 
 
-    //Flags to set required fields on the form. 
+    //Flags to set required fields on the form.
     $scope.leadershipCircleFlag = false;
     $scope.familyGiftFlag = $scope.obj.spouseAmt != null ? true:false;
     $scope.fastTrackFlag = $scope.obj.fastTrackPlan != null ? true:false;

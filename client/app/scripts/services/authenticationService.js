@@ -12,7 +12,7 @@ angular.module('clientApp')
 
       service.Login = function (username, password, callback) {
 
-       var enetcookie = $cookies.get('LtpaToken');
+       /*var enetcookie = $cookies.get('LtpaToken');
         if(!_.isNull(enetcookie) && !_.isEmpty(enetcookie))
         {
           console.log('found the enet cookie');
@@ -23,7 +23,7 @@ angular.module('clientApp')
           }, function(error){
 
           })
-        }
+        }*/
 
 
         this.SetCredentials(username, password);
