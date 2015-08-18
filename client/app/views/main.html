@@ -126,7 +126,9 @@
                 <!-- <span class="input-group-addon">.00</span> -->
             </div>  
 
-     
+              <div class="help-block" ng-messages="unitedway_form.onetime.$error" ng-if="unitedway_form.onetime.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+              </div> 
             </div>
             </div>
             </div>
@@ -376,7 +378,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
         value="cornerstone"
         ng-model="obj.fastTrackPlan"
         ng-required="fastTrackFlag"
-        validation-field-required="{{fastTrackFlag}}"
+        ng-disabled="!fastTrackFlag"
         >
 
       <label for="fasttrackprogram"></label></td>
@@ -407,7 +409,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
         value="pillar" 
         ng-model="obj.fastTrackPlan"
         ng-required="fastTrackFlag"
-        validation-field-required="{{fastTrackFlag}}"
+        ng-disabled="!fastTrackFlag"
         >
     </td>
 
@@ -437,7 +439,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
         value="pioneer" 
         ng-model="obj.fastTrackPlan"
         ng-required="fastTrackFlag"
-        validation-field-required="{{fastTrackFlag}}"
+        ng-disabled="!fastTrackFlag"
         >
 
       </td>
@@ -469,7 +471,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
         " 
         ng-model="obj.fastTrackPlan"
         ng-required="fastTrackFlag"
-        validation-field-required="{{fastTrackFlag}}"
+        ng-disabled="!fastTrackFlag"
         >
     </td>
 
