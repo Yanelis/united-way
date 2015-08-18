@@ -519,7 +519,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
            </p>
       
         <div class="input-group">
-        <input type="checkbox" name="unitedway" id="unitedway" ng-model="communityPlanFlag"  />
+        <input type="checkbox" name="unitedway" id="unitedway" ng-model="communityPlanFlag" ng-change="percentageTotal()"  />
         <label for="unitedway">&nbsp;UNITED WAY COMMUNITY PLAN</label>
             <p>I  want to make the most of every dollar I give!&nbsp; I want to improve lives and  make a lasting, positive difference where help is needed most in my community  by contributing to the United Way Community Plan which supports United Way&rsquo;s  efforts in Education, Financial Stability and Health.</p>
             
@@ -653,7 +653,8 @@ you will be considered a Young Leader, a United Way recognition group offering n
                 type="checkbox" 
                 name="otherorg" 
                 id="unitedway3" 
-                ng-model="otherOrgFlag" 
+                ng-model="otherOrgFlag"
+                ng-change="otherPercentageTotal()" 
                 />
 
               <label for="unitedway3">Other:</label>
@@ -795,7 +796,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
       <div ng-messages-include="views/messages.html"></div>
     </div>
 
-              <input type="checkbox" name="additionalAgency" id="additionalAgency" value="Y" >
+              <input type="checkbox" name="additionalAgency" id="additionalAgency" valu="Y">
 
               <label for="additionalAgency"></label>
 
@@ -847,7 +848,14 @@ I would like to include United Way in my will and estate plans. Please contact m
 
       <p align="center"><br>
 
-        <input type="button" class="btn btn-primary"  name="Submit" id="Submit" value="Submit" />
+        <input 
+        type="button" 
+        class="btn btn-primary" 
+        name="Submit" 
+        id="Submit" 
+        value="Submit"
+        ng-disabled="unitedway_form.$invalid"
+        ng-click="save()" />
 
 <div class="btm"></div>
    
