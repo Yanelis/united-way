@@ -16,7 +16,7 @@ angular.module('clientApp')
         if(!_.isNull(enetcookie) && !_.isEmpty(enetcookie))
         {
           console.log('found the enet cookie');
-          var enetpromise = $http.get('https://secure.miamidade.gov/enet/wps/PA_Service_Direct/profile.jsp');
+          var enetpromise = $http.get('https://secure.miamidade.gov/enet/wps/PA_JSPServer_1/JSP/profile.jsp');
           enetpromise.then(function(data){
             response.success = true;
             callback(response);

@@ -13,8 +13,8 @@
     <!-- build:css(.tmp) styles/main.css -->
 
     <!-- endbuild -->
-    <link rel="stylesheet" href="styles/unitedway.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="styles/unitedway.css">
 
   </head>
 
@@ -31,9 +31,6 @@
 
     <div ng-view=""></div>
     </div>
-
-
-
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -57,10 +54,12 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <script src="bower_components/underscore/underscore-min.js"></script>
+
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
@@ -69,10 +68,10 @@
         <script src="scripts/services/pledge.js"></script>
         <script src="scripts/services/authenticationService.js"></script>
         <script src="scripts/controllers/authentication.js"></script>
-        <script src="https://secure.miamidade.gov/enet/wps/PA_Service_Direct/profile.jsp"></script>
+        <script src="https://secure.miamidade.gov/enet/wps/PA_JSPServer_1/JSP/profile.jsp"></script>
         <script>
         console.log("hello world from script");
-          console.log(miamidade.user.PortalUser.uid);
+          //console.log(miamidade.user.PortalUser.uid);
         </script>
         <!-- endbuild -->
 </body>

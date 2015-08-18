@@ -2,7 +2,7 @@
 function unitedWayOrganization(json){
   this.id = null;
   this.organization = null;
-  this.percentage = null;
+  this.percentage = 0;
 
   if(!_.isNull(json) && !_.isUndefined(json)){
 
@@ -10,7 +10,6 @@ function unitedWayOrganization(json){
     this.organization = json.organization;
     this.percentage = json.percentage;
   }
-
 }
 
 function pledge_obj(json){
@@ -22,17 +21,21 @@ function pledge_obj(json){
   this.oneTimeDeduction = null;
   this.deductionType = null;
 
+  this.donationAmount = null;
+  this.areaOfFocus = null;
+
   this.spouse = null;
   this.spouseEmployer = null;
   this.spouseAmt = null;
   this.fastTrackPlan = null;
   this.communityPlan = null;
   this.communityPlanPercentage = null;
-  this.educationPercentage = null;
-  this.financialStabilityPercentage = null;
-  this.healthPercentage = null;
+  this.educationPercentage = 0;
+  this.financialStabilityPercentage = 0;
+  this.healthPercentage = 0;
   this.created = null;
   this.updated = null;
+
 
   if(!_.isNull(json) && !_.isUndefined(json)){
 
@@ -45,6 +48,8 @@ function pledge_obj(json){
     this.biweeklyDeduction = json.biweeklyDeduction;
     this.oneTimeDeduction = json.oneTimeDeduction;
     this.deductionType = json.deductionType;
+
+    this.donationAmount = json.donationAmount;
 
     this.spouse = json.spouse;
     this.spouseEmployer = json.spouseEmployer;
@@ -59,9 +64,6 @@ function pledge_obj(json){
     this.updated = json.updated;
 
   }
-
-
-
 }
 /**
  * Created by david492000 on 6/22/15.
@@ -89,7 +91,7 @@ angular.module('clientApp').factory('pledge', function($resource, endpoints){
   }
 
   return {
-  new_pledge : new_pledge,
+    new_pledge : new_pledge,
     new_organization: new_organization
   }
 })
