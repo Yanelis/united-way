@@ -2,7 +2,7 @@
 function unitedWayOrganization(json){
   this.id = null;
   this.organization = null;
-  this.percentage = null;
+  this.percentage = 0;
 
   if(!_.isNull(json) && !_.isUndefined(json)){
 
@@ -30,9 +30,9 @@ function pledge_obj(json){
   this.fastTrackPlan = null;
   this.communityPlan = null;
   this.communityPlanPercentage = null;
-  this.educationPercentage = null;
-  this.financialStabilityPercentage = null;
-  this.healthPercentage = null;
+  this.educationPercentage = 0;
+  this.financialStabilityPercentage = 0;
+  this.healthPercentage = 0;
   this.created = null;
   this.updated = null;
 

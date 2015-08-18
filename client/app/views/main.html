@@ -558,6 +558,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     id="education" 
                     size="3" 
                     ng-model="obj.educationPercentage"
+                    ng-change="percentageTotal()"
                     />
                    <span class="input-group-addon">%</span>
                  </div>  
@@ -586,10 +587,8 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     id="income" 
                     size="3"  
                     ng-model="obj.financialStabilityPercentage"
-                    validation-max-length="3"
-                    validation-no-space="true"
-                    validation-only-numbers="true"
-                    validation-no-special-chars="true">
+                    ng-change="percentageTotal()"
+                    />
                    <span class="input-group-addon">%</span>
                  </div>  
           </div>
@@ -618,21 +617,35 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     id="health" 
                     size="3" 
                     ng-model="obj.healthPercentage"
+                    ng-change="percentageTotal()"
                      />
                    <span class="input-group-addon">%</span>
                  </div>  
                </div>
-
-    <input type="hidden" name="percentages" ng-class="{'ng-invalid': !correctPercentage}" ng-model="correctPercentage" />
-
-    <div class="help-block" ng-messages="unitedway_form.percentages.$error">
-      <div ng-messages-include="views/messages.html"></div>
-    </div>
-
-
              </div>
+
+
+            <div class="row">
+             <div class="col-md-6">
+
+             <div>
+               <p>Total percentage: {{total}}</p>
+             </div>
+
+              <input 
+                type="hidden" 
+                name="percentages" 
+                ng-model="total" 
+                
+                />
+
+                <div class="help-block" ng-messages="unitedway_form.percentages.$error">
+                  <div ng-messages-include="views/messages.html"></div>
+                </div>
+             </div>
+            </div>
 <hr/>
-            <p>
+
 
               <input 
                 type="checkbox" 
@@ -641,7 +654,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                 ng-model="otherOrgFlag" 
                 />
 
-              <strong>Other:</strong>
+              <label for="unitedway3">Other:</label>
 
               <p> If  you would like to designate your contribution to a specific agency in the  community or if you would like to support United Way&rsquo;s work AND also support  your agency of choice, please complete the OTHER section.&nbsp; If you&rsquo;re  splitting your gift, you will need to type in United Way Community Plan or  United Way &mdash; Focus Area on one of the lines plus the name of your agency of  choice on another line.&nbsp; </p>
 
@@ -668,7 +681,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
       type="text" 
       id="other" 
       size="50" 
-      ng-model="obj.otherOrg1Name"
+      ng-model="org1.organization"
       ng-required="otherOrgFlag"
       />
     </div>
@@ -689,7 +702,8 @@ you will be considered a Young Leader, a United Way recognition group offering n
           id="otherpercent" 
           size="3"
           ng-required="otherOrgFlag"
-          ng-model="obj.otherOrg1Percentage"
+          ng-model="org1.percentage"
+          ng-change="otherPercentageTotal()"
           />
         <span class="input-group-addon">%</span>
       </div>  
@@ -712,7 +726,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
     type="text" 
     id="other2" 
     size="50" 
-    ng-model="obj.otherOrg2Name"
+    ng-model="org2.organization"
     ng-required="otherOrgFlag"
     />
   </div>
@@ -730,8 +744,9 @@ you will be considered a Young Leader, a United Way recognition group offering n
         type="text" 
         name="otherpercent2" 
         id="otherpercent2" 
-        ng-model="obj.otherOrg2Percent"
+        ng-model="org2.percentage"
         ng-required="otherOrgFlag"
+        ng-change="otherPercentageTotal()"
         />
         <span class="input-group-addon">%</span>
       </div>  
@@ -745,12 +760,20 @@ you will be considered a Young Leader, a United Way recognition group offering n
 <div class="row">
   <div class="col-md-5">
     <label for="other">Organization 3</label><br>
-    <input class="form-control" name="designation3" type="text" id="other3" size="50" onkeypress="clickRadio()" value="">
+    <input class="form-control" name="designation3" type="text" id="other3" size="50" ng-model="org3.organization" 
+     />
   </div>
   <div class="col-md-5">
     <label for="otherpercent3">Percentage:</label>
       <div class="input-group col-md-4">
-        <input class="form-control" type="text" name="otherpercent3" id="otherpercent3" size="3"  value="">
+        <input 
+          class="form-control" 
+          type="text" 
+          name="otherpercent3" 
+          id="otherpercent3" 
+          ng-model="org3.percentage" 
+          ng-change="otherPercentageTotal()"
+          />
         <span class="input-group-addon">%</span>
       </div>  
   </div>
@@ -759,6 +782,16 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
 
 <p>
+      
+    <input 
+      type="hidden" 
+      name="orgPercentages" 
+      ng-model="otherPercentageTotal" 
+    />
+
+    <div class="help-block" ng-messages="unitedway_form.orgPercentages.$error">
+      <div ng-messages-include="views/messages.html"></div>
+    </div>
 
               <input type="checkbox" name="additionalAgency" id="additionalAgency" value="Y" >
 
@@ -798,7 +831,7 @@ I would like to include United Way in my will and estate plans. Please contact m
 
               <label for="loyalContributor">
 
-            check this box if you are a loyal contributor (giving to United Way for more than 10 years)
+            Check this box if you are a loyal contributor (giving to United Way for more than 10 years)
 
             </label>
 

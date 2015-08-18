@@ -14,8 +14,10 @@ angular.module('clientApp')
     $scope.obj = pledge.new_pledge(null);
 
 
-    //$scope.obj.organizationDonations.push("test");
-    //$scope.obj.spouseAmt = '';
+    $scope.org1 = pledge.new_organization(null);
+    $scope.org2 = pledge.new_organization(null);
+    $scope.org3 = pledge.new_organization(null);
+
 
     //Flags to set required fields on the form. 
     $scope.leadershipCircleFlag = false;
@@ -43,10 +45,20 @@ angular.module('clientApp')
     }
 
 
-    $scope.correctPercentage = function(){
-      var totalPercent = $scope.obj.educationPercentage + $scope.obj.financialStabilityPercentage + $scope.obj.healthPercentage;
-      if(totalPercent < 100 || totalPercent > 100)
-        return false;
+    $scope.percentageTotal = function(){
+      $scope.total = parseInt($scope.obj.educationPercentage) + parseInt($scope.obj.financialStabilityPercentage) + parseInt($scope.obj.healthPercentage);
+
+      $scope.unitedway_form.percentages.$setValidity("percentages", $scope.total == 100)
+
     }
+
+
+    $scope.otherPercentageTotal = function(){
+      $scope.orgTotal = parseInt($scope.org1.percentage) + parseInt($scope.org2.percentage) + parseInt($scope.org3.percentage);
+
+      $scope.unitedway_form.orgPercentages.$setValidity("percentages", $scope.orgTotal == 100)
+
+    }
+
 
   });
