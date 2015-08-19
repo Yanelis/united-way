@@ -556,6 +556,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     name="education"
                     id="education"
                     size="3"
+                    maxlength="3"
                     ng-model="obj.educationPercentage"
                     ng-change="percentageTotal()"
                     />
@@ -585,6 +586,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     name="income"
                     id="income"
                     size="3"
+                    maxlength="3"
                     ng-model="obj.financialStabilityPercentage"
                     ng-change="percentageTotal()"
                     />
@@ -615,6 +617,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     name="health"
                     id="health"
                     size="3"
+                    maxlength="3"
                     ng-model="obj.healthPercentage"
                     ng-change="percentageTotal()"
                      />
@@ -627,7 +630,8 @@ you will be considered a Young Leader, a United Way recognition group offering n
             <div class="row">
              <div class="col-md-6">
 
-             <div>
+             <div 
+             ng-show="communityPlanFlag">
                <p>Total percentage: {{total}}</p>
              </div>
 
@@ -635,7 +639,6 @@ you will be considered a Young Leader, a United Way recognition group offering n
                 type="hidden"
                 name="percentages"
                 ng-model="total"
-
                 />
 
                 <div class="help-block" ng-messages="unitedway_form.percentages.$error">
@@ -701,6 +704,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
           name="otherpercent"
           id="otherpercent"
           size="3"
+          maxlength="3"
           ng-required="otherOrgFlag"
           ng-model="org1.percentage"
           ng-change="otherPercentageTotal()"
@@ -743,6 +747,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
         type="text"
         name="otherpercent2"
         id="otherpercent2"
+        maxlength="3"
         ng-model="org2.percentage"
         ng-change="otherPercentageTotal()"
         />
@@ -775,6 +780,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
           type="text"
           name="otherpercent3"
           id="otherpercent3"
+          maxlength="3"
           ng-model="org3.percentage"
           ng-change="otherPercentageTotal()"
           />
@@ -785,7 +791,10 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
 
 
-<p>
+<p> 
+    <div ng-show="otherOrgFlag">
+      <p>Total percentage: {{orgTotal}}</p>
+    </div>
 
     <input
       type="hidden"

@@ -47,39 +47,36 @@ angular.module('clientApp')
 
 
     $scope.percentageTotal = function(){
-      $scope.total = parseInt($scope.obj.educationPercentage) + parseInt($scope.obj.financialStabilityPercentage) + parseInt($scope.obj.healthPercentage);
 
-      $scope.unitedway_form.percentages.$setValidity("percentages", $scope.total == 100);
-
-      //Reset fields if checkbox is unchecked.
-      if(!$scope.communityPlanFlag){
+      if($scope.communityPlanFlag){
+        $scope.total = parseInt($scope.obj.educationPercentage) + parseInt($scope.obj.financialStabilityPercentage) + parseInt($scope.obj.healthPercentage);
+        $scope.unitedway_form.percentages.$setValidity("percentages", $scope.total == 100);
+      } else {
+        //Reset fields and validation if checkbox is unchecked.
         $scope.obj.educationPercentage = 0;
         $scope.obj.financialStabilityPercentage = 0;
         $scope.obj.healthPercentage = 0;
-
-        $scope.unitedway_form.percentages.$setValidity("percentages", $scope.total != 100);
+        $scope.unitedway_form.percentages.$setValidity("percentages", true);
       }
 
     }
 
 
     $scope.otherPercentageTotal = function(){
-      $scope.orgTotal = parseInt($scope.org1.percentage) + parseInt($scope.org2.percentage) + parseInt($scope.org3.percentage);
 
-      $scope.unitedway_form.orgPercentages.$setValidity("percentages", $scope.orgTotal == 100);
-
-      //Reset fields if checkbox is unchecked.
-      if(!$scope.otherOrgFlag){
+      if($scope.otherOrgFlag){
+        $scope.orgTotal = parseInt($scope.org1.percentage) + parseInt($scope.org2.percentage) + parseInt($scope.org3.percentage);
+        $scope.unitedway_form.orgPercentages.$setValidity("percentages", $scope.orgTotal == 100);
+      } else {
+        //Reset fields and validation if checkbox is unchecked.
         $scope.org1.organization = '';
         $scope.org1.percentage = 0;
         $scope.org2.organization = '';
         $scope.org2.percentage = 0;
         $scope.org3.organization = '';
         $scope.org3.percentage = 0;
-
-        $scope.unitedway_form.orgPercentages.$setValidity("percentages", $scope.orgTotal != 100);
+        $scope.unitedway_form.orgPercentages.$setValidity("percentages", true);
       }
-
 
     }
 
