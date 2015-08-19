@@ -8,7 +8,7 @@
  * Controller of the clientApp
  */
 angular.module('clientApp')
-  .controller('MainCtrl', function ($scope, pledge, portalService) {
+  .controller('MainCtrl', ['$scope', 'pledge', 'portalService', function ($scope, pledge, portalService) {
    //$scope.obj = {};
     $scope.fasttrackenroll = "N";
     $scope.obj = pledge.new_pledge(null);
@@ -49,7 +49,16 @@ angular.module('clientApp')
     $scope.percentageTotal = function(){
       $scope.total = parseInt($scope.obj.educationPercentage) + parseInt($scope.obj.financialStabilityPercentage) + parseInt($scope.obj.healthPercentage);
 
-      $scope.unitedway_form.percentages.$setValidity("percentages", $scope.total == 100)
+      $scope.unitedway_form.percentages.$setValidity("percentages", $scope.total == 100);
+
+      //Reset fields if checkbox is unchecked.
+      if(!$scope.communityPlanFlag){
+        $scope.obj.educationPercentage = 0;
+        $scope.obj.financialStabilityPercentage = 0;
+        $scope.obj.healthPercentage = 0;
+
+        $scope.unitedway_form.percentages.$setValidity("percentages", $scope.total != 100);
+      }
 
     }
 
@@ -57,9 +66,22 @@ angular.module('clientApp')
     $scope.otherPercentageTotal = function(){
       $scope.orgTotal = parseInt($scope.org1.percentage) + parseInt($scope.org2.percentage) + parseInt($scope.org3.percentage);
 
-      $scope.unitedway_form.orgPercentages.$setValidity("percentages", $scope.orgTotal == 100)
+      $scope.unitedway_form.orgPercentages.$setValidity("percentages", $scope.orgTotal == 100);
+
+      //Reset fields if checkbox is unchecked.
+      if(!$scope.otherOrgFlag){
+        $scope.org1.organization = '';
+        $scope.org1.percentage = 0;
+        $scope.org2.organization = '';
+        $scope.org2.percentage = 0;
+        $scope.org3.organization = '';
+        $scope.org3.percentage = 0;
+
+        $scope.unitedway_form.orgPercentages.$setValidity("percentages", $scope.orgTotal != 100);
+      }
+
 
     }
 
 
-  });
+  }]);

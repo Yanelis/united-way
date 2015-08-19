@@ -29,7 +29,7 @@
               {{$scope.obj.username}}
             </p>
 
-            <p><label for="email"><strong>Employee ID: </label></strong> {{$scope.obj.employeeID}}<strong> <label>DDL: </label></strong> </p>
+            <p><label for="email"><strong>Employee ID: </label></strong> {{$scope.obj.eid}}<strong> <label>DDL: </label></strong> </p>
 
 
             <div class="row">
@@ -719,7 +719,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
 <div class="row">
   <div class="col-md-5">
   <div ng-class="{'has-error': unitedway_form.designation2.$invalid && unitedway_form.designation2.$touched}">
-    <label for="other" ng-class="{'required': otherOrgFlag}">Organization 2</label><br>
+    <label for="other">Organization 2</label><br>
     <input
     class="form-control"
     name="designation2"
@@ -727,7 +727,6 @@ you will be considered a Young Leader, a United Way recognition group offering n
     id="other2"
     size="50"
     ng-model="org2.organization"
-    ng-required="otherOrgFlag"
     />
   </div>
 
@@ -745,7 +744,6 @@ you will be considered a Young Leader, a United Way recognition group offering n
         name="otherpercent2"
         id="otherpercent2"
         ng-model="org2.percentage"
-        ng-required="otherOrgFlag"
         ng-change="otherPercentageTotal()"
         />
         <span class="input-group-addon">%</span>
@@ -760,8 +758,14 @@ you will be considered a Young Leader, a United Way recognition group offering n
 <div class="row">
   <div class="col-md-5">
     <label for="other">Organization 3</label><br>
-    <input class="form-control" name="designation3" type="text" id="other3" size="50" ng-model="org3.organization"
-     />
+    <input 
+      class="form-control" 
+      name="designation3" 
+      type="text" 
+      id="other3" 
+      size="50" 
+      ng-model="org3.organization"
+      />
   </div>
   <div class="col-md-5">
     <label for="otherpercent3">Percentage:</label>
