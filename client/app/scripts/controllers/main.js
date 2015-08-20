@@ -8,16 +8,12 @@
  * Controller of the clientApp
  */
 angular.module('clientApp')
-  .controller('MainCtrl', ['$scope', 'pledge', 'portalService', '$http', 'endpoints', function ($scope, pledge, portalService, $http, endpoints) {
+  .controller('MainCtrl', ['$scope', 'pledge', 'portalService', '$http', 'endpoints', '$filter', function ($scope, pledge, portalService, $http, endpoints, $filter) {
     //$scope.obj = {};
     $scope.fasttrackenroll = "N";
     
 
     $scope.eid = portalService.getUserId();
-    
-    $scope.org1 = pledge.new_organization(null);
-    $scope.org2 = pledge.new_organization(null);
-    $scope.org3 = pledge.new_organization(null);
     
     var promise = $http.get(endpoints.pledgeUrl + '/employee/' + $scope.eid);
     promise.then(function(data){
@@ -33,6 +29,18 @@ angular.module('clientApp')
         $scope.otherOrgFlag = $scope.obj.organizationDonations.length > 0 ? true:false;
 
         $scope.donationFrequency = !$scope.obj.biweeklyDeduction ? 'onetime':'biweekly';
+
+
+        $scope.org1 = $scope.addOrganization();
+        $scope.org2 = $scope.addOrganization();
+        $scope.org3 = $scope.addOrganization();
+
+
+
+        if($scope.obj.educationPercentage || $scope.obj.healthPercentage || $scope.obj.financialStabilityPercentage){
+          $scope.areaOfFocus = true;
+        }
+
 
     }, function(error){
         $scope.obj = pledge.new_pledge(null);
@@ -51,6 +59,17 @@ angular.module('clientApp')
     
     $scope.save = function(){
       console.log(" save .... ");
+      validateOrganizations();
+
+      if($scope.obj.oneTimeDeduction){
+        $scope.obj.oneTimeDeduction = convertToDouble($scope.obj.oneTimeDeduction);
+      }
+
+      if($scope.obj.biweeklyDeduction){
+        $scope.obj.biweeklyDeduction = convertToDouble($scope.obj.biweeklyDeduction);
+      }
+
+
      $scope.obj.save().then(function(data){
        console.log("data was saved");
 
@@ -65,6 +84,26 @@ angular.module('clientApp')
     }
 
 
+    function convertToDouble(num){
+      return parseInt(num.replace(/\,/g, ''));
+    }
+
+    
+    function validateOrganizations(){
+      //Fancy deep copy of array using underscore.
+      var copy = _.map($scope.obj.organizationDonations, _.clone);
+
+      _.each(copy, function(obj, index){
+        if(!obj.organization){
+          removeOrganization(index);
+        }
+      })
+    }
+
+    function removeOrganization(index){
+      $scope.obj.organizationDonations.splice($scope.obj.organizationDonations[index],1); 
+    }
+
     $scope.percentageTotal = function(){
 
       if($scope.communityPlanFlag){
@@ -77,14 +116,16 @@ angular.module('clientApp')
         $scope.obj.healthPercentage = 0;
         $scope.unitedway_form.percentages.$setValidity("percentages", true);
       }
-
     }
 
 
     $scope.otherPercentageTotal = function(){
 
       if($scope.otherOrgFlag){
+
         $scope.orgTotal = parseInt($scope.org1.percentage) + parseInt($scope.org2.percentage) + parseInt($scope.org3.percentage);
+
+        //Validates field based on the value contained in $scope.orgTotal.
         $scope.unitedway_form.orgPercentages.$setValidity("percentages", $scope.orgTotal == 100);
       } else {
         //Reset fields and validation if checkbox is unchecked.

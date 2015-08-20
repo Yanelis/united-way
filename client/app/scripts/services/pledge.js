@@ -2,7 +2,7 @@
 function unitedWayOrganization(json){
   this.id = null;
   this.organization = null;
-  this.percentage = 0;
+  this.percentage = null;
 
   if(!_.isNull(json) && !_.isUndefined(json)){
 
@@ -21,19 +21,18 @@ function pledge_obj(json){
   this.oneTimeDeduction = null;
   this.deductionType = null;
 
-  this.donationAmount = null;
-  this.areaOfFocus = null;
+
   this.ename = null;
   this.eLastName = null;
   this.eDept = null;
-  this.donationFrequency = null;
+
 
   this.spouse = null;
   this.spouseEmployer = null;
   this.spouseAmt = null;
   this.fastTrackPlan = null;
   this.communityPlan = null;
-  this.communityPlanPercentage = null;
+  this.communityPlanPercentage = 0;
   this.educationPercentage = 0;
   this.financialStabilityPercentage = 0;
   this.healthPercentage = 0;
@@ -53,12 +52,9 @@ function pledge_obj(json){
     this.oneTimeDeduction = json.oneTimeDeduction;
     this.deductionType = json.deductionType;
 
-    this.donationAmount = json.donationAmount;
-    this.areaOfFocus = json.areaOfFocus;
     this.ename = json.ename;
     this.eLastName = json.eLastName;
     this.eDept = json.eDept;
-    this.donationFrequency = json.donationFrequency;
 
     this.spouse = json.spouse;
     this.spouseEmployer = json.spouseEmployer;
