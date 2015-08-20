@@ -8,7 +8,7 @@
       <div class="col-sm-12">
 
 
-            <form name="unitedway_form" method="put" action="http://www.miamidade.gov/info/process_donation.asp" id="form-sign-up" onSubmit="return FrontPage_Form1_Validator(this)" >
+            <form name="unitedway_form" method="put" action="http://www.miamidade.gov/info/process_donation.asp" id="form-sign-up" >
 
             <div class="top"></div>
 
@@ -26,10 +26,10 @@
 
             <p>
               <label for="email"><strong>Employee Name: </label> &nbsp;</strong>
-              {{$scope.obj.username}}
+              {{obj.ename}}
             </p>
 
-            <p><label for="email"><strong>Employee ID: </label></strong> {{$scope.obj.eid}}<strong> <label>DDL: </label></strong> </p>
+            <p><label for="email"><strong>Employee ID: </label></strong> {{obj.eid}}<strong> <label>DDL: </label></strong> {{obj.eDept}}</p>
 
 
             <div class="row">
@@ -75,16 +75,16 @@
 
               <div class="row">
               <div class="col-md-8">
-              <select class="form-control" id="adjustContibution" ng-model="deductionType" type="select">
-                <option value="">Change Type</option>
-                <option value="biweekly">Bi-Weekly Deduction</option>
-                <option value="onetime">One Time Deduction</option>
+              <select class="form-control" id="adjustContibution" ng-model="donationFrequency" type="select" ng-change="resetDeduction()">
+                <option value="reset" ng-selected="reset">Change Type</option>
+                <option value="biweekly" ng-selected="biweekly">Bi-Weekly Deduction</option>
+                <option value="onetime" ng-selected="onetime">One Time Deduction</option>
               </select>
               </div>
               </div>
             </div>
 
-            <div class="row" ng-show="deductionType == 'biweekly'">
+            <div class="row" ng-show="donationFrequency == 'biweekly'">
             <div class="col-md-8">
             <div class="form-group">
             <label for="biweekly">My bi-weekly deduction:</label>
@@ -108,7 +108,7 @@
             </div>
 
 
-            <div class="row" ng-show="deductionType == 'onetime'">
+            <div class="row" ng-show="donationFrequency == 'onetime'">
             <div class="col-md-4">
             <div class="form-group">
             <label for="onetime">My one-time donation:</label>

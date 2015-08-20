@@ -10,7 +10,6 @@ angular.module('clientApp').factory('portalService', function(){
   }
 
 
-
   return{
     getUserId: getUserId
   }

@@ -23,6 +23,10 @@ function pledge_obj(json){
 
   this.donationAmount = null;
   this.areaOfFocus = null;
+  this.ename = null;
+  this.eLastName = null;
+  this.eDept = null;
+  this.donationFrequency = null;
 
   this.spouse = null;
   this.spouseEmployer = null;
@@ -50,6 +54,11 @@ function pledge_obj(json){
     this.deductionType = json.deductionType;
 
     this.donationAmount = json.donationAmount;
+    this.areaOfFocus = json.areaOfFocus;
+    this.ename = json.ename;
+    this.eLastName = json.eLastName;
+    this.eDept = json.eDept;
+    this.donationFrequency = json.donationFrequency;
 
     this.spouse = json.spouse;
     this.spouseEmployer = json.spouseEmployer;
@@ -78,8 +87,10 @@ angular.module('clientApp').factory('pledge', function($resource, endpoints){
     return new unitedWayOrganization(json);
   }
 
+
   var resource = $resource(endpoints.pledgeUrl, {id: "@_id"}, {"update":{method:'PUT'}});
   console.log("url " + endpoints.pledgeUrl);
+
 
   pledge_obj.prototype = {
 

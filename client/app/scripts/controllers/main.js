@@ -8,28 +8,47 @@
  * Controller of the clientApp
  */
 angular.module('clientApp')
-  .controller('MainCtrl', ['$scope', 'pledge', 'portalService', function ($scope, pledge, portalService) {
-   //$scope.obj = {};
+  .controller('MainCtrl', ['$scope', 'pledge', 'portalService', '$http', 'endpoints', function ($scope, pledge, portalService, $http, endpoints) {
+    //$scope.obj = {};
     $scope.fasttrackenroll = "N";
-    $scope.obj = pledge.new_pledge(null);
+    
 
-    $scope.obj.eid = portalService.getUserId();
-
+    $scope.eid = portalService.getUserId();
+    
     $scope.org1 = pledge.new_organization(null);
     $scope.org2 = pledge.new_organization(null);
     $scope.org3 = pledge.new_organization(null);
+    
+    var promise = $http.get(endpoints.pledgeUrl + '/employee/' + $scope.eid);
+    promise.then(function(data){
+        $scope.obj = pledge.new_pledge(data.data[0]);
 
 
-    //Flags to set required fields on the form.
-    $scope.leadershipCircleFlag = false;
-    $scope.familyGiftFlag = $scope.obj.spouseAmt != null ? true:false;
-    $scope.fastTrackFlag = $scope.obj.fastTrackPlan != null ? true:false;
-    $scope.communityPlanFlag = $scope.obj.communityPlan != null ? true:false;
-    $scope.focusAreas = $scope.obj.areaOfFocus != null ? true:false;
-    $scope.otherOrgFlag = $scope.obj.organizationDonations.length > 0 ? true:false;
+        //Flags to set required fields on the form.
+        $scope.leadershipCircleFlag = false;
+        $scope.familyGiftFlag = !$scope.obj.spouseAmt ? false:true;
+        $scope.fastTrackFlag = !$scope.obj.fastTrackPlan ? false:true;
+        $scope.communityPlanFlag = !$scope.obj.communityPlan ? false:true;
+        $scope.focusAreas = !$scope.obj.areaOfFocus ? false:true;
+        $scope.otherOrgFlag = $scope.obj.organizationDonations.length > 0 ? true:false;
+
+        $scope.donationFrequency = !$scope.obj.biweeklyDeduction ? 'onetime':'biweekly';
+
+    }, function(error){
+        $scope.obj = pledge.new_pledge(null);
+
+    });
 
 
+    $scope.resetDeduction = function(){
+      if($scope.donationFrequency == 'reset'){
+        $scope.obj.biweeklyDeduction = null;
+        $scope.obj.oneTimeDeduction = null;
+        $scope.donationFrequency = 'reset';
+      }
+    }
 
+    
     $scope.save = function(){
       console.log(" save .... ");
      $scope.obj.save().then(function(data){
