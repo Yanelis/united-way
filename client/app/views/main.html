@@ -95,7 +95,6 @@
                 placeholder="US Dollars"
                 ng-model="obj.biweeklyDeduction"
                 ng-required="deductionType == 'biweekly'"
-                value="obj.biweeklyDeduction | currency"
                 />
               </div>
               <div class="help-block" ng-messages="unitedway_form.biweekly.$error" ng-if="unitedway_form.biweekly.$touched">
@@ -120,7 +119,7 @@
                 placeholder="US Dollars"
                 ng-model="obj.oneTimeDeduction"
                 ng-required="deductionType == 'onetime'"
-                >
+                />
                 <!-- <span class="input-group-addon">.00</span> -->
             </div>
 
@@ -225,9 +224,12 @@
 
             <h2>Leadership Circle</h2>
 
-            <p><input name="countyleader"  type="checkbox" id="1000"
+            <input name="countyleader"  type="checkbox" id="countyleader"
             ng-checked="leadershipCircleFlag"
-            ng-model="leadershipCircleFlag" > Individuals who make a United Way gift of $1,000 or more a year are considered<br>
+            ng-model="leadershipCircleFlag" > 
+            <label for="countyleader">I would like to be part of the County Leadership Circle</label>
+            <p>
+            Individuals who make a United Way gift of $1,000 or more a year are considered<br>
 
               County Leadership Circle members and are invited to special events in recognition of<br>
 
@@ -253,6 +255,7 @@
                  placeholder="US Dollars"
                  ng-model="obj.donationAmount"
                  ng-required="leadershipCircleFlag"
+                 ng-disabled="!leadershipCircleFlag"
                  >
                 <!-- <span class="input-group-addon">.00</span> -->
             </div>
@@ -277,9 +280,11 @@ you will be considered a Young Leader, a United Way recognition group offering n
           </div>
 
 <hr>
-<strong>Family Gift</strong>
+<h4>Family Gift</h4>
 
- <p><input name="familyflag"  type="checkbox"  ng-model="familyGiftFlag" > If your gift above, combined with the gift of your spouse/parther, totals at least $1000 per year, you will be considered a member of the County Leadership Circle.</p>
+ <input name="familyflag" id="familyflag"  type="checkbox"  ng-model="familyGiftFlag" > 
+ <label for="familyflag">We'd like to give a family gift.</label>
+ <p>If your gift above, combined with the gift of your spouse/parther, totals at least $1000 per year, you will be considered a member of the County Leadership Circle.</p>
 
             <div class="row">
             <div class="col-md-12">
@@ -293,7 +298,9 @@ you will be considered a Young Leader, a United Way recognition group offering n
                   type="text"
                   id="spouse"
                   ng-model="obj.spouse"
-                  ng-required="familyGiftFlag">
+                  ng-required="familyGiftFlag"
+                  ng-disabled="!familyGiftFlag"
+                  />
               </div>
               </div>
 
@@ -312,7 +319,9 @@ you will be considered a Young Leader, a United Way recognition group offering n
                   type="text"
                   id="employer"
                   ng-model="obj.spouseEmployer"
-                  ng-required="familyGiftFlag">
+                  ng-required="familyGiftFlag"
+                  ng-disabled="!familyGiftFlag"
+                  />
               </div>
 
               <div class="help-block" ng-messages="unitedway_form.employer.$error" ng-show="unitedway_form.employer.$touched">
@@ -332,7 +341,9 @@ you will be considered a Young Leader, a United Way recognition group offering n
                   id="amount"
                   placeholder="US Dollars"
                   ng-model="obj.spouseAmt"
-                  ng-required="familyGiftFlag">
+                  ng-required="familyGiftFlag"
+                  ng-disabled="!familyGiftFlag"
+                  />
                 <!-- <span class="input-group-addon">.00</span> -->
               </div>
               <div class="help-block" ng-messages="unitedway_form.amount.$error" ng-show="unitedway_form.amount.$touched">
@@ -358,9 +369,15 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
               </strong><br>
 
-             <input name="fasttrackenroll" type="checkbox" id="1" ng-model="fastTrackFlag">
+             <input 
+             name="fasttrackenroll" 
+             type="checkbox" 
+             id="fasttrackenroll" 
+             ng-model="fastTrackFlag">
 
-             <label for="fasttrackenroll" ng-class="{'required': fastTrackFlag}">Enroll me in the Fast Track program</label>
+             <label 
+             for="fasttrackenroll" 
+             ng-class="{'required': fastTrackFlag}">Enroll me in the Fast Track program</label>
            </p>
 
             <table width="600" border="0">
@@ -549,15 +566,38 @@ you will be considered a Young Leader, a United Way recognition group offering n
            </p>
 
         <div class="input-group">
-        <input type="checkbox" name="unitedway" id="unitedway" ng-model="communityPlanFlag" ng-change="percentageTotal()"  />
+        <input type="checkbox" name="unitedway" id="unitedway" ng-model="communityPlanFlag" />
         <label for="unitedway">&nbsp;UNITED WAY COMMUNITY PLAN</label>
             <p>I  want to make the most of every dollar I give!&nbsp; I want to improve lives and  make a lasting, positive difference where help is needed most in my community  by contributing to the United Way Community Plan which supports United Way&rsquo;s  efforts in Education, Financial Stability and Health.</p>
-
-
+          </div>
+          <div class="row">
+          <div class="col-md-4">
+           <label for="communityPlanPercentage">Percentage:</label>
+            <div class="input-group col-md-4">
+                   <input
+                    class="form-control"
+                    type="text"
+                    name="communityPlanPercentage"
+                    id="communityPlanPercentage"
+                    size="3"
+                    maxlength="3"
+                    ng-model="obj.communityPlanPercentage"
+                    ng-disabled="!communityPlanFlag"
+                    />
+                   <span class="input-group-addon">%</span>
+                 </div>
+                 </div>
           </div>
           <div class="input-group">
-
+          <input 
+          type="checkbox" 
+          name="unitedway2" 
+          id="unitedway2" 
+          ng-model="areaOfFocus"
+          ng-change="percentageTotal()" 
+             />
           <label for="unitedway2">&nbsp;I  WANT TO FOCUS MY GIFT TO ONE OR MORE OF THE FOLLOWING UNITED WAY AREAS:</label>
+
             </div>
 
 
@@ -592,6 +632,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     maxlength="3"
                     ng-model="obj.educationPercentage"
                     ng-change="percentageTotal()"
+                    ng-disabled="!areaOfFocus"
                     />
                    <span class="input-group-addon">%</span>
                  </div>
@@ -622,6 +663,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     maxlength="3"
                     ng-model="obj.financialStabilityPercentage"
                     ng-change="percentageTotal()"
+                    ng-disabled="!areaOfFocus"
                     />
                    <span class="input-group-addon">%</span>
                  </div>
@@ -653,6 +695,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     maxlength="3"
                     ng-model="obj.healthPercentage"
                     ng-change="percentageTotal()"
+                    ng-disabled="!areaOfFocus"
                      />
                    <span class="input-group-addon">%</span>
                  </div>
@@ -664,7 +707,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
              <div class="col-md-6">
 
              <div 
-             ng-show="communityPlanFlag">
+             ng-show="areaOfFocus">
                <p>Total percentage: {{total}}</p>
              </div>
 
@@ -719,6 +762,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
       size="50"
       ng-model="org1.organization"
       ng-required="otherOrgFlag"
+      ng-disabled="!otherOrgFlag"
       />
     </div>
 
@@ -741,6 +785,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
           ng-required="otherOrgFlag"
           ng-model="org1.percentage"
           ng-change="otherPercentageTotal()"
+          ng-disabled="!otherOrgFlag"
           />
         <span class="input-group-addon">%</span>
       </div>
@@ -764,6 +809,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
     id="other2"
     size="50"
     ng-model="org2.organization"
+    ng-disabled="!otherOrgFlag"
     />
   </div>
 
@@ -783,6 +829,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
         maxlength="3"
         ng-model="org2.percentage"
         ng-change="otherPercentageTotal()"
+        ng-disabled="!otherOrgFlag"
         />
         <span class="input-group-addon">%</span>
       </div>
@@ -803,6 +850,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
       id="other3" 
       size="50" 
       ng-model="org3.organization"
+      ng-disabled="!otherOrgFlag"
       />
   </div>
   <div class="col-md-5">
@@ -816,6 +864,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
           maxlength="3"
           ng-model="org3.percentage"
           ng-change="otherPercentageTotal()"
+          ng-disabled="!otherOrgFlag"
           />
         <span class="input-group-addon">%</span>
       </div>
