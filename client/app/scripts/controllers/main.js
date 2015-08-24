@@ -25,10 +25,12 @@ angular.module('clientApp')
         $scope.familyGiftFlag = !$scope.obj.spouseAmt ? false:true;
         $scope.fastTrackFlag = !$scope.obj.fastTrackPlan ? false:true;
         $scope.communityPlanFlag = !$scope.obj.communityPlan ? false:true;
+        
         $scope.focusAreas = !$scope.obj.areaOfFocus ? false:true;
+        
         $scope.otherOrgFlag = $scope.obj.organizationDonations.length > 0 ? true:false;
 
-        $scope.donationFrequency = !$scope.obj.biweeklyDeduction ? 'onetime':'biweekly';
+        $scope.donationFrequency = $scope.obj.biweeklyDeduction === null ? 'reset' : $scope.obj.biweeklyDeduction; //? 'onetime':'biweekly';
 
         if($scope.otherOrgFlag){
         
@@ -54,15 +56,12 @@ angular.module('clientApp')
 
         } else {
           $scope.firstOrg = pledge.new_organization(null);
-          //$scope.firstOrg.id = $scope.obj.id;
           $scope.obj.organizationDonations.push($scope.firstOrg);
 
           $scope.secondOrg = pledge.new_organization(null);
-          //$scope.secondOrg.id = $scope.obj.id;
           $scope.obj.organizationDonations.push($scope.secondOrg);
 
           $scope.thirdOrg = pledge.new_organization(null);
-          //$scope.thirdOrg.id = $scope.obj.id;
           $scope.obj.organizationDonations.push($scope.thirdOrg);
         }
 
@@ -70,6 +69,9 @@ angular.module('clientApp')
         $scope.obj = pledge.new_pledge(null);
 
     });
+
+
+    
 
 
     $scope.loadOrganizations = function(organization, index){
@@ -120,11 +122,18 @@ angular.module('clientApp')
       //Fancy deep copy of array using underscore.
       var copy = _.map($scope.obj.organizationDonations, _.clone);
 
-      _.each(copy, function(obj, index){
-        if(_.isNull(obj.organization) || _.isUndefined(obj.organization)){
-            removeOrganization(index);
+      for(var i = copy.length - 1; i > 0; i--){
+        if (copy[i].organization == "" || _.isNull(copy[i].organization)){
+          removeOrganization(i);
+        }
       }
-    })
+
+
+     // _.each(copy, function(obj, index){
+     //     if(obj.organization === "" || _.isNull(obj.organization)){
+     //       removeOrganization(index);
+     // }
+    //})
     }
 
     function removeOrganization(index){
@@ -151,17 +160,15 @@ angular.module('clientApp')
       if($scope.otherOrgFlag){
 
         $scope.orgTotal = parseInt($scope.firstOrg.percentage) + parseInt($scope.secondOrg.percentage) + parseInt($scope.thirdOrg.percentage);
-
-
         //Validates field based on the value contained in $scope.orgTotal.
         $scope.unitedway_form.orgPercentages.$setValidity("percentages", $scope.orgTotal == 100);
       } else {
         //Reset fields and validation if checkbox is unchecked.
-        $scope.firstOrg.organization = '';
+        $scope.firstOrg.organization = null;
         $scope.firstOrg.percentage = 0;
-        $scope.secondOrg.organization = '';
+        $scope.secondOrg.organization = null;
         $scope.secondOrg.percentage = 0;
-        $scope.thirdOrg.organization = '';
+        $scope.thirdOrg.organization = null;
         $scope.thirdOrg.percentage = 0;
         $scope.unitedway_form.orgPercentages.$setValidity("percentages", true);
       }

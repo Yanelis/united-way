@@ -779,7 +779,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
       type="text"
       id="other"
       size="50"
-      ng-model="firstOrg.organization"
+      ng-model="firstOrg"
       ng-required="otherOrgFlag"
       ng-disabled="!otherOrgFlag"
       />
@@ -803,7 +803,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
           id="otherpercent"
           maxlength="3"
           ng-required="otherOrgFlag"
-          ng-model="firstOrg.percentage"
+          ng-model="firstOrgPercentage"
           ng-change="otherPercentageTotal()"
           ng-disabled="!otherOrgFlag"
           />
@@ -828,7 +828,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
     type="text"
     id="other2"
     size="50"
-    ng-model="secondOrg.organization"
+    ng-model="secondOrg"
     ng-disabled="!otherOrgFlag"
     />
   </div>
@@ -847,7 +847,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
         name="otherpercent2"
         id="otherpercent2"
         maxlength="3"
-        ng-model="secondOrg.percentage"
+        ng-model="secondOrgPercentage"
         ng-change="otherPercentageTotal()"
         ng-disabled="!otherOrgFlag"
         />
@@ -869,7 +869,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
       type="text" 
       id="other3" 
       size="50" 
-      ng-model="thirdOrg.organization"
+      ng-model="thirdOrg"
       ng-disabled="!otherOrgFlag"
       />
   </div>
@@ -882,7 +882,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
           name="otherpercent3"
           id="otherpercent3"
           maxlength="3"
-          ng-model="thirdOrg.percentage"
+          ng-model="thirdOrg"
           ng-change="otherPercentageTotal()"
           ng-disabled="!otherOrgFlag"
           />

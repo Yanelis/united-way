@@ -25,6 +25,7 @@ function pledge_obj(json){
   this.ename = null;
   this.eLastName = null;
   this.eDept = null;
+  this.areaOfFocus = null;
 
 
   this.spouse = null;
@@ -55,6 +56,7 @@ function pledge_obj(json){
     this.ename = json.ename;
     this.eLastName = json.eLastName;
     this.eDept = json.eDept;
+    this.areaOfFocus = json.areaOfFocus;
 
     this.spouse = json.spouse;
     this.spouseEmployer = json.spouseEmployer;
