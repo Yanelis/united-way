@@ -30,23 +30,59 @@ angular.module('clientApp')
 
         $scope.donationFrequency = !$scope.obj.biweeklyDeduction ? 'onetime':'biweekly';
 
+        if($scope.otherOrgFlag){
+        
+          _.each($scope.obj.organizationDonations, function(obj, index){
+              switch(index){
+                case 0:
+                  $scope.firstOrg = obj.organization;
+                  $scope.firstOrgPercentage = obj.percentage;
+                  break;
 
-        $scope.org1 = $scope.addOrganization();
-        $scope.org2 = $scope.addOrganization();
-        $scope.org3 = $scope.addOrganization();
+                case 1:
+                  $scope.secondOrg = obj.organization;
+                  $scope.secondOrgPercentage = obj.percentage;
+                  break;
 
+                case 2:
+                  $scope.thirdOrg = obj.organization;
+                  $scope.thirdOrgPercentage = obj.percentage;
+                  break;
+              }
+          });
+        
 
+        } else {
+          $scope.firstOrg = pledge.new_organization(null);
+          //$scope.firstOrg.id = $scope.obj.id;
+          $scope.obj.organizationDonations.push($scope.firstOrg);
 
-        if($scope.obj.educationPercentage || $scope.obj.healthPercentage || $scope.obj.financialStabilityPercentage){
-          $scope.areaOfFocus = true;
+          $scope.secondOrg = pledge.new_organization(null);
+          //$scope.secondOrg.id = $scope.obj.id;
+          $scope.obj.organizationDonations.push($scope.secondOrg);
+
+          $scope.thirdOrg = pledge.new_organization(null);
+          //$scope.thirdOrg.id = $scope.obj.id;
+          $scope.obj.organizationDonations.push($scope.thirdOrg);
         }
-
 
     }, function(error){
         $scope.obj = pledge.new_pledge(null);
 
     });
 
+
+    $scope.loadOrganizations = function(organization, index){
+      $http.get(endpoints.pledgeUrl + '/employee/' + $scope.eid);
+      promise.then(function(data){
+
+        organization = pledge.new_organization(data.data[0].organizationDonations[index])
+  
+      }, function(error){
+
+          console.log(error);
+      });
+    }
 
     $scope.resetDeduction = function(){
       if($scope.donationFrequency == 'reset'){
@@ -60,14 +96,6 @@ angular.module('clientApp')
     $scope.save = function(){
       console.log(" save .... ");
       validateOrganizations();
-
-      if($scope.obj.oneTimeDeduction){
-        $scope.obj.oneTimeDeduction = convertToDouble($scope.obj.oneTimeDeduction);
-      }
-
-      if($scope.obj.biweeklyDeduction){
-        $scope.obj.biweeklyDeduction = convertToDouble($scope.obj.biweeklyDeduction);
-      }
 
 
      $scope.obj.save().then(function(data){
@@ -87,26 +115,25 @@ angular.module('clientApp')
     function convertToDouble(num){
       return parseInt(num.replace(/\,/g, ''));
     }
-
     
     function validateOrganizations(){
       //Fancy deep copy of array using underscore.
       var copy = _.map($scope.obj.organizationDonations, _.clone);
 
       _.each(copy, function(obj, index){
-        if(!obj.organization){
-          removeOrganization(index);
-        }
-      })
+        if(_.isNull(obj.organization) || _.isUndefined(obj.organization)){
+            removeOrganization(index);
+      }
+    })
     }
 
     function removeOrganization(index){
-      $scope.obj.organizationDonations.splice($scope.obj.organizationDonations[index],1); 
+      $scope.obj.organizationDonations.splice(index,1); 
     }
 
     $scope.percentageTotal = function(){
 
-      if($scope.communityPlanFlag){
+      if($scope.focusAreas){
         $scope.total = parseInt($scope.obj.educationPercentage) + parseInt($scope.obj.financialStabilityPercentage) + parseInt($scope.obj.healthPercentage);
         $scope.unitedway_form.percentages.$setValidity("percentages", $scope.total == 100);
       } else {
@@ -123,22 +150,21 @@ angular.module('clientApp')
 
       if($scope.otherOrgFlag){
 
-        $scope.orgTotal = parseInt($scope.org1.percentage) + parseInt($scope.org2.percentage) + parseInt($scope.org3.percentage);
+        $scope.orgTotal = parseInt($scope.firstOrg.percentage) + parseInt($scope.secondOrg.percentage) + parseInt($scope.thirdOrg.percentage);
+
 
         //Validates field based on the value contained in $scope.orgTotal.
         $scope.unitedway_form.orgPercentages.$setValidity("percentages", $scope.orgTotal == 100);
       } else {
         //Reset fields and validation if checkbox is unchecked.
-        $scope.org1.organization = '';
-        $scope.org1.percentage = 0;
-        $scope.org2.organization = '';
-        $scope.org2.percentage = 0;
-        $scope.org3.organization = '';
-        $scope.org3.percentage = 0;
+        $scope.firstOrg.organization = '';
+        $scope.firstOrg.percentage = 0;
+        $scope.secondOrg.organization = '';
+        $scope.secondOrg.percentage = 0;
+        $scope.thirdOrg.organization = '';
+        $scope.thirdOrg.percentage = 0;
         $scope.unitedway_form.orgPercentages.$setValidity("percentages", true);
       }
-
     }
-
 
   }]);

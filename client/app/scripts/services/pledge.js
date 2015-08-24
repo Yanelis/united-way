@@ -2,7 +2,7 @@
 function unitedWayOrganization(json){
   this.id = null;
   this.organization = null;
-  this.percentage = null;
+  this.percentage = 0;
 
   if(!_.isNull(json) && !_.isUndefined(json)){
 

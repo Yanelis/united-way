@@ -95,6 +95,7 @@
                 placeholder="US Dollars"
                 ng-model="obj.biweeklyDeduction"
                 ng-required="deductionType == 'biweekly'"
+                value="obj.biweeklyDeduction | currency"
                 />
               </div>
               <div class="help-block" ng-messages="unitedway_form.biweekly.$error" ng-if="unitedway_form.biweekly.$touched">
@@ -119,7 +120,7 @@
                 placeholder="US Dollars"
                 ng-model="obj.oneTimeDeduction"
                 ng-required="deductionType == 'onetime'"
-                />
+                >
                 <!-- <span class="input-group-addon">.00</span> -->
             </div>
 
@@ -184,8 +185,9 @@
 
                   Debit**
                 </div>
-
-
+    <div class="row">
+    <div class="col-md-12">
+    
                    <p class="small">
                    <em><strong>* If you are choosing to
 
@@ -209,6 +211,8 @@
 
         online form is submitted</strong></em>
         </p>
+      </div>
+    </div>
 
 <hr>
 
@@ -227,9 +231,10 @@
             <input name="countyleader"  type="checkbox" id="countyleader"
             ng-checked="leadershipCircleFlag"
             ng-model="leadershipCircleFlag" > 
-            <label for="countyleader">I would like to be part of the County Leadership Circle</label>
-            <p>
-            Individuals who make a United Way gift of $1,000 or more a year are considered<br>
+  
+            <label for="countyleader">I'd like to join the County Leadership Circle</label>
+
+            <p>Individuals who make a United Way gift of $1,000 or more a year are considered<br>
 
               County Leadership Circle members and are invited to special events in recognition of<br>
 
@@ -238,8 +243,6 @@
               Leadership Circle, you also become a member of the United Way of<br>
 
               Miami-Dade Leadership &amp; Endowment Circle.<br></p>
-
-              <br>
 
             <div class="row" ng-class="{'showError': leadershipCircleFlag}">
             <div class="col-md-6">
@@ -283,8 +286,9 @@ you will be considered a Young Leader, a United Way recognition group offering n
 <h4>Family Gift</h4>
 
  <input name="familyflag" id="familyflag"  type="checkbox"  ng-model="familyGiftFlag" > 
- <label for="familyflag">We'd like to give a family gift.</label>
- <p>If your gift above, combined with the gift of your spouse/parther, totals at least $1000 per year, you will be considered a member of the County Leadership Circle.</p>
+ <label for="familyflag">We'd like to make a donation as a family.</label>
+<p>
+ If your gift above, combined with the gift of your spouse/parther, totals at least $1000 per year, you will be considered a member of the County Leadership Circle.</p>
 
             <div class="row">
             <div class="col-md-12">
@@ -373,11 +377,10 @@ you will be considered a Young Leader, a United Way recognition group offering n
              name="fasttrackenroll" 
              type="checkbox" 
              id="fasttrackenroll" 
-             ng-model="fastTrackFlag">
+             ng-model="fastTrackFlag"
+             />
 
-             <label 
-             for="fasttrackenroll" 
-             ng-class="{'required': fastTrackFlag}">Enroll me in the Fast Track program</label>
+             <label for="fasttrackenroll" ng-class="{'required': fastTrackFlag}">Enroll me in the Fast Track program</label>
            </p>
 
             <table width="600" border="0">
@@ -566,45 +569,56 @@ you will be considered a Young Leader, a United Way recognition group offering n
            </p>
 
         <div class="input-group">
-        <input type="checkbox" name="unitedway" id="unitedway" ng-model="communityPlanFlag" />
+        <input 
+        type="checkbox" 
+        name="unitedway" 
+        id="unitedway" 
+        ng-model="communityPlanFlag" 
+        />
         <label for="unitedway">&nbsp;UNITED WAY COMMUNITY PLAN</label>
             <p>I  want to make the most of every dollar I give!&nbsp; I want to improve lives and  make a lasting, positive difference where help is needed most in my community  by contributing to the United Way Community Plan which supports United Way&rsquo;s  efforts in Education, Financial Stability and Health.</p>
-          </div>
-          <div class="row">
-          <div class="col-md-4">
-           <label for="communityPlanPercentage">Percentage:</label>
-            <div class="input-group col-md-4">
+        </div>
+
+
+
+                <label for="communityPlan">Percentage:</label>
+                  <div class="input-group col-md-1">
                    <input
                     class="form-control"
                     type="text"
-                    name="communityPlanPercentage"
-                    id="communityPlanPercentage"
-                    size="3"
+                    name="communityPlan"
+                    id="communityPlan"
+                    
                     maxlength="3"
                     ng-model="obj.communityPlanPercentage"
                     ng-disabled="!communityPlanFlag"
                     />
                    <span class="input-group-addon">%</span>
                  </div>
-                 </div>
+
+
+ 
           </div>
-          <div class="input-group">
-          <input 
-          type="checkbox" 
-          name="unitedway2" 
-          id="unitedway2" 
-          ng-model="areaOfFocus"
-          ng-change="percentageTotal()" 
-             />
+        </div>
+        <hr/>
+
+
+          <div class="row">
+          <div class="col-md-12">
+        <input 
+        type="checkbox" 
+        name="unitedway2" 
+        id="unitedway2" 
+        ng-model="focusAreas"
+        ng-change="percentageTotal()"
+        />
           <label for="unitedway2">&nbsp;I  WANT TO FOCUS MY GIFT TO ONE OR MORE OF THE FOLLOWING UNITED WAY AREAS:</label>
-
             </div>
+          </div>
 
 
-
-
-             <div class="row focus">
-              <div class="minHeight col-md-4">
+          <div class="row focus">
+            <div class="minHeight col-md-4">
                  <label>EDUCATION:</label>
 
             <p>
@@ -622,21 +636,21 @@ you will be considered a Young Leader, a United Way recognition group offering n
             </ul>
 
             <label for="education">Percentage:</label>
-            <div class="input-group col-md-4">
+                  <div class="input-group col-md-4">
                    <input
                     class="form-control"
                     type="text"
                     name="education"
                     id="education"
-                    size="3"
+                    
                     maxlength="3"
                     ng-model="obj.educationPercentage"
                     ng-change="percentageTotal()"
-                    ng-disabled="!areaOfFocus"
+                    ng-disabled="!focusAreas"
                     />
                    <span class="input-group-addon">%</span>
                  </div>
-                 </div>
+            </div>
 
 
               <div class="minHeight col-md-4">
@@ -659,11 +673,11 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     type="text"
                     name="income"
                     id="income"
-                    size="3"
+                    
                     maxlength="3"
                     ng-model="obj.financialStabilityPercentage"
                     ng-change="percentageTotal()"
-                    ng-disabled="!areaOfFocus"
+                    ng-disabled="!focusAreas"
                     />
                    <span class="input-group-addon">%</span>
                  </div>
@@ -691,11 +705,11 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     type="text"
                     name="health"
                     id="health"
-                    size="3"
+                    
                     maxlength="3"
                     ng-model="obj.healthPercentage"
                     ng-change="percentageTotal()"
-                    ng-disabled="!areaOfFocus"
+                    ng-disabled="!focusAreas"
                      />
                    <span class="input-group-addon">%</span>
                  </div>
@@ -707,7 +721,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
              <div class="col-md-6">
 
              <div 
-             ng-show="areaOfFocus">
+             ng-show="focusAreas">
                <p>Total percentage: {{total}}</p>
              </div>
 
@@ -722,9 +736,11 @@ you will be considered a Young Leader, a United Way recognition group offering n
                 </div>
              </div>
             </div>
+
 <hr/>
 
-
+<div class="row">
+<div class="col-md-12">
               <input
                 type="checkbox"
                 name="otherorg"
@@ -748,6 +764,9 @@ you will be considered a Young Leader, a United Way recognition group offering n
               <p>United  Way &mdash; Education &mdash; 50% <br>
 
                  Agency of choice &mdash;  50%</p>
+               </div>
+
+             </div>
 
 
 <div class="row">
@@ -760,7 +779,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
       type="text"
       id="other"
       size="50"
-      ng-model="org1.organization"
+      ng-model="firstOrg.organization"
       ng-required="otherOrgFlag"
       ng-disabled="!otherOrgFlag"
       />
@@ -773,17 +792,18 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
   </div>
   <div class="col-md-5">
-    <label for="otherpercent" ng-class="{'required': otherOrgFlag}">Percentage:</label>
+    <label 
+    for="otherpercent" 
+    ng-class="{'required': otherOrgFlag}">Percentage:</label>
       <div class="input-group col-md-4" ng-class="{'has-error': unitedway_form.otherpercent.$invalid && unitedway_form.otherpercent.$touched}">
         <input
           class="form-control"
           type="text"
           name="otherpercent"
           id="otherpercent"
-          size="3"
           maxlength="3"
           ng-required="otherOrgFlag"
-          ng-model="org1.percentage"
+          ng-model="firstOrg.percentage"
           ng-change="otherPercentageTotal()"
           ng-disabled="!otherOrgFlag"
           />
@@ -808,7 +828,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
     type="text"
     id="other2"
     size="50"
-    ng-model="org2.organization"
+    ng-model="secondOrg.organization"
     ng-disabled="!otherOrgFlag"
     />
   </div>
@@ -827,7 +847,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
         name="otherpercent2"
         id="otherpercent2"
         maxlength="3"
-        ng-model="org2.percentage"
+        ng-model="secondOrg.percentage"
         ng-change="otherPercentageTotal()"
         ng-disabled="!otherOrgFlag"
         />
@@ -849,7 +869,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
       type="text" 
       id="other3" 
       size="50" 
-      ng-model="org3.organization"
+      ng-model="thirdOrg.organization"
       ng-disabled="!otherOrgFlag"
       />
   </div>
@@ -862,7 +882,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
           name="otherpercent3"
           id="otherpercent3"
           maxlength="3"
-          ng-model="org3.percentage"
+          ng-model="thirdOrg.percentage"
           ng-change="otherPercentageTotal()"
           ng-disabled="!otherOrgFlag"
           />
@@ -905,9 +925,6 @@ you will be considered a Young Leader, a United Way recognition group offering n
               <strong></strong></p>
 
 
-            </div>
-          </div>
-
             <div class="btm"></div>
 
 
@@ -942,10 +959,7 @@ I would like to include United Way in my will and estate plans. Please contact m
              <div class="top"></div>
 
 
-
-
-      <p align="center"><br>
-
+        <div class="text-center">
         <input
         type="button"
         class="btn btn-primary"
@@ -953,7 +967,9 @@ I would like to include United Way in my will and estate plans. Please contact m
         id="Submit"
         value="Submit"
         ng-disabled="unitedway_form.$invalid"
-        ng-click="save()" />
+        ng-click="save()"
+       />
+     </div>
 
 <div class="btm"></div>
 
@@ -962,7 +978,7 @@ I would like to include United Way in my will and estate plans. Please contact m
 
     </div>
 
-  </div>
+
 
 
 
