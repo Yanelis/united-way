@@ -26,11 +26,28 @@ angular.module('clientApp')
         $scope.fastTrackFlag = !$scope.obj.fastTrackPlan ? false:true;
         $scope.communityPlanFlag = !$scope.obj.communityPlan ? false:true;
         
-        $scope.focusAreas = !$scope.obj.areaOfFocus ? false:true;
+        //$scope.focusAreas = !$scope.obj.areaOfFocus ? false:true;
+
+        if($scope.obj.educationPercentage > 0 || $scope.obj.financialStabilityPercentage > 0 || $scope.obj.healthPercentage > 0){
+          $scope.focusAreas = true;
+        }
         
         $scope.otherOrgFlag = $scope.obj.organizationDonations.length > 0 ? true:false;
 
-        $scope.donationFrequency = $scope.obj.biweeklyDeduction === null ? 'reset' : $scope.obj.biweeklyDeduction; //? 'onetime':'biweekly';
+        //$scope.donationFrequency = $scope.obj.biweeklyDeduction === null ? 'reset' : 'biweekly'; 
+
+        if($scope.obj.biweeklyDeduction === null && $scope.obj.oneTimeDeduction === null){
+          $scope.donationFrequency = 'reset';
+        }
+
+        if($scope.obj.biweeklyDeduction !== null){
+          $scope.donationFrequency = 'biweekly';
+        }
+
+        if($scope.obj.oneTimeDeduction !== null){
+          $scope.donationFrequency = 'onetime';
+        }
+
 
         if($scope.otherOrgFlag){
         
@@ -60,7 +77,7 @@ angular.module('clientApp')
 
           $scope.secondOrg = pledge.new_organization(null);
           $scope.obj.organizationDonations.push($scope.secondOrg);
-
+ 
           $scope.thirdOrg = pledge.new_organization(null);
           $scope.obj.organizationDonations.push($scope.thirdOrg);
         }
@@ -90,6 +107,7 @@ angular.module('clientApp')
       if($scope.donationFrequency == 'reset'){
         $scope.obj.biweeklyDeduction = null;
         $scope.obj.oneTimeDeduction = null;
+        $scope.obj.deductionType = null;
         $scope.donationFrequency = 'reset';
       }
     }
@@ -127,13 +145,6 @@ angular.module('clientApp')
           removeOrganization(i);
         }
       }
-
-
-     // _.each(copy, function(obj, index){
-     //     if(obj.organization === "" || _.isNull(obj.organization)){
-     //       removeOrganization(index);
-     // }
-    //})
     }
 
     function removeOrganization(index){

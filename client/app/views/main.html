@@ -143,7 +143,7 @@
                   value="Payroll"
                   ng-disabled="donationFrequency == 'reset'"/>
 
-                  Payroll Deduction<br>
+                  <label for="payroll">Payroll Deduction</label> <br/>
 
                   <input 
                   type="radio" 
@@ -153,7 +153,7 @@
                   value="Cash"
                   ng-disabled="donationFrequency == 'reset'"/>
 
-                  Cash*<br>
+                  <label for="cash">Cash*</label><br>
 
                   <input 
                   type="radio" 
@@ -163,7 +163,7 @@
                   value="Check"
                   ng-disabled="donationFrequency == 'reset'" />
 
-                  Check*<br>
+                  <label for="check">Check*</label><br>
 
                   <input 
                   type="radio" 
@@ -173,7 +173,7 @@
                   value="Credit" 
                   ng-disabled="donationFrequency == 'reset'"/>
 
-                  Credit**<br>
+                  <label for="credit">Credit**</label><br>
 
                   <input 
                   type="radio" 
@@ -183,7 +183,7 @@
                   value="Debit" 
                   ng-disabled="donationFrequency == 'reset'"/>
 
-                  Debit**
+                  <label for="debit">Debit**</label>
                 </div>
     <div class="row">
     <div class="col-md-12">
@@ -850,6 +850,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
         ng-model="secondOrgPercentage"
         ng-change="otherPercentageTotal()"
         ng-disabled="!otherOrgFlag"
+        ng-required = "secondOrg != ''"
         />
         <span class="input-group-addon">%</span>
       </div>
@@ -882,9 +883,10 @@ you will be considered a Young Leader, a United Way recognition group offering n
           name="otherpercent3"
           id="otherpercent3"
           maxlength="3"
-          ng-model="thirdOrg"
+          ng-model="thirdOrgPercentage"
           ng-change="otherPercentageTotal()"
           ng-disabled="!otherOrgFlag"
+          ng-required="thirdOrg != ''"
           />
         <span class="input-group-addon">%</span>
       </div>
