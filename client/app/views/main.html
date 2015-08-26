@@ -580,9 +580,10 @@ you will be considered a Young Leader, a United Way recognition group offering n
         </div>
 
 
-
+<div class="row">
+<div class="col-md-4">
                 <label for="communityPlan">Percentage:</label>
-                  <div class="input-group col-md-1">
+                  <div class="input-group col-md-4">
                    <input
                     class="form-control"
                     type="text"
@@ -595,9 +596,9 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     />
                    <span class="input-group-addon">%</span>
                  </div>
+               </div>
 
-
- 
+             </div>
           </div>
         </div>
         <hr/>
@@ -610,7 +611,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
         name="unitedway2" 
         id="unitedway2" 
         ng-model="focusAreas"
-        ng-change="percentageTotal()"
+        ng-change="toggleFocusAreas()"
         />
           <label for="unitedway2">&nbsp;I  WANT TO FOCUS MY GIFT TO ONE OR MORE OF THE FOLLOWING UNITED WAY AREAS:</label>
             </div>
@@ -721,7 +722,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
              <div class="col-md-6">
 
              <div 
-             ng-show="focusAreas">
+             ng-show="total > 0 && focusAreas">
                <p>Total percentage: {{total}}</p>
              </div>
 
@@ -746,7 +747,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                 name="otherorg"
                 id="unitedway3"
                 ng-model="otherOrgFlag"
-                ng-change="otherPercentageTotal()"
+                ng-change="toggleOtherOrganizations()"
                 />
 
               <label for="unitedway3">Other:</label>
@@ -779,7 +780,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
       type="text"
       id="other"
       size="50"
-      ng-model="firstOrg"
+      ng-model="firstOrg.organization"
       ng-required="otherOrgFlag"
       ng-disabled="!otherOrgFlag"
       />
@@ -803,7 +804,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
           id="otherpercent"
           maxlength="3"
           ng-required="otherOrgFlag"
-          ng-model="firstOrgPercentage"
+          ng-model="firstOrg.percentage"
           ng-change="otherPercentageTotal()"
           ng-disabled="!otherOrgFlag"
           />
@@ -828,7 +829,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
     type="text"
     id="other2"
     size="50"
-    ng-model="secondOrg"
+    ng-model="secondOrg.organization"
     ng-disabled="!otherOrgFlag"
     />
   </div>
@@ -847,10 +848,10 @@ you will be considered a Young Leader, a United Way recognition group offering n
         name="otherpercent2"
         id="otherpercent2"
         maxlength="3"
-        ng-model="secondOrgPercentage"
+        ng-model="secondOrg.percentage"
         ng-change="otherPercentageTotal()"
         ng-disabled="!otherOrgFlag"
-        ng-required = "secondOrg != ''"
+        ng-required = "secondOrg.organization != ''"
         />
         <span class="input-group-addon">%</span>
       </div>
@@ -870,25 +871,28 @@ you will be considered a Young Leader, a United Way recognition group offering n
       type="text" 
       id="other3" 
       size="50" 
-      ng-model="thirdOrg"
+      ng-model="thirdOrg.organization"
       ng-disabled="!otherOrgFlag"
       />
   </div>
   <div class="col-md-5">
     <label for="otherpercent3">Percentage:</label>
-      <div class="input-group col-md-4">
+      <div class="input-group col-md-4" ng-class="{'has-error': unitedway_form.otherpercent3.$invalid && unitedway_form.otherpercent3.$touched}">
         <input
           class="form-control"
           type="text"
           name="otherpercent3"
           id="otherpercent3"
           maxlength="3"
-          ng-model="thirdOrgPercentage"
+          ng-model="thirdOrg.percentage"
           ng-change="otherPercentageTotal()"
           ng-disabled="!otherOrgFlag"
-          ng-required="thirdOrg != ''"
+          ng-required="thirdOrg.organization != ''"
           />
         <span class="input-group-addon">%</span>
+      </div>
+      <div class="help-block" ng-messages="unitedway_form.otherpercent3.$error" ng-show="unitedway_form.otherpercent3.$touched">
+        <div ng-messages-include="views/messages.html"></div>
       </div>
   </div>
 </div>
@@ -896,7 +900,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
 
 <p> 
-    <div ng-show="otherOrgFlag">
+    <div ng-show="orgTotal > 0 && otherOrgFlag">
       <p>Total percentage: {{orgTotal}}</p>
     </div>
 
@@ -904,6 +908,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
       type="hidden"
       name="orgPercentages"
       ng-model="orgTotal"
+      ng-show="otherOrgFlag"
     />
 
     <div class="help-block" ng-messages="unitedway_form.orgPercentages.$error">
@@ -971,6 +976,10 @@ I would like to include United Way in my will and estate plans. Please contact m
         ng-disabled="unitedway_form.$invalid"
         ng-click="save()"
        />
+       <br/>
+       <br/>
+       <br/>
+       <br/>
      </div>
 
 <div class="btm"></div>
