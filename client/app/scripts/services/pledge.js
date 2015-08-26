@@ -17,8 +17,8 @@ function pledge_obj(json){
   this.eid = null;
   this.organizationDonations = [];
   this.email = null;
-  this.biweeklyDeduction = null;
-  this.oneTimeDeduction = null;
+  this.biweeklyDeduction = 0;
+  this.oneTimeDeduction = 0;
   this.deductionType = null;
 
 
@@ -26,11 +26,15 @@ function pledge_obj(json){
   this.eLastName = null;
   this.eDept = null;
   this.areaOfFocus = null;
+  this.additionalAgency = null;
+  this.willAndEstate = null;
+  this.willAndEstateInfo = null;
+  this.loyalContributor = null;
 
 
   this.spouse = null;
   this.spouseEmployer = null;
-  this.spouseAmt = null;
+  this.spouseAmt = 0;
   this.fastTrackPlan = null;
   this.communityPlan = null;
   this.communityPlanPercentage = 0;
@@ -57,6 +61,10 @@ function pledge_obj(json){
     this.eLastName = json.eLastName;
     this.eDept = json.eDept;
     this.areaOfFocus = json.areaOfFocus;
+    this.additionalAgency = json.additionalAgency;
+    this.willAndEstate = json.willAndEstate;
+    this.willAndEstateInfo = json.willAndEstateInfo;
+    this.loyalContributor = json.loyalContributor;
 
     this.spouse = json.spouse;
     this.spouseEmployer = json.spouseEmployer;

@@ -24,12 +24,14 @@ angular.module('clientApp')
 
         //Flags to set required fields on the form.
         $scope.leadershipCircleFlag = false;
+
         $scope.familyGiftFlag = !$scope.obj.spouseAmt ? false:true;
+        $scope.familyGiftFlag = !$scope.obj.spouse ? false:true;
+        $scope.familyGiftFlag = !$scope.obj.spouseEmployer ? false:true;
+
         $scope.fastTrackFlag = !$scope.obj.fastTrackPlan ? false:true;
         $scope.communityPlanFlag = !$scope.obj.communityPlan ? false:true;
 
-
-        
 
         //Set the flag for focusAreas to true if the user has entered a percentage for any of the following three fields. 
         if($scope.obj.educationPercentage > 0 || $scope.obj.financialStabilityPercentage > 0 || $scope.obj.healthPercentage > 0){
@@ -41,15 +43,15 @@ angular.module('clientApp')
 
 
         //Set the donation type dropdown to the correct value based on the type of donation user has madae before.
-        if($scope.obj.biweeklyDeduction === null && $scope.obj.oneTimeDeduction === null){
+        if($scope.obj.biweeklyDeduction === 0 && $scope.obj.oneTimeDeduction === 0){
           $scope.donationFrequency = 'reset';
         }
 
-        if($scope.obj.biweeklyDeduction !== null){
+        if($scope.obj.biweeklyDeduction !== 0){
           $scope.donationFrequency = 'biweekly';
         }
 
-        if($scope.obj.oneTimeDeduction !== null){
+        if($scope.obj.oneTimeDeduction !== 0){
           $scope.donationFrequency = 'onetime';
         }
 
@@ -106,12 +108,9 @@ angular.module('clientApp')
     }
 
     $scope.resetDeduction = function(){
-      if($scope.donationFrequency == 'reset'){
-        $scope.obj.biweeklyDeduction = null;
-        $scope.obj.oneTimeDeduction = null;
+        $scope.obj.biweeklyDeduction = 0;
+        $scope.obj.oneTimeDeduction = 0;
         $scope.obj.deductionType = null;
-        $scope.donationFrequency = 'reset';
-      }
     }
  
 
@@ -127,15 +126,39 @@ angular.module('clientApp')
         obj.percentage = convertToInt(obj.percentage);
       });
 
-      $scope.obj.biweeklyDeduction = convertToInt($scope.obj.biweeklyDeduction);
-      $scope.obj.oneTimeDeduction = convertToInt($scope.obj.oneTimeDeduction);
 
-      $scope.obj.communityPlanPercentage = convertToInt($scope.obj.communityPlanPercentage);
-      $scope.obj.educationPercentage = convertToInt($scope.obj.educationPercentage);
-      $scope.obj.financialStabilityPercentage = convertToInt($scope.obj.financialStabilityPercentage);
-      $scope.obj.healthPercentage = convertToInt($scope.obj.healthPercentage);
+      //Check type and convert to numeric type when necessary.
+      if (!_.isNumber($scope.obj.biweeklyDeduction)){
+        $scope.obj.biweeklyDeduction = convertToDouble($scope.obj.biweeklyDeduction);
+      }
 
-      $scope.obj.spouseAmt = convertToInt($scope.obj.spouseAmt);
+      if (!_.isNumber($scope.obj.oneTimeDeduction)){
+        $scope.obj.oneTimeDeduction = convertToDouble($scope.obj.oneTimeDeduction);
+      }
+
+      if (!_.isNumber($scope.obj.donationAmount)){
+        $scope.obj.donationAmount = convertToDouble($scope.obj.donationAmount);
+      }
+
+      if (!_.isNumber($scope.obj.communityPlanPercentage)){
+        $scope.obj.communityPlanPercentage = convertToInt($scope.obj.communityPlanPercentage);
+      }
+
+      if (!_.isNumber($scope.obj.educationPercentage)){
+        $scope.obj.educationPercentage = convertToInt($scope.obj.educationPercentage);
+      }
+
+      if (!_.isNumber($scope.obj.financialStabilityPercentage)){
+        $scope.obj.financialStabilityPercentage = convertToInt($scope.obj.financialStabilityPercentage)
+      };
+
+      if (!_.isNumber($scope.obj.healthPercentage)){
+        $scope.obj.healthPercentage = convertToInt($scope.obj.healthPercentage);
+      }
+
+      if (!_.isNumber($scope.obj.spouseAmt)){
+        $scope.obj.spouseAmt = convertToDouble($scope.obj.spouseAmt);
+      }
 
 
      $scope.obj.save().then(function(data){
@@ -157,7 +180,10 @@ angular.module('clientApp')
     }
 
     function convertToDouble(num){
-      return parseInt(num.replace(/\,/g, ''));
+
+      if(num.indexOf(',') > -1){
+        return parseInt(num.replace(/\,/g, ''));
+      }
     }
     
     function validateOrganizations(){
@@ -179,6 +205,49 @@ angular.module('clientApp')
       if(!$scope.focusAreas){
         $scope.resetPercentageTotal();
       }
+    }
+
+    $scope.toggleFamilyGift = function(){
+      if(!$scope.familyGiftFlag){
+        $scope.resetFamilyGift();
+      }
+    }
+
+    $scope.toggleLeadershipCircle = function(){
+      if(!$scope.leadershipCircleFlag){
+        $scope.resetLeadershipCircle();
+      }
+    }
+
+    $scope.toggleOtherOrganizations = function(){
+      if(!$scope.otherOrgFlag){
+        $scope.resetOtherPercentageTotal();
+      } else {
+        if($scope.obj.organizationDonations.length == 0)
+          $scope.createOrganizations();
+      }
+    }
+
+    $scope.toggleCommunityPlan = function(){
+      if(!$scope.communityPlanFlag){
+        $scope.resetCommunityPlan();
+      }
+    }
+
+
+    $scope.resetCommunityPlan = function(){
+      $scope.obj.communityPlanPercentage = 0;
+    }
+
+    $scope.resetLeadershipCircle = function(){
+      $scope.obj.donationAmount = 0;
+    }
+
+
+    $scope.resetFamilyGift = function(){
+      $scope.obj.spouse = null;
+      $scope.obj.spouseAmt = 0;
+      $scope.obj.spouseEmployer = null;
     }
 
     $scope.percentageTotal = function(){
@@ -208,14 +277,7 @@ angular.module('clientApp')
         $scope.unitedway_form.orgPercentages.$setValidity("percentages", true);
     }
 
-    $scope.toggleOtherOrganizations = function(){
-      if(!$scope.otherOrgFlag){
-        $scope.resetOtherPercentageTotal();
-      } else {
-        if($scope.obj.organizationDonations.length == 0)
-          $scope.createOrganizations();
-      }
-    }
+
 
     $scope.otherPercentageTotal = function(){
 

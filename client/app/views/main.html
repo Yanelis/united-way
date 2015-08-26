@@ -230,7 +230,9 @@
 
             <input name="countyleader"  type="checkbox" id="countyleader"
             ng-checked="leadershipCircleFlag"
-            ng-model="leadershipCircleFlag" > 
+            ng-model="leadershipCircleFlag" 
+            ng-change="toggleLeadershipCircle()"
+            /> 
   
             <label for="countyleader">I'd like to join the County Leadership Circle</label>
 
@@ -285,7 +287,13 @@ you will be considered a Young Leader, a United Way recognition group offering n
 <hr>
 <h4>Family Gift</h4>
 
- <input name="familyflag" id="familyflag"  type="checkbox"  ng-model="familyGiftFlag" > 
+ <input 
+  name="familyflag" 
+  id="familyflag" 
+  type="checkbox" 
+  ng-model="familyGiftFlag" 
+  ng-change = "toggleFamilyGift()"
+  /> 
  <label for="familyflag">We'd like to make a donation as a family.</label>
 <p>
  If your gift above, combined with the gift of your spouse/parther, totals at least $1000 per year, you will be considered a member of the County Leadership Circle.</p>
@@ -573,7 +581,8 @@ you will be considered a Young Leader, a United Way recognition group offering n
         type="checkbox" 
         name="unitedway" 
         id="unitedway" 
-        ng-model="communityPlanFlag" 
+        ng-model="communityPlanFlag"
+        ng-change="toggleCommunityPlan()" 
         />
         <label for="unitedway">&nbsp;UNITED WAY COMMUNITY PLAN</label>
             <p>I  want to make the most of every dollar I give!&nbsp; I want to improve lives and  make a lasting, positive difference where help is needed most in my community  by contributing to the United Way Community Plan which supports United Way&rsquo;s  efforts in Education, Financial Stability and Health.</p>
@@ -921,6 +930,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
               id="additionalAgency" 
               value="Y"
               ng-disabled="!otherOrgFlag"
+              ng-model="obj.additionalAgency"
               />
 
               <label for="additionalAgency"></label>
@@ -940,12 +950,24 @@ you will be considered a Young Leader, a United Way recognition group offering n
             <h2>Miscellaneous Information</h2>
 
 
-       <input name="willandestate" type="checkbox" id="willandestate" value="Y"  >
+       <input 
+        name="willandestate" 
+        type="checkbox" 
+        id="willandestate" 
+        value="Y" 
+        ng-model="obj.willAndEstate"
+        />
 <label for="willandestate">
 <strong>I have</strong> included United Way in my will and estate plans. Please contact me.<br>
   </label>
 <br/>
-<input name="willandestateinfo" type="checkbox" id="willandestateinfo" value="Y" >
+<input 
+  name="willandestateinfo" 
+  type="checkbox" 
+  id="willandestateinfo" 
+  value="Y" 
+  ng-model="obj.willAndEstateInfo"
+  />
 <label for="willandestateinfo">
 I would like to include United Way in my will and estate plans. Please contact me.
   </label>
