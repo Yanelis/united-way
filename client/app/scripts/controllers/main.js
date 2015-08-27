@@ -14,7 +14,13 @@ angular.module('clientApp')
     
     $scope.eid = portalService.getUserId();
 
-    $scope.employeeID = $scope.eid.substring(1, $scope.eid.length);
+    if ($scope.eid.indexOf('e') > -1){
+      $scope.employeeID = $scope.eid.substring(1, $scope.eid.length);
+    } else {
+      $scope.employeeID = $scope.eid;
+    }
+
+    
 
     var employee = $http.get(endpoints.pledgeUrl + '/employee/' + $scope.employeeID + '/info');
     
