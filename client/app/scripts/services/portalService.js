@@ -5,8 +5,8 @@
 angular.module('clientApp').factory('portalService', function(){
 
   function getUserId(){
-    //return miamidade.user.PortalUser.uid
-    return "123456";
+    return miamidade.user.PortalUser.uid
+    //return "123456";
   }
 
 

@@ -12,10 +12,11 @@ angular.module('clientApp')
     //$scope.obj = {};
     $scope.fasttrackenroll = "N";
     
-
     $scope.eid = portalService.getUserId();
 
-    var employee = $http.get(endpoints.pledgeUrl + '/employee/' + $scope.eid + '/info');
+    $scope.employeeID = $scope.eid.substring(1, $scope.eid.length);
+
+    var employee = $http.get(endpoints.pledgeUrl + '/employee/' + $scope.employeeID + '/info');
     
     employee.then(function(data){
 
