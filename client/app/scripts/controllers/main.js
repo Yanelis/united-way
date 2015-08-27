@@ -14,11 +14,19 @@ angular.module('clientApp')
     
 
     $scope.eid = portalService.getUserId();
+
+    var employee = $http.get(endpoints.pledgeUrl + '/employee/' + $scope.eid + '/info');
     
+    employee.then(function(data){
+
+      $scope.employee = pledge.new_employee(data.data);
+
+    });
+
     var promise = $http.get(endpoints.pledgeUrl + '/employee/' + $scope.eid);
     promise.then(function(data){
 
-        console.log(data);
+        //console.log(data);
         $scope.obj = pledge.new_pledge(data.data[0]);
 
 
@@ -128,36 +136,36 @@ angular.module('clientApp')
 
 
       //Check type and convert to numeric type when necessary.
-      if (!_.isNumber($scope.obj.biweeklyDeduction)){
-        $scope.obj.biweeklyDeduction = convertToDouble($scope.obj.biweeklyDeduction);
+      if (!_.isUndefined($scope.obj.biweeklyDeduction)  && !_.isNumber($scope.obj.biweeklyDeduction)){
+        $scope.obj.biweeklyDeduction = removeCommas($scope.obj.biweeklyDeduction);
       }
 
-      if (!_.isNumber($scope.obj.oneTimeDeduction)){
-        $scope.obj.oneTimeDeduction = convertToDouble($scope.obj.oneTimeDeduction);
+      if (!_.isUndefined($scope.obj.oneTimeDeduction)  && !_.isNumber($scope.obj.oneTimeDeduction)){
+        $scope.obj.oneTimeDeduction = removeCommas($scope.obj.oneTimeDeduction);
       }
 
-      if (!_.isNumber($scope.obj.donationAmount)){
-        $scope.obj.donationAmount = convertToDouble($scope.obj.donationAmount);
+      if (!_.isUndefined($scope.obj.donationAmount)  && !_.isNumber($scope.obj.donationAmount)){
+        $scope.obj.donationAmount = removeCommas($scope.obj.donationAmount);
       }
 
-      if (!_.isNumber($scope.obj.communityPlanPercentage)){
+      if (!_.isUndefined($scope.obj.communityPlanPercentage)  && !_.isNumber($scope.obj.communityPlanPercentage)){
         $scope.obj.communityPlanPercentage = convertToInt($scope.obj.communityPlanPercentage);
       }
 
-      if (!_.isNumber($scope.obj.educationPercentage)){
+      if (!_.isUndefined($scope.obj.educationPercentage)  && !_.isNumber($scope.obj.educationPercentage)){
         $scope.obj.educationPercentage = convertToInt($scope.obj.educationPercentage);
       }
 
-      if (!_.isNumber($scope.obj.financialStabilityPercentage)){
+      if (!_.isUndefined($scope.obj.financialStabilityPercentage)  && !_.isNumber($scope.obj.financialStabilityPercentage)){
         $scope.obj.financialStabilityPercentage = convertToInt($scope.obj.financialStabilityPercentage)
       };
 
-      if (!_.isNumber($scope.obj.healthPercentage)){
+      if (!_.isUndefined($scope.obj.healthPercentage)  && !_.isNumber($scope.obj.healthPercentage)){
         $scope.obj.healthPercentage = convertToInt($scope.obj.healthPercentage);
       }
 
-      if (!_.isNumber($scope.obj.spouseAmt)){
-        $scope.obj.spouseAmt = convertToDouble($scope.obj.spouseAmt);
+      if (!_.isUndefined($scope.obj.spouseAmt)  && !_.isNumber($scope.obj.spouseAmt)){
+        $scope.obj.spouseAmt = removeCommas($scope.obj.spouseAmt);
       }
 
 
@@ -179,11 +187,15 @@ angular.module('clientApp')
       return parseInt(num);
     }
 
-    function convertToDouble(num){
+    function removeCommas(num){
 
       if(num.indexOf(',') > -1){
-        return parseInt(num.replace(/\,/g, ''));
+        num =  parseFloat(num.replace(/\,/g, '')).toFixed(2);
+      } else {
+        num = parseFloat(num).toFixed(2);
       }
+
+      return num;
     }
     
     function validateOrganizations(){

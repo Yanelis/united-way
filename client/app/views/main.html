@@ -26,10 +26,10 @@
 
             <p>
               <label for="email"><strong>Employee Name: </label> &nbsp;</strong>
-              {{obj.ename}}
+              {{employee.firstName}} {{employee.lastName}}
             </p>
 
-            <p><label for="email"><strong>Employee ID: </label></strong> {{obj.eid}}<strong> <label>DDL: </label></strong> {{obj.eDept}}</p>
+            <p><label for="email"><strong>Employee ID: </label></strong> E{{eid}}<strong> <label>DDL: </label></strong> {{employee.department}}</p>
 
 
             <div class="row">
@@ -95,7 +95,6 @@
                 placeholder="US Dollars"
                 ng-model="obj.biweeklyDeduction"
                 ng-required="deductionType == 'biweekly'"
-                value="obj.biweeklyDeduction | currency"
                 />
               </div>
               <div class="help-block" ng-messages="unitedway_form.biweekly.$error" ng-if="unitedway_form.biweekly.$touched">

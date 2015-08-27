@@ -12,6 +12,19 @@ function unitedWayOrganization(json){
   }
 }
 
+function employee_obj(json){
+  this.firstName = null;
+  this.lastName = null;
+  this.department = null;
+
+  if(!_.isNull(json) && !_.isUndefined(json)){
+    this.firstName = json.firstName;
+    this.lastName = json.lastName;
+    this.department = json.Department;
+
+  }
+}
+
 function pledge_obj(json){
   this.id = null;
   this.eid = null;
@@ -25,11 +38,10 @@ function pledge_obj(json){
   this.ename = null;
   this.eLastName = null;
   this.eDept = null;
-  this.areaOfFocus = null;
-  this.additionalAgency = null;
-  this.willAndEstate = null;
-  this.willAndEstateInfo = null;
-  this.loyalContributor = null;
+  this.additionalAgency = false;
+  this.willAndEstate = false;
+  this.willAndEstateInfo = false;
+  this.loyalContributor = false;
 
 
   this.spouse = null;
@@ -60,7 +72,6 @@ function pledge_obj(json){
     this.ename = json.ename;
     this.eLastName = json.eLastName;
     this.eDept = json.eDept;
-    this.areaOfFocus = json.areaOfFocus;
     this.additionalAgency = json.additionalAgency;
     this.willAndEstate = json.willAndEstate;
     this.willAndEstateInfo = json.willAndEstateInfo;
@@ -93,6 +104,10 @@ angular.module('clientApp').factory('pledge', function($resource, endpoints){
     return new unitedWayOrganization(json);
   }
 
+  function new_employee(json){
+    return new employee_obj(json);
+  }
+
 
   var resource = $resource(endpoints.pledgeUrl, {id: "@_id"}, {"update":{method:'PUT'}});
   console.log("url " + endpoints.pledgeUrl);
@@ -109,6 +124,7 @@ angular.module('clientApp').factory('pledge', function($resource, endpoints){
 
   return {
     new_pledge : new_pledge,
-    new_organization: new_organization
+    new_organization: new_organization,
+    new_employee: new_employee
   }
 })
