@@ -184,10 +184,11 @@ h2{
     display: flex;
   }
 
+/*
   body{
     background: #ebebeb;
   }
-  
+  */
   .container{
     background: #fff;
     box-shadow: 0 0 5px #666;
