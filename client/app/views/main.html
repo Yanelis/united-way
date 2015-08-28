@@ -75,7 +75,13 @@
 
               <div class="row">
               <div class="col-md-8">
-              <select class="form-control" id="adjustContibution" ng-model="donationFrequency" type="select" ng-change="resetDeduction()">
+              <select 
+              class="form-control" 
+              id="adjustContibution" 
+              ng-model="donationFrequency" 
+              type="select" 
+              ng-change="resetDeduction()"
+              >
                 <option value="reset" ng-selected="reset">Change Type</option>
                 <option value="biweekly" ng-selected="biweekly">Bi-Weekly Deduction</option>
                 <option value="onetime" ng-selected="onetime">One Time Deduction</option>
@@ -95,6 +101,9 @@
                 placeholder="US Dollars"
                 ng-model="obj.biweeklyDeduction"
                 ng-required="deductionType == 'biweekly'"
+                ng-focus="obj.biweeklyDeduction = ''"
+                ng-change="calculateTotalAnnualDonation()"
+                ng-blur="validateDeduction()"
                 />
               </div>
               <div class="help-block" ng-messages="unitedway_form.biweekly.$error" ng-if="unitedway_form.biweekly.$touched">
@@ -119,6 +128,9 @@
                 placeholder="US Dollars"
                 ng-model="obj.oneTimeDeduction"
                 ng-required="deductionType == 'onetime'"
+                ng-focus="obj.oneTimeDeduction = ''"
+                ng-change="calculateTotalAnnualDonation()"
+                ng-blur="validateDeduction()"
                 >
                 <!-- <span class="input-group-addon">.00</span> -->
             </div>
@@ -230,7 +242,7 @@
             <input name="countyleader"  type="checkbox" id="countyleader"
             ng-checked="leadershipCircleFlag"
             ng-model="leadershipCircleFlag" 
-            ng-change="toggleLeadershipCircle()"
+            ng-disabled = "obj.donationAmount < 1000 "
             /> 
   
             <label for="countyleader">I'd like to join the County Leadership Circle</label>
@@ -248,21 +260,8 @@
             <div class="row" ng-class="{'showError': leadershipCircleFlag}">
             <div class="col-md-6">
             <div class="form-group">
-            <label for="totaldonation" ng-class="{'required': leadershipCircleFlag}" >Your total annual donation is:</label>
-            <div class="input-group"
-            ng-class="{'has-error': unitedway_form.totaldonation.$invalid && unitedway_form.totaldonation.$touched}">
-
-                <span class="input-group-addon">$</span>
-                <input name="totaldonation" type="text"
-                 id="totaldonation"
-                 class="form-control"
-                 placeholder="US Dollars"
-                 ng-model="obj.donationAmount"
-                 ng-required="leadershipCircleFlag"
-                 ng-disabled="!leadershipCircleFlag"
-                 >
-                <!-- <span class="input-group-addon">.00</span> -->
-            </div>
+            <label for="totaldonation">Your total annual donation is: </label>
+            <span>{{obj.donationAmount | currency}}</span>
 
               <div class="help-block" ng-messages="unitedway_form.totaldonation.$error" ng-show="unitedway_form.totaldonation.$touched">
                 <div ng-messages-include="views/messages.html"></div>
@@ -311,6 +310,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                   ng-model="obj.spouse"
                   ng-required="familyGiftFlag"
                   ng-disabled="!familyGiftFlag"
+                  ng-focus="obj.spouse = ''"
                   />
               </div>
               </div>
@@ -332,6 +332,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                   ng-model="obj.spouseEmployer"
                   ng-required="familyGiftFlag"
                   ng-disabled="!familyGiftFlag"
+                  ng-focus="obj.spouseEmploye = ''"
                   />
               </div>
 
@@ -354,6 +355,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                   ng-model="obj.spouseAmt"
                   ng-required="familyGiftFlag"
                   ng-disabled="!familyGiftFlag"
+                  ng-focus="obj.spouseAmt = ''"
                   />
                 <!-- <span class="input-group-addon">.00</span> -->
               </div>
@@ -601,6 +603,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     maxlength="3"
                     ng-model="obj.communityPlanPercentage"
                     ng-disabled="!communityPlanFlag"
+                    ng-focus="obj.communityPlanPercentage = ''"
                     />
                    <span class="input-group-addon">%</span>
                  </div>
@@ -656,6 +659,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     ng-model="obj.educationPercentage"
                     ng-change="percentageTotal()"
                     ng-disabled="!focusAreas"
+                    ng-focus="obj.educationPercentage = ''"
                     />
                    <span class="input-group-addon">%</span>
                  </div>
@@ -687,6 +691,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     ng-model="obj.financialStabilityPercentage"
                     ng-change="percentageTotal()"
                     ng-disabled="!focusAreas"
+                    ng-focus="obj.financialStabilityPercentage = ''"
                     />
                    <span class="input-group-addon">%</span>
                  </div>
@@ -719,6 +724,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                     ng-model="obj.healthPercentage"
                     ng-change="percentageTotal()"
                     ng-disabled="!focusAreas"
+                    ng-focus="obj.healthPercentage = ''"
                      />
                    <span class="input-group-addon">%</span>
                  </div>
@@ -791,6 +797,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
       ng-model="firstOrg.organization"
       ng-required="otherOrgFlag"
       ng-disabled="!otherOrgFlag"
+      ng-focus="firstOrg.organization = ''"
       />
     </div>
 
@@ -815,6 +822,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
           ng-model="firstOrg.percentage"
           ng-change="otherPercentageTotal()"
           ng-disabled="!otherOrgFlag"
+          ng-focus="firstOrg.percentage = ''"
           />
         <span class="input-group-addon">%</span>
       </div>
@@ -839,6 +847,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
     size="50"
     ng-model="secondOrg.organization"
     ng-disabled="!otherOrgFlag"
+    ng-focus="secondOrg.organization = ''"
     />
   </div>
 
@@ -860,6 +869,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
         ng-change="otherPercentageTotal()"
         ng-disabled="!otherOrgFlag"
         ng-required = "secondOrg.organization != ''"
+        ng-focus="secondOrg.percentage = ''"
         />
         <span class="input-group-addon">%</span>
       </div>
@@ -881,6 +891,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
       size="50" 
       ng-model="thirdOrg.organization"
       ng-disabled="!otherOrgFlag"
+      ng-focus="thirdOrg.organization = ''"
       />
   </div>
   <div class="col-md-5">
@@ -896,6 +907,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
           ng-change="otherPercentageTotal()"
           ng-disabled="!otherOrgFlag"
           ng-required="thirdOrg.organization != ''"
+          ng-focus="thirdOrg.percentage = ''"
           />
         <span class="input-group-addon">%</span>
       </div>

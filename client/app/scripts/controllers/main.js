@@ -20,7 +20,7 @@ angular.module('clientApp')
       $scope.employeeID = $scope.eid;
     }
 
-    
+
 
     var employee = $http.get(endpoints.pledgeUrl + '/employee/' + $scope.employeeID + '/info');
     
@@ -60,21 +60,31 @@ angular.module('clientApp')
         //Set the donation type dropdown to the correct value based on the type of donation user has madae before.
         if($scope.obj.biweeklyDeduction === 0 && $scope.obj.oneTimeDeduction === 0){
           $scope.donationFrequency = 'reset';
+          $scope.obj.donationAmount = 0;
         }
 
         if($scope.obj.biweeklyDeduction !== 0){
           $scope.donationFrequency = 'biweekly';
+          $scope.calculateTotalAnnualDonation();
         }
 
         if($scope.obj.oneTimeDeduction !== 0){
           $scope.donationFrequency = 'onetime';
+          $scope.calculateTotalAnnualDonation();
         }
+
+        $scope.obj.eid = $scope.eid;
+
+        if(!_.isNull($scope.obj.email)){
+          $scope.unitedway_form.$valid = true;
+        }
+
+
+        $scope.createOrganizations();
 
 
         //If the otherOrg flag is set to true then we iterate over the organizationDonations array and populate the appropriate fields in the form.
         if($scope.otherOrgFlag){
-
-          $scope.createOrganizations();
         
           //Iterating over the values in the array.
           _.each($scope.obj.organizationDonations, function(obj, index){
@@ -95,13 +105,28 @@ angular.module('clientApp')
               }
           });
         
-        } 
+        }
 
     }, function(error){
         $scope.obj = pledge.new_pledge(null);
+        $scope.calculateTotalAnnualDonation();
 
     });
 
+
+    $scope.calculateTotalAnnualDonation = function(){
+      if($scope.donationFrequency == 'biweekly'){
+        $scope.obj.donationAmount = $scope.obj.biweeklyDeduction * 26;
+      } 
+
+      if($scope.donationFrequency == 'onetime'){
+        $scope.obj.donationAmount = $scope.obj.oneTimeDeduction;
+      }
+
+      if($scope.donationFrequency == 'reset'){
+        $scope.obj.donationAmount = 0;
+      }
+    }
 
     $scope.createOrganizations = function(){
       $scope.firstOrg = $scope.addOrganization();
@@ -122,10 +147,25 @@ angular.module('clientApp')
       });
     }
 
+    $scope.validateDeduction = function(){
+
+      $scope.calculateTotalAnnualDonation();
+
+      if($scope.donationFrequency != 'reset' && $scope.obj.donationAmount < 1000){
+        $scope.obj.donationAmount = 0;
+        $scope.leadershipCircleFlag = false;
+        $scope.obj.deductionType = null;
+      }
+
+    }
+
     $scope.resetDeduction = function(){
         $scope.obj.biweeklyDeduction = 0;
         $scope.obj.oneTimeDeduction = 0;
         $scope.obj.deductionType = null;
+        $scope.leadershipCircleFlag = false;
+
+        $scope.calculateTotalAnnualDonation();
     }
  
 
@@ -178,6 +218,7 @@ angular.module('clientApp')
 
      $scope.obj.save().then(function(data){
        console.log("data was saved");
+       window.location = "http://www.miamidade.gov/unitedway/thank-you.asp"
 
      }, function(error){
        console.log("error saving data");
