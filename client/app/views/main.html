@@ -2,7 +2,7 @@
         <div >
           <img src="images/live-united-horizontal-banner.jpg" width="1170" height="250" alt="Give, advocate, volunteer. Live United" class="img-responsive"/>
         </div>
-      <div class="hidden-sm hidden-xs col-md-4 vertical-banner">
+      <div class="hidden-sm hidden-xs col-sm-4 vertical-banner">
     &nbsp;
       </div>
       <div class="col-sm-12">
@@ -33,14 +33,14 @@
 
 
             <div class="row">
-            <div class="col-md-6">
+            <div class="col-sm-6">
 
 
             <label for="email">Email Address: </label>
             <div class="input-group"
             ng-class="{'has-error': unitedway_form.email.$invalid && unitedway_form.email.$touched}">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-                <input class="form-control col-md-4" name="email"  type="email" id="email"
+                <input class="form-control col-sm-4" name="email"  type="email" id="email"
                 class="form-control"
                 placeholder="Email"
                 ng-model="obj.email"
@@ -56,7 +56,7 @@
             </div>
 
             <div class="row">
-            <div class="col-md-9">
+            <div class="col-sm-9">
             <p>Please review the full form before completing. If you would like your giving levels to remain<br>the same, it is not necessary to submit a contribution form. Only your bi-weekly <br>deduction giving level will  automatically roll forward, one-time donations will not. </p>
 
             <p>If you would like to make an adjustment to your contribution, please select an option and fill out the box below.<br>
@@ -70,11 +70,11 @@
             <!-- TODO: Create dropdown to select one of the following: -->
 
             <div class="row">
-            <div class="col-md-6">
+            <div class="col-sm-6">
             <div class="form-group">
 
               <div class="row">
-              <div class="col-md-8">
+              <div class="col-sm-8">
               <select 
               class="form-control" 
               id="adjustContibution" 
@@ -91,7 +91,7 @@
             </div>
 
             <div class="row" ng-show="donationFrequency == 'biweekly'">
-            <div class="col-md-8">
+            <div class="col-sm-8">
             <div class="form-group">
             <label for="biweekly">My bi-weekly deduction:</label>
               <div class="input-group" ng-class="{'has-error': unitedway_form.biweekly.$invalid && unitedway_form.biweekly.$touched}">
@@ -118,7 +118,7 @@
 
 
             <div class="row" ng-show="donationFrequency == 'onetime'">
-            <div class="col-md-4">
+            <div class="col-sm-4">
             <div class="form-group">
             <label for="onetime">My one-time donation:</label>
             <div class="input-group" ng-class="{'has-error': unitedway_form.onetime.$invalid && unitedway_form.onetime.$touched}">
@@ -197,7 +197,7 @@
                   <label for="debit">Debit**</label>
                 </div>
     <div class="row">
-    <div class="col-md-12">
+    <div class="col-sm-12">
     
                    <p class="small">
                    <em><strong>* If you are choosing to
@@ -258,7 +258,7 @@
               Miami-Dade Leadership &amp; Endowment Circle.<br></p>
 
             <div class="row" ng-class="{'showError': leadershipCircleFlag}">
-            <div class="col-md-6">
+            <div class="col-sm-6">
             <div class="form-group">
             <label for="totaldonation">Your total annual donation is: </label>
             <span>{{obj.donationAmount | currency}}</span>
@@ -297,9 +297,9 @@ you will be considered a Young Leader, a United Way recognition group offering n
  If your gift above, combined with the gift of your spouse/parther, totals at least $1000 per year, you will be considered a member of the County Leadership Circle.</p>
 
             <div class="row">
-            <div class="col-md-12">
+            <div class="col-sm-12">
               <div class="row">
-              <div class="col-md-10"
+              <div class="col-sm-10"
               ng-class="{'has-error': unitedway_form.spouse.$invalid && unitedway_form.spouse.$touched}">
                 <label for="spouse" ng-class="{'required': familyGiftFlag}"><strong>Spouse/Partner Name:</strong></label>
                 <input
@@ -320,7 +320,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
               </div>
                         <br/>
               <div class="row">
-              <div class="col-md-5">
+              <div class="col-sm-5">
                <label for="employer" ng-class="{'required': familyGiftFlag}"><strong>Employer:</strong></label>
               <div
                ng-class="{'has-error': unitedway_form.employer.$invalid && unitedway_form.employer.$touched}">
@@ -341,7 +341,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
               </div>
             </div>
 
-              <div class="col-md-5">
+              <div class="col-sm-5">
               <label for="amount" ng-class="{'required': familyGiftFlag}"><strong>Annual Amount of his/her gift:</strong></label>
               <div class="input-group" ng-class="{'has-error': unitedway_form.amount.$invalid && unitedway_form.amount.$touched}">
 
@@ -564,7 +564,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
 
       <div class="row">
-      <div class="col-md-12">
+      <div class="col-sm-12">
 
 
         <hr>
@@ -591,9 +591,9 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
 
 <div class="row">
-<div class="col-md-4">
+<div class="col-sm-4">
                 <label for="communityPlan">Percentage:</label>
-                  <div class="input-group col-md-4">
+                  <div class="input-group col-sm-4">
                    <input
                     class="form-control"
                     type="text"
@@ -616,7 +616,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
 
           <div class="row">
-          <div class="col-md-12">
+          <div class="col-sm-12">
         <input 
         type="checkbox" 
         name="unitedway2" 
@@ -630,7 +630,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
 
           <div class="row focus">
-            <div class="minHeight col-md-4">
+            <div class="minHeight col-sm-4">
                  <label>EDUCATION:</label>
 
             <p>
@@ -648,7 +648,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
             </ul>
 
             <label for="education">Percentage:</label>
-                  <div class="input-group col-md-4">
+                  <div class="input-group col-sm-4">
                    <input
                     class="form-control"
                     type="text"
@@ -666,7 +666,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
             </div>
 
 
-              <div class="minHeight col-md-4">
+              <div class="minHeight col-sm-4">
               <label>FINANCIAL STABILITY:</label>
               <p>Paving  a path to financial independence</p>
               <ul>
@@ -680,7 +680,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
               </ul>
 
               <label for="income">Percentage:</label>
-                <div class="input-group col-md-4">
+                <div class="input-group col-sm-4">
                    <input
                     class="form-control"
                     type="text"
@@ -697,7 +697,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
                  </div>
           </div>
 
-              <div class="minHeight col-md-4">
+              <div class="minHeight col-sm-4">
             <strong>HEALTH:&nbsp;&nbsp;&nbsp;&nbsp;</strong> <label for="health"></label>
 
             <p>Improving  people&rsquo;s health</p>
@@ -713,7 +713,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
             </ul>
 
                 <label for="health">Percentage:</label>
-                <div class="input-group col-md-4">
+                <div class="input-group col-sm-4">
                    <input
                     class="form-control"
                     type="text"
@@ -733,7 +733,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
 
             <div class="row">
-             <div class="col-md-6">
+             <div class="col-sm-6">
 
              <div 
              ng-show="total > 0 && focusAreas">
@@ -755,7 +755,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
 <hr/>
 
 <div class="row">
-<div class="col-md-12">
+<div class="col-sm-12">
               <input
                 type="checkbox"
                 name="otherorg"
@@ -785,7 +785,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
 
 <div class="row">
-  <div class="col-md-5">
+  <div class="col-sm-5">
   <div ng-class="{'has-error': unitedway_form.designation.$invalid && unitedway_form.designation.$touched}">
     <label for="other" ng-class="{'required': otherOrgFlag}">Organization 1</label><br>
     <input
@@ -807,11 +807,11 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
 
   </div>
-  <div class="col-md-5">
+  <div class="col-sm-5">
     <label 
     for="otherpercent" 
     ng-class="{'required': otherOrgFlag}">Percentage:</label>
-      <div class="input-group col-md-4" ng-class="{'has-error': unitedway_form.otherpercent.$invalid && unitedway_form.otherpercent.$touched}">
+      <div class="input-group col-sm-4" ng-class="{'has-error': unitedway_form.otherpercent.$invalid && unitedway_form.otherpercent.$touched}">
         <input
           class="form-control"
           type="text"
@@ -836,7 +836,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
 
 <div class="row">
-  <div class="col-md-5">
+  <div class="col-sm-5">
   <div ng-class="{'has-error': unitedway_form.designation2.$invalid && unitedway_form.designation2.$touched}">
     <label for="other">Organization 2</label><br>
     <input
@@ -856,9 +856,9 @@ you will be considered a Young Leader, a United Way recognition group offering n
     </div>
 
   </div>
-  <div class="col-md-5">
+  <div class="col-sm-5">
     <label for="otherpercent2">Percentage:</label>
-      <div class="input-group col-md-4" ng-class="{'has-error': unitedway_form.otherpercent2.$invalid && unitedway_form.otherpercent2.$touched}">
+      <div class="input-group col-sm-4" ng-class="{'has-error': unitedway_form.otherpercent2.$invalid && unitedway_form.otherpercent2.$touched}">
         <input
         class="form-control"
         type="text"
@@ -881,7 +881,7 @@ you will be considered a Young Leader, a United Way recognition group offering n
 
 
 <div class="row">
-  <div class="col-md-5">
+  <div class="col-sm-5">
     <label for="other">Organization 3</label><br>
     <input 
       class="form-control" 
@@ -894,9 +894,9 @@ you will be considered a Young Leader, a United Way recognition group offering n
       ng-focus="thirdOrg.organization = ''"
       />
   </div>
-  <div class="col-md-5">
+  <div class="col-sm-5">
     <label for="otherpercent3">Percentage:</label>
-      <div class="input-group col-md-4" ng-class="{'has-error': unitedway_form.otherpercent3.$invalid && unitedway_form.otherpercent3.$touched}">
+      <div class="input-group col-sm-4" ng-class="{'has-error': unitedway_form.otherpercent3.$invalid && unitedway_form.otherpercent3.$touched}">
         <input
           class="form-control"
           type="text"
