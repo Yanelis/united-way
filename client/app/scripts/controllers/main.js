@@ -8,7 +8,7 @@
  * Controller of the clientApp
  */
 angular.module('clientApp')
-  .controller('MainCtrl', ['$scope', 'pledge', 'portalService', '$http', 'endpoints', '$filter', function ($scope, pledge, portalService, $http, endpoints, $filter) {
+  .controller('MainCtrl', ['$scope', 'pledge', 'portalService', '$http', 'endpoints', '$filter', '$location', function ($scope, pledge, portalService, $http, endpoints, $filter, $location) {
     //$scope.obj = {};
     $scope.fasttrackenroll = "N";
     
@@ -218,7 +218,8 @@ angular.module('clientApp')
 
      $scope.obj.save().then(function(data){
        console.log("data was saved");
-       window.location = "http://www.miamidade.gov/unitedway/thank-you.asp"
+       //window.location = "http://www.miamidade.gov/unitedway/thank-you.asp"
+       $location.path("/thank-you");
 
      }, function(error){
        console.log("error saving data");

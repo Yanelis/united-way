@@ -161,6 +161,9 @@ h2{
 
 /**** United Way Form Styles ****/
 
+  .banner{
+    margin: 0 -15px;
+  }
 
   .minHeight{
     display: -webkit-flex;
@@ -192,12 +195,16 @@ h2{
   .container{
     background: #fff;
     box-shadow: 0 0 5px #666;
-    width: 900px;
+    width: 850px;
   }
 
 
 label.required::after {
     content: " *" !important;
+}
+
+.thanks{
+  min-height: 600px !important;
 }
 
 

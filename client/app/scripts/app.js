@@ -35,6 +35,11 @@ angular
         templateUrl: 'views/main.html'
       })
 
+      .when('/thank-you', {
+        controller: 'ThanksCtrl',
+        templateUrl: 'views/thanks.html'
+      })
+
       .otherwise({ redirectTo: '/login' });
   }])
   .run(['$rootScope', '$location', '$cookieStore', '$http',
