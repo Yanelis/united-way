@@ -12,24 +12,44 @@ function unitedWayOrganization(json){
   }
 }
 
+function employee_obj(json){
+  this.firstName = null;
+  this.lastName = null;
+  this.department = null;
+
+  if(!_.isNull(json) && !_.isUndefined(json)){
+    this.firstName = json.firstName;
+    this.lastName = json.lastName;
+    this.department = json.Department;
+
+  }
+}
+
 function pledge_obj(json){
   this.id = null;
   this.eid = null;
   this.organizationDonations = [];
   this.email = null;
-  this.biweeklyDeduction = null;
-  this.oneTimeDeduction = null;
+  this.biweeklyDeduction = 0;
+  this.oneTimeDeduction = 0;
   this.deductionType = null;
 
-  this.donationAmount = null;
-  this.areaOfFocus = null;
+
+  this.ename = null;
+  this.eLastName = null;
+  this.eDept = null;
+  this.additionalAgency = false;
+  this.willAndEstate = false;
+  this.willAndEstateInfo = false;
+  this.loyalContributor = false;
+
 
   this.spouse = null;
   this.spouseEmployer = null;
-  this.spouseAmt = null;
+  this.spouseAmt = 0;
   this.fastTrackPlan = null;
   this.communityPlan = null;
-  this.communityPlanPercentage = null;
+  this.communityPlanPercentage = 0;
   this.educationPercentage = 0;
   this.financialStabilityPercentage = 0;
   this.healthPercentage = 0;
@@ -49,7 +69,13 @@ function pledge_obj(json){
     this.oneTimeDeduction = json.oneTimeDeduction;
     this.deductionType = json.deductionType;
 
-    this.donationAmount = json.donationAmount;
+    this.ename = json.ename;
+    this.eLastName = json.eLastName;
+    this.eDept = json.eDept;
+    this.additionalAgency = json.additionalAgency;
+    this.willAndEstate = json.willAndEstate;
+    this.willAndEstateInfo = json.willAndEstateInfo;
+    this.loyalContributor = json.loyalContributor;
 
     this.spouse = json.spouse;
     this.spouseEmployer = json.spouseEmployer;
@@ -78,8 +104,14 @@ angular.module('clientApp').factory('pledge', function($resource, endpoints){
     return new unitedWayOrganization(json);
   }
 
+  function new_employee(json){
+    return new employee_obj(json);
+  }
+
+
   var resource = $resource(endpoints.pledgeUrl, {id: "@_id"}, {"update":{method:'PUT'}});
   console.log("url " + endpoints.pledgeUrl);
+
 
   pledge_obj.prototype = {
 
@@ -92,6 +124,7 @@ angular.module('clientApp').factory('pledge', function($resource, endpoints){
 
   return {
     new_pledge : new_pledge,
-    new_organization: new_organization
+    new_organization: new_organization,
+    new_employee: new_employee
   }
 })

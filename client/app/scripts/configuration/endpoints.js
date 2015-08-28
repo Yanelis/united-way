@@ -3,7 +3,9 @@
  */
 angular.module('clientApp').constant('endpoints',{
 
-  pledgeUrl: 'http://localhost:8080/api/donations',
-  authenticateUrl: 'http://localhost:8080/accounts/authenticate'
+  //pledgeUrl: 'http://localhost:8080/api/donations',
+  pledgeUrl: 'http://repo.sharegov.org/unitedwayapi/api/donations'
+  //pledgeUrl: 'https://api.miamidade.gov/unitedwayapi/api/donations'
+  //authenticateUrl: 'http://localhost:8080/accounts/authenticate'
 
 })
