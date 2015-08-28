@@ -25,7 +25,7 @@ public class UnitedWayDonation implements Serializable {
     private String eid;
 
    @JsonManagedReference
-   @OneToMany(mappedBy = "donation", fetch=FetchType.EAGER, cascade = {CascadeType.PERSIST})
+   @OneToMany(mappedBy = "donation", fetch=FetchType.EAGER, cascade = {CascadeType.ALL, CascadeType.PERSIST}, orphanRemoval = true)
     private Set<UnitedWayOrganization> organizationDonations;
 
     @Column(nullable = true)
@@ -68,8 +68,7 @@ public class UnitedWayDonation implements Serializable {
     @Column(nullable = true)
     private double healthPercentage;
 
-    @Column(nullable = true)
-    private boolean specificAgencyPlan;
+
 
 
     @Column(nullable = false)
@@ -77,6 +76,15 @@ public class UnitedWayDonation implements Serializable {
 
     @Column(nullable = true)
     private Date updated;
+    @Column(nullable = true)
+    private boolean additionalAgency;
+    @Column(nullable = true)
+    private boolean willAndEstate;
+    @Column(nullable = true)
+    private boolean willAndEstateInfo;
+    @Column(nullable = true)
+    private boolean loyalContributor;
+
 
 
 
@@ -222,6 +230,38 @@ public class UnitedWayDonation implements Serializable {
     public Set<UnitedWayOrganization> getOrganizationDonations() {
         return organizationDonations;
 
+    }
+
+    public boolean isAdditionalAgency() {
+        return additionalAgency;
+    }
+
+    public void setAdditionalAgency(boolean additionalAgency) {
+        this.additionalAgency = additionalAgency;
+    }
+
+    public boolean isWillAndEstate() {
+        return willAndEstate;
+    }
+
+    public void setWillAndEstate(boolean willAndEstate) {
+        this.willAndEstate = willAndEstate;
+    }
+
+    public boolean isWillAndEstateInfo() {
+        return willAndEstateInfo;
+    }
+
+    public void setWillAndEstateInfo(boolean willAndEstateInfo) {
+        this.willAndEstateInfo = willAndEstateInfo;
+    }
+
+    public boolean isLoyalContributor() {
+        return loyalContributor;
+    }
+
+    public void setLoyalContributor(boolean loyalContributor) {
+        this.loyalContributor = loyalContributor;
     }
 
     public void setOrganizationDonations(Set<UnitedWayOrganization> organizationDonations) {
