@@ -8,7 +8,7 @@
  * Controller of the clientApp
  */
 angular.module('clientApp')
-  .controller('MainCtrl', ['$scope', 'pledge', 'portalService', '$http', 'endpoints', '$filter', '$location', function ($scope, pledge, portalService, $http, endpoints, $filter, $location) {
+  .controller('MainCtrl', ['$scope', 'pledge', 'portalService', '$http', 'endpoints', '$filter', '$location', 'ngStorage' function ($scope, pledge, portalService, $http, endpoints, $filter, $location, $sessionStorage) {
     //$scope.obj = {};
     $scope.fasttrackenroll = "N";
     
@@ -216,6 +216,14 @@ angular.module('clientApp')
       }
 
 
+      var donation = {
+        'donor': $scope.employee.firstName + ' ' + $scope.employee.lastName,
+        'amount': $scope.obj.donationAmount,
+        'frequency': $scope.donationFrequency != 'onetime' ? 'bi-weekly': 'one time'
+      };
+
+      $localStorage.donation = donation;
+
      $scope.obj.save().then(function(data){
        console.log("data was saved");
        //window.location = "http://www.miamidade.gov/unitedway/thank-you.asp"
@@ -225,6 +233,7 @@ angular.module('clientApp')
        console.log("error saving data");
      })
     }
+
 
     $scope.addOrganization = function(){
       var newOrg = pledge.new_organization(null);
