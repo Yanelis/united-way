@@ -38,6 +38,13 @@ public class UnitedWayDonation implements Serializable {
     private Double oneTimeDeduction;
 
     @Column(nullable = true)
+    private String biweeklyDeductionDescription;
+
+    @Column(nullable = true)
+    private String oneTimeDeductionDescription;
+
+
+    @Column(nullable = true)
     private String deductionType;
 
 

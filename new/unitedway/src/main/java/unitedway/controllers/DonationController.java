@@ -45,7 +45,7 @@ public class DonationController {
     @RequestMapping(method=RequestMethod.POST)
     public UnitedWayDonation create(@RequestBody @Valid UnitedWayDonation donation){
 
-        donation.setEid("123456");
+
         donation.setCreated(new Date());
         return repo.save(donation);
     }
