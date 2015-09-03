@@ -43,7 +43,7 @@ angular.module('clientApp')
     var promise = $http.get(endpoints.pledgeUrl + '/employee/' + $scope.eid);
     promise.then(function(data){
 
-        //console.log(data);
+        ////console.log(data);
         $scope.obj = pledge.new_pledge(data.data[0]);
 
 
@@ -150,7 +150,7 @@ angular.module('clientApp')
   
       }, function(error){
 
-          console.log(error);
+          //console.log(error);
       });
     }
 
@@ -195,7 +195,7 @@ angular.module('clientApp')
  
 
     $scope.save = function(){
-      console.log(" save .... ");
+      //console.log(" save .... ");
       
       //Validating the other organization objects we created earlier. This will check for null or empty strings and will call removeOrganization(index) to remove them if found.
       if($scope.obj.organizationDonations.length > 0){
@@ -255,12 +255,13 @@ angular.module('clientApp')
       window.localStorage.setItem('donation', JSON.stringify(donation));
 
      $scope.obj.save().then(function(data){
-       console.log("data was saved");
+       //console.log("data was saved");
 
        $location.path("/thank-you");
 
      }, function(error){
-       console.log("error saving data");
+       //console.log("error saving data");
+       $location.path("/error");
      })
     }
 
