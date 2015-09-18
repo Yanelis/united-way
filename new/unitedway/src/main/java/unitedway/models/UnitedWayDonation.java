@@ -58,6 +58,7 @@ public class UnitedWayDonation implements Serializable {
     @Column(nullable = true)
     private double spouseAmt;
 
+
     @Column(nullable = true)
     private String fastTrackPlan;
 
@@ -274,7 +275,26 @@ public class UnitedWayDonation implements Serializable {
     public void setOrganizationDonations(Set<UnitedWayOrganization> organizationDonations) {
         this.organizationDonations = organizationDonations;
     }
-   /* public void addUnitedWayOrganization(UnitedWayOrganization obj){
+
+    public String getBiweeklyDeductionDescription() {
+        return biweeklyDeductionDescription;
+    }
+
+    public void setBiweeklyDeductionDescription(String biweeklyDeductionDescription) {
+        this.biweeklyDeductionDescription = biweeklyDeductionDescription;
+    }
+
+    public String getOneTimeDeductionDescription() {
+        return oneTimeDeductionDescription;
+    }
+
+    public void setOneTimeDeductionDescription(String oneTimeDeductionDescription) {
+        this.oneTimeDeductionDescription = oneTimeDeductionDescription;
+    }
+
+
+
+    /* public void addUnitedWayOrganization(UnitedWayOrganization obj){
         if(organizationDonations == null)
             organizationDonations = new HashSet<UnitedWayOrganization>();
 

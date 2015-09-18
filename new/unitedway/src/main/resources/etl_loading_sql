@@ -1,0 +1,70 @@
+INSERT INTO dbo.united_way_donation
+(eid,
+email,
+biweekly_deduction,
+one_time_deduction,
+biweekly_deduction_description,
+one_time_deduction_description,
+deduction_type,
+spouse,
+spouse_employer,
+spouse_amt,
+fast_track_plan,
+community_plan,
+community_plan_percentage,
+education_percentage,
+financial_stability_percentage,
+health_percentage,
+created,
+additional_agency,
+will_and_estate,
+will_and_estate_info,
+loyal_contributor
+)
+SELECT
+REPLACE(LTRIM(REPLACE(a.EntityID, '0', ' ')), ' ', '0')  as eid,
+a.Email_address,
+cast(SUBSTRING(a.FEIN, 0,6)+'.'+ SUBSTRING(a.FEIN, 6,2) as decimal(7,2)) as biweeklyDeduction,
+cast(SUBSTRING(a.Business_name, 0,6)+'.'+ SUBSTRING(a.Business_name, 6,2) as decimal(7,2)) as oneTimeDeduction,
+'' as biweeklyDeductionDescription,
+case when a.onetimeDedGiftFlag = 'Y' then
+'Payroll'
+when a.onetimeCashGiftFlag = 'Y' then
+'Cash'
+when a.onetimeCheckGiftFlag = 'Y' then
+'Check'
+when a.creditGiftFlag = 'Y' then
+'Credit'
+when a.debitGiftFlag = 'Y' then
+'Debit'
+else
+''
+end as oneTimeDeductionDescription,
+'' as deductionType,
+a.Phone_ext as spouse,
+a.RFPYear as spouseEmployer,
+cast(substring(a.ExtAttr,0,7) + '.' + substring(a.ExtAttr,7,2) as decimal(8,2)) as spouseAmt,
+case
+when a.cornerstoneGiftFlag = 'Y'
+then 'cornerstone'
+when a.pillarGiftFlag = 'Y'
+then 'pillar'
+when a.pioneerGiftFlag = 'Y'
+then 'pioneer'
+when a.toquevilleGiftFlag = 'Y'
+then 'cornerstone'
+else 'nothing'
+end as fastTrackPlan,
+case when a.Fax_area = 'Y' then 1 else 0 end as communityPlan,
+cast(a.Phone_number as integer)as communityPlanPercentage,
+cast(a.C_VAR as integer) as educationPercentage,
+cast(a.C_ATTR as integer) as financialStabilityPercentage,
+cast(a.C_VALUE as integer)as healthPercentage,
+dateadd(s,cast(a.pledgeDate as bigint)/1000, '1970-01-01') as created,
+0 as additionalAgency,
+case a.willAndEstateFlag when 'Y' then 1 else 0 end as willAndEstate,
+case a.willAndEstateInfoFlag when 'Y' then 1 else 0 end as willAndEstateInfo,
+0 as loyalContributor
+FROM united_way_original_data a
+WHERE 1=1
+and a.pledgeDate <> '00000000';

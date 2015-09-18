@@ -80,18 +80,19 @@ public class DonationController {
 
 
 
-
+        Json json = Json.object();
         ColumnMapRowMapper rowMapper = new ColumnMapRowMapper();
         List<Map<String, Object>> rows = template.query("select firstName, lastName, Department from dbo.united_way_original_data where EntityID = ?", rowMapper, eid);
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
+        if(!rows.isEmpty() && rows !=  null) {
+            Map<String, Object> row = rows.get(0);
 
-        Map<String, Object> row = rows.get(0);
-        Json json = Json.object();
-        for(Map.Entry<String, Object> entry : row.entrySet()) {
+            for (Map.Entry<String, Object> entry : row.entrySet()) {
 
-            json.set(entry.getKey(), entry.getValue());
+                json.set(entry.getKey(), entry.getValue());
 
+            }
         }
 
 
