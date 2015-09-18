@@ -62,11 +62,12 @@
             </div>
 
 
-            <!-- TODO: Create dropdown to select one of the following: -->
+            <!-- 
 
             <div class="row">
             <div class="col-sm-6">
             <div class="form-group">
+
 
               <div class="row">
               <div class="col-sm-8">
@@ -84,9 +85,10 @@
               </div>
               </div>
             </div>
+            -->
 
-            <div class="row" ng-show="donationFrequency == 'biweekly'">
-            <div class="col-sm-8">
+            <div class="row">
+            <div class="col-sm-6">
             <div class="form-group">
             <label for="biweekly">My bi-weekly deduction:</label>
               <div class="input-group" ng-class="{'has-error': unitedway_form.biweekly.$invalid && unitedway_form.biweekly.$touched}">
@@ -107,22 +109,63 @@
             </div>
           </div>
         </div>
-                <!-- <span class="input-group-addon">.00</span> -->
-            </div>
-            </div>
 
 
-            <div class="row" ng-show="donationFrequency == 'onetime'">
-            <div class="col-sm-4">
+            <div class="row">
+              <div 
+              class="form-group col-sm-6" 
+              >
+              <select
+                id="biWeeklyDeductionDescription"
+                name="biWeeklyDeductionDescription"
+                ng-model="obj.biWeeklyDeductionDescription"
+                class="form-control"
+                ng-required="obj.biweeklyDeduction > 0"
+                ng-change="validateDeduction()"
+              >
+                 <option value="">Please select one of the following:</option>
+                  <option 
+                  value="Payroll"
+                  >Payroll Deduction
+                  </option> 
+
+                  <option 
+                  value="Cash"
+                  >Cash*
+                  </option>
+
+                  <option 
+                  value="Check"
+                   >Check*
+                   </option>
+
+                  <option 
+                  value="Credit" 
+                  >Credit**
+                  </option>
+
+                  <option 
+                  value="Debit" 
+                  >Debit**
+                  </option>
+
+                </select>
+                </div>
+              </div>
+
+
+
+
+            <div class="row">
+            <div class="col-sm-6">
             <div class="form-group">
             <label for="onetime">My one-time donation:</label>
-            <div class="input-group" ng-class="{'has-error': unitedway_form.onetime.$invalid && unitedway_form.onetime.$touched}">
+            <div class="input-group">
                 <span class="input-group-addon">$</span>
                 <input name="onetime" size="5" type="text" id="onetime"
                 class="form-control"
                 placeholder="US Dollars"
                 ng-model="obj.oneTimeDeduction"
-                ng-required="deductionType == 'onetime'"
                 ng-focus="obj.oneTimeDeduction = ''"
                 ng-change="calculateTotalAnnualDonation()"
                 ng-blur="validateDeduction()"
@@ -136,61 +179,54 @@
             </div>
             </div>
             </div>
-
+            
+            <div class="row">
               <div 
-              class="form-group" 
-              ng-required="obj.deductionType"
+              class="form-group col-sm-6" 
+              ng-class="{'has-error': unitedway_form.onetime > 0 && unitedway_form.oneTimeDeductionType.value == ''}"
               >
-                  <input 
-                  type="radio" 
-                  name="donationtype" 
-                  ng-model="obj.deductionType" 
-                  id="payroll" 
+              <select
+                name="oneTimeDeductionDescription"
+                id="oneTimeDeductionDescription"
+                ng-model="obj.oneTimeDeductionDescription"
+                class="form-control"
+                ng-required="obj.oneTimeDeduction > 0"
+                ng-change="validateDeduction()"
+              >
+                 <option value="">Please select one of the following:</option>
+                  <option 
                   value="Payroll"
-                  ng-disabled="donationFrequency == 'reset'"/>
+                  >Payroll Deduction
+                  </option> 
 
-                  <label for="payroll">Payroll Deduction</label> <br/>
-
-                  <input 
-                  type="radio" 
-                  name="donationtype" 
-                  ng-model="obj.deductionType" 
-                  id="cash" 
+                  <option 
                   value="Cash"
-                  ng-disabled="donationFrequency == 'reset'"/>
+                  >Cash*
+                  </option>
 
-                  <label for="cash">Cash*</label><br>
-
-                  <input 
-                  type="radio" 
-                  name="donationtype" 
-                  ng-model="obj.deductionType" 
-                  id="check" 
+                  <option 
                   value="Check"
-                  ng-disabled="donationFrequency == 'reset'" />
+                   >Check*
+                   </option>
 
-                  <label for="check">Check*</label><br>
-
-                  <input 
-                  type="radio" 
-                  name="donationtype" 
-                  ng-model="obj.deductionType" 
-                  id="credit" 
+                  <option 
                   value="Credit" 
-                  ng-disabled="donationFrequency == 'reset'"/>
+                  >Credit**
+                  </option>
 
-                  <label for="credit">Credit**</label><br>
-
-                  <input 
-                  type="radio" 
-                  name="donationtype" 
-                  ng-model="obj.deductionType" 
-                  id="debit" 
+                  <option 
                   value="Debit" 
-                  ng-disabled="donationFrequency == 'reset'"/>
+                  >Debit**
+                  </option>
 
-                  <label for="debit">Debit**</label>
+                </select>
                 </div>
+
+                <div class="help-block" ng-messages="unitedway_form.oneTimeDeductionType.$error" ng-if="unitedway_form.onetime.$touched">
+                <div ng-messages-include="views/messages.html"></div>
+              </div>
+              </div>
+
     <div class="row">
     <div class="col-sm-12">
     

@@ -40,7 +40,7 @@ angular
         templateUrl: 'views/thanks.html'
       })
 
-      .otherwise({ redirectTo: '/login' });
+      .otherwise({ redirectTo: '/error' });
   }])
   .run(['$rootScope', '$location', '$cookieStore', '$http',
     function ($rootScope, $location, $cookieStore, $http) {

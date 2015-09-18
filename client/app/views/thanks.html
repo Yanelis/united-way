@@ -1,29 +1,15 @@
 <div class="copy row thanks">
 
-      <div class="col-sm-12">
+      <div class="col-sm-12 text-center">
 
 
-            <h2>Thank You</h2>
-
-            <input name="employeename" type="hidden" id="employeename" value="" />
-
-            <input name="employeelastname" type="hidden" id="employeelastname" value="" />
-
-            <input name="employeeid" value="" type="hidden"/>
-
-            <input name="groupid" value="unitedway" type="hidden" />
-
-            <input type="hidden" name="employeedept"  value="" id="employeedept" />
-
-            <p>
-              <h4>{{donation.donor}}</h4>
-            </p>
+            <h4>Thank You, {{donation.donor}}</h4>
 
 
             <div class="row">
             <div class="col-sm-12">
 
-            <p>Your {{donation.frequency}} contribution of {{donation.amount | currency}} is greatly appreciated. Thank you for doing your part to help improve our community! </p>
+            <p>Your {{donation.frequency}} greatly appreciated. <br/> Thank you for doing your part to help our community! </p>
           </div>
         </div>
       </div>

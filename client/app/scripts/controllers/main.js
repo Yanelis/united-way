@@ -8,7 +8,7 @@
  * Controller of the clientApp
  */
 angular.module('clientApp')
-  .controller('MainCtrl', ['$scope', 'pledge', 'portalService', '$http', 'endpoints', '$filter', '$location', 'ngStorage' function ($scope, pledge, portalService, $http, endpoints, $filter, $location, $sessionStorage) {
+  .controller('MainCtrl', ['$scope', 'pledge', 'portalService', '$http', 'endpoints', '$filter', '$location', function ($scope, pledge, portalService, $http, endpoints, $filter, $location) {
     //$scope.obj = {};
     $scope.fasttrackenroll = "N";
     
@@ -28,12 +28,22 @@ angular.module('clientApp')
 
       $scope.employee = pledge.new_employee(data.data);
 
+    }, function(error){
+
+        var emp = {
+          firstName: 'Test',
+          lastName: 'Data',
+          Department: 'testDept'
+        }
+
+        $scope.employee = pledge.new_employee(emp);
+
     });
 
     var promise = $http.get(endpoints.pledgeUrl + '/employee/' + $scope.eid);
     promise.then(function(data){
 
-        //console.log(data);
+        ////console.log(data);
         $scope.obj = pledge.new_pledge(data.data[0]);
 
 
@@ -58,20 +68,20 @@ angular.module('clientApp')
 
 
         //Set the donation type dropdown to the correct value based on the type of donation user has madae before.
-        if($scope.obj.biweeklyDeduction === 0 && $scope.obj.oneTimeDeduction === 0){
-          $scope.donationFrequency = 'reset';
-          $scope.obj.donationAmount = 0;
-        }
-
-        if($scope.obj.biweeklyDeduction !== 0){
-          $scope.donationFrequency = 'biweekly';
-          $scope.calculateTotalAnnualDonation();
-        }
-
-        if($scope.obj.oneTimeDeduction !== 0){
-          $scope.donationFrequency = 'onetime';
-          $scope.calculateTotalAnnualDonation();
-        }
+        //if($scope.obj.biweeklyDeduction === 0 && $scope.obj.oneTimeDeduction === 0){
+        //  $scope.donationFrequency = 'reset';
+        //  $scope.obj.donationAmount = 0;
+        //}
+//
+        //if($scope.obj.biweeklyDeduction !== 0){
+        //  $scope.donationFrequency = 'biweekly';
+        //  $scope.calculateTotalAnnualDonation();
+        //}
+//
+        //if($scope.obj.oneTimeDeduction !== 0){
+        //  $scope.donationFrequency = 'onetime';
+        //  $scope.calculateTotalAnnualDonation();
+        //}
 
         $scope.obj.eid = $scope.eid;
 
@@ -113,18 +123,15 @@ angular.module('clientApp')
 
     });
 
+    //Use both one time and biweekly values to calculate the total donation amount.
 
     $scope.calculateTotalAnnualDonation = function(){
-      if($scope.donationFrequency == 'biweekly'){
-        $scope.obj.donationAmount = $scope.obj.biweeklyDeduction * 26;
+      if($scope.obj.biweeklyDeduction > 0){
+        $scope.obj.donationAmount += $scope.obj.biweeklyDeduction * 26;
       } 
 
-      if($scope.donationFrequency == 'onetime'){
-        $scope.obj.donationAmount = $scope.obj.oneTimeDeduction;
-      }
-
-      if($scope.donationFrequency == 'reset'){
-        $scope.obj.donationAmount = 0;
+      if($scope.oneTimeDeduction > 0){
+        $scope.obj.donationAmount += $scope.obj.oneTimeDeduction;
       }
     }
 
@@ -143,18 +150,35 @@ angular.module('clientApp')
   
       }, function(error){
 
-          console.log(error);
+          //console.log(error);
       });
+    }
+
+    $scope.validateDeductionType = function(){
+      if($scope.obj.oneTimeDeduction > 0 && !$scope.obj.oneTimeDeductionDescription){
+        $scope.unitedway_form.oneTimeDeductionDescription.$setValidity("selectOne", false);
+      } else {
+        $scope.unitedway_form.oneTimeDeductionDescription.$setValidity("selectOne", true);
+      }
+
+      if($scope.obj.biWeeklyDeduction > 0 && !$scope.obj.biWeeklyDeductionDescription){
+        $scope.unitedway_form.biWeeklyDeductionDescription.$setValidity("selectOne", false);
+      } else {
+        $scope.unitedway_form.biWeeklyDeductionDescription.$setValidity("selectOne", true);
+      }
     }
 
     $scope.validateDeduction = function(){
 
       $scope.calculateTotalAnnualDonation();
 
-      if($scope.donationFrequency != 'reset' && $scope.obj.donationAmount < 1000){
+      $scope.validateDeductionType();
+
+      if($scope.obj.donationAmount < 1000){
         $scope.obj.donationAmount = 0;
         $scope.leadershipCircleFlag = false;
-        $scope.obj.deductionType = null;
+        $scope.obj.biweeklyDeductionDescription = null;
+        $scope.obj.oneTimeDeductionDescription = null;
       }
 
     }
@@ -162,7 +186,8 @@ angular.module('clientApp')
     $scope.resetDeduction = function(){
         $scope.obj.biweeklyDeduction = 0;
         $scope.obj.oneTimeDeduction = 0;
-        $scope.obj.deductionType = null;
+        $scope.obj.biweeklyDeductionDescription = null;
+        $scope.obj.oneTimeDeductionDescription = null;
         $scope.leadershipCircleFlag = false;
 
         $scope.calculateTotalAnnualDonation();
@@ -170,7 +195,7 @@ angular.module('clientApp')
  
 
     $scope.save = function(){
-      console.log(" save .... ");
+      //console.log(" save .... ");
       
       //Validating the other organization objects we created earlier. This will check for null or empty strings and will call removeOrganization(index) to remove them if found.
       if($scope.obj.organizationDonations.length > 0){
@@ -215,23 +240,44 @@ angular.module('clientApp')
         $scope.obj.spouseAmt = removeCommas($scope.obj.spouseAmt);
       }
 
+      //Calculate amount and create object to display on thank you page.
+      var amount = (parseFloat($scope.obj.biweeklyDeduction) * 26) + parseFloat($scope.obj.oneTimeDeduction);
+
+      $scope.setDonationFrequency();
 
       var donation = {
         'donor': $scope.employee.firstName + ' ' + $scope.employee.lastName,
-        'amount': $scope.obj.donationAmount,
-        'frequency': $scope.donationFrequency != 'onetime' ? 'bi-weekly': 'one time'
+        'amount': amount,
+        'frequency': $scope.donationFrequency
       };
 
-      $localStorage.donation = donation;
+      //Save object to localstorage to access it from thank you page.
+      window.localStorage.setItem('donation', JSON.stringify(donation));
 
      $scope.obj.save().then(function(data){
-       console.log("data was saved");
-       //window.location = "http://www.miamidade.gov/unitedway/thank-you.asp"
+       //console.log("data was saved");
+
        $location.path("/thank-you");
 
      }, function(error){
-       console.log("error saving data");
+       //console.log("error saving data");
+       $location.path("/error");
      })
+    }
+
+    $scope.setDonationFrequency = function() {
+      if($scope.obj.biweeklyDeduction > 0 && $scope.obj.oneTimeDeduction > 0)
+      {
+        $scope.donationFrequency = "bi-weekly contribution of $" + $scope.obj.biweeklyDeduction + " and one time contribution of $" + $scope.obj.oneTimeDeduction + " are ";
+      }
+
+      if($scope.obj.biweeklyDeduction > 0 && $scope.obj.oneTimeDeduction == 0){
+        $scope.donationFrequency = "bi-weekly contribution of $" + $scope.obj.biweeklyDeduction + " is";
+      }
+
+      if($scope.obj.oneTimeDeduction > 0 && $scope.obj.biweeklyDeduction == 0){
+        $scope.donationFrequency = "one time contribution of $" + $scope.obj.oneTimeDeduction + " is";
+      }
     }
 
 
@@ -255,7 +301,8 @@ angular.module('clientApp')
 
       return num;
     }
-    
+
+
     function validateOrganizations(){
       //Fancy deep copy of array using underscore.
       var copy = _.map($scope.obj.organizationDonations, _.clone);

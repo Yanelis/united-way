@@ -32,9 +32,9 @@ function pledge_obj(json){
   this.email = null;
   this.biweeklyDeduction = 0;
   this.oneTimeDeduction = 0;
-  this.deductionType = null;
-
-
+  
+  this.oneTimeDeductionDescription = null;
+  this.biweeklyDeductionDescription = null;
   this.ename = null;
   this.eLastName = null;
   this.eDept = null;
@@ -67,8 +67,9 @@ function pledge_obj(json){
     this.email = json.email;
     this.biweeklyDeduction = json.biweeklyDeduction;
     this.oneTimeDeduction = json.oneTimeDeduction;
-    this.deductionType = json.deductionType;
 
+    this.oneTimeDeductionDescription = json.oneTimeDeductionDescription;
+    this.biweeklyDeductionDescription = json.biweeklyDeductionDescription;
     this.ename = json.ename;
     this.eLastName = json.eLastName;
     this.eDept = json.eDept;

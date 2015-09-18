@@ -8,8 +8,8 @@
  * Controller of the clientApp
  */
 angular.module('clientApp')
-  .controller('ThanksCtrl', ['$scope', 'ngStorage', function ($scope, $localStorage) {
+  .controller('ThanksCtrl', ['$scope', function ($scope) {
 
-    $scope.donation = $localStorage.donation;
+    $scope.donation = JSON.parse(window.localStorage.getItem('donation'));
 
   }]);
