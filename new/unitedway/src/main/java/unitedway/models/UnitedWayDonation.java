@@ -93,6 +93,15 @@ public class UnitedWayDonation implements Serializable {
     @Column(nullable = true)
     private boolean loyalContributor;
 
+    @Column(nullable = true)
+    private boolean excellenceOnePctFlag;
+    @Column(nullable = true)
+    private boolean excellenceTwoPctFlag;
+
+
+    @Column(nullable = true)
+    private String source;
+
 
 
 
@@ -292,6 +301,29 @@ public class UnitedWayDonation implements Serializable {
         this.oneTimeDeductionDescription = oneTimeDeductionDescription;
     }
 
+    public boolean isExcellenceOnePctFlag() {
+        return excellenceOnePctFlag;
+    }
+
+    public void setExcellenceOnePctFlag(boolean excellenceOnePctFlag) {
+        this.excellenceOnePctFlag = excellenceOnePctFlag;
+    }
+
+    public boolean isExcellenceTwoPctFlag() {
+        return excellenceTwoPctFlag;
+    }
+
+    public void setExcellenceTwoPctFlag(boolean excellenceTwoPctFlag) {
+        this.excellenceTwoPctFlag = excellenceTwoPctFlag;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
 
 
     /* public void addUnitedWayOrganization(UnitedWayOrganization obj){
