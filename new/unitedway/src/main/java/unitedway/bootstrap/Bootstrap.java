@@ -28,27 +28,5 @@ public class Bootstrap implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception{
 
-        /*Set<UnitedWayOrganization> orglist = new HashSet<UnitedWayOrganization>();
-
-        UnitedWayDonation saved;
-        UnitedWayDonation unitedWayDonation = new UnitedWayDonation();
-        unitedWayDonation.setEid("123456");
-        unitedWayDonation.setEmail("david492000@yahoo.com");
-        unitedWayDonation.setCreated(new Date());
-        saved = donations.save(unitedWayDonation);
-
-        UnitedWayOrganization org = null;
-        for(int a = 0; a < 3; a++){
-            org = new UnitedWayOrganization("hello" + a, 11);
-           org.setDonation(saved);
-            organizations.save(org);
-            orglist.add(org);
-        }
-
-        saved = donations.findOne(saved.getId());
-
-
-        */
-
     }
 }

@@ -1,21 +1,19 @@
 package unitedway.controllers;
 
 
-import mjson.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.ColumnMapRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.context.Context;
+import unitedway.mail.UnitedWayMail;
 import unitedway.models.UnitedWayDonation;
 import unitedway.repo.DonationRepo;
+import unitedway.services.UserService;
 
 import javax.validation.Valid;
-import java.io.ByteArrayOutputStream;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by david492000 on 6/9/15.
@@ -27,8 +25,16 @@ public class DonationController {
     @Autowired
     DonationRepo repo;
 
+
+
     @Autowired
-    JdbcTemplate template;
+    UnitedWayMail mail;
+
+    @Autowired
+    UserService userService;
+
+
+    final String source = "ONLINE";
 
     @RequestMapping(method= RequestMethod.GET)
     public Iterable<UnitedWayDonation> index(){
@@ -45,7 +51,20 @@ public class DonationController {
     @RequestMapping(method=RequestMethod.POST)
     public UnitedWayDonation create(@RequestBody @Valid UnitedWayDonation donation){
 
-        donation.setEid("123456");
+
+        try {
+
+            Context context = mail.prepareContext(donation);
+            String body = mail.processTemplate(context, "DonationTemplate");
+            String jsonMessage = mail.buildMessage(donation.getEmail(), "noreply@miamidade.gov","United Way", body, "Thank You for Your United Way donation!");
+            String response = mail.emailRequest(jsonMessage);
+        }catch(Exception ex){
+            System.out.println("email didn't go trough");
+            ex.printStackTrace();
+        }
+
+
+        donation.setSource(source);
         donation.setCreated(new Date());
         return repo.save(donation);
     }
@@ -58,6 +77,7 @@ public class DonationController {
         if(exist == null)
             return new ResponseEntity<UnitedWayDonation>(donation, HttpStatus.BAD_REQUEST);
 
+        donation.setSource(source);
         UnitedWayDonation updated = repo.save(donation);
         return new ResponseEntity<UnitedWayDonation>(updated, HttpStatus.OK);
     }
@@ -74,32 +94,30 @@ public class DonationController {
     @RequestMapping("/employee/{eid}/info")
     public ResponseEntity<String> getEmployeeInfo(@PathVariable String eid){
 
-        //apend 0s
-        for(int i = eid.length(); i < 8; i++)
-            eid = "0"+eid;
 
-
-
-
-        ColumnMapRowMapper rowMapper = new ColumnMapRowMapper();
-        List<Map<String, Object>> rows = template.query("select firstName, lastName, Department from dbo.united_way_original_data where EntityID = ?", rowMapper, eid);
-
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-
-        Map<String, Object> row = rows.get(0);
-        Json json = Json.object();
-        for(Map.Entry<String, Object> entry : row.entrySet()) {
-
-            json.set(entry.getKey(), entry.getValue());
-
-        }
-
-
-        return new ResponseEntity<String>(json.toString(), HttpStatus.OK);
+        return new ResponseEntity<String>(userService.getEmployeeInfo(eid).toString(), HttpStatus.OK);
     }
 
 
 
+    @RequestMapping("/testemail")
+    public ResponseEntity<String> testEmail(){
+
+
+        UnitedWayDonation donation = new UnitedWayDonation();
+        donation.setEmail("SANCHOO@miamidade.gov");
+        donation.setEid("199586");
+        donation.setBiweeklyDeduction(55.33);
+
+        Context context = mail.prepareContext(donation);
+        String body = mail.processTemplate(context, "DonationTemplate");
+        String jsonMessage = mail.buildMessage(donation.getEmail(), "noreply@miamidade.gov","United Way", body, "Thank You for Your United Way donation!");
+
+            String response = mail.emailRequest(jsonMessage);
+
+
+        return new ResponseEntity<String>(response, HttpStatus.OK);
+    }
 
 
 
