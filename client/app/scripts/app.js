@@ -16,20 +16,16 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ngMessages'
+    'ngMessages',
+    'ngCacheBuster',
+    'fcsa-number'
   ])
 
   .config(['$routeProvider', function ($routeProvider) {
 
+    //httpRequestInterceptorCacheBusterProvider.setMatchList([/.*views.*/,/.*images.*/, /.*styles.*/]);
+
     $routeProvider
-      /*.when('/login', {
-        controller: 'LoginController',
-        templateUrl: 'views/login.html'
-      })
-      .when('/logout',{
-        controller: 'LogoutController',
-        templateUrl: 'views/login.html'
-      })*/
       .when('/', {
         controller: 'MainCtrl',
         templateUrl: 'views/main.html'
@@ -38,6 +34,10 @@ angular
       .when('/thank-you', {
         controller: 'ThanksCtrl',
         templateUrl: 'views/thanks.html'
+      })
+
+      .when('/error', {
+        templateUrl: 'views/error.html'
       })
 
       .otherwise({ redirectTo: '/error' });

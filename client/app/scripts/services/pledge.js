@@ -59,7 +59,7 @@ function pledge_obj(json){
 
   if(!_.isNull(json) && !_.isUndefined(json)){
 
-    console.log(json);
+
     this.id = json.id;
     this.eid = json.eid;
     this.organizationDonations = json.organizationDonations;
@@ -89,6 +89,8 @@ function pledge_obj(json){
     this.healthPercentage = json.healthPercentage;
     this.created = json.created;
     this.updated = json.updated;
+
+    console.log(json);
 
   }
 }
