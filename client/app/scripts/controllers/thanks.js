@@ -12,4 +12,5 @@ angular.module('clientApp')
 
     $scope.donation = JSON.parse(window.localStorage.getItem('donation'));
 
+    //$window.scrollTo(0, 0);
   }]);

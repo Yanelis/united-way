@@ -196,6 +196,7 @@ h2{
     background: #fff;
     box-shadow: 0 0 5px #666;
     width: 850px;
+    min-height: 600px;
   }
 
 
@@ -207,4 +208,13 @@ label.required::after {
   min-height: 600px !important;
 }
 
+
+p[ng-message]{
+  color: red;
+}
+
+.bg-danger{
+  padding: 15px; 
+  font-size: 16px;
+}
 
