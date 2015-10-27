@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: unitedway
-Implementation-Version: 0.0.1-SNAPSHOT
-Implementation-Vendor-Id: gov.miamidade
-Build-Jdk: 1.7.0_79
-Built-By: david492000
-Created-By: IntelliJ IDEA
-Main-Class: unitedway.UnitedwayApplication
-
