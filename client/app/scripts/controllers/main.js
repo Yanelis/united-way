@@ -11,7 +11,7 @@ angular.module('clientApp')
   .controller('MainCtrl', ['$scope', 'pledge', 'portalService', '$http', 'endpoints', '$filter', '$location', function ($scope, pledge, portalService, $http, endpoints, $filter, $location) {
     //$scope.obj = {};
     $scope.fasttrackenroll = "N";
-    $scope.donationAmount = 0;
+    //$scope.donationAmount = 0;
     
     $scope.eid = portalService.getUserId();
 
@@ -28,6 +28,10 @@ angular.module('clientApp')
     employee.then(function(data){
 
       $scope.employee = pledge.new_employee(data.data);
+
+      if($scope.employee.email){
+        $scope.unitedway_form.email.$setValidity("email", true);
+      }
 
     }, function(error){
 
@@ -52,9 +56,17 @@ angular.module('clientApp')
         $scope.fastTrackFlag = false;
 
         $scope.familyGiftFlag = $scope.obj.spouseAmt == 0 ? false:true;
-        $scope.familyGiftFlag = !$scope.obj.spouse ? false:true;
-        $scope.familyGiftFlag = !$scope.obj.spouseEmployer ? false:true;
 
+        if(/^\s+$/.test($scope.obj.spouseAmt) || !$scope.obj.spouseAmt){
+          $scope.familyGiftFlag = false;
+        }
+
+
+        if(/^\s+$/.test($scope.obj.spouseEmployer) || !$scope.obj.spouseEmployer){
+          $scope.familyGiftFlag = false;
+        }
+
+        $scope.donationAmount = parseFloat($scope.obj.oneTimeDeduction) + parseFloat($scope.obj.spouseAmt) + (parseFloat($scope.obj.biweeklyDeduction) * 26) + parseFloat($scope.fastTrackAmount);
 
         //Checks if the user is already enrolled in the fast track plan.
         if($scope.obj.fastTrackPlan != undefined || !_.isNull($scope.obj.fastTrackPlan) || $scope.obj.fastTrackPlan != 'nothing'){
@@ -178,10 +190,11 @@ angular.module('clientApp')
         $scope.calculateTotalAnnualDonation();
 
 
-        $scope.obj.eid = $scope.eid;
+        //$scope.obj.eid = $scope.eid;
+        $scope.obj.eid = $scope.employeeID;
 
         if(!_.isNull($scope.obj.email)){
-          $scope.unitedway_form.$valid = true;
+          $scope.unitedway_form.email.$valid = true;
         }
 
         if($scope.donationAmount > 1000){
