@@ -19,7 +19,7 @@ angular.module('clientApp')
       $scope.employeeID = $scope.eid.substring(1, $scope.eid.length);
     } else {
       $scope.employeeID = $scope.eid;
-    }
+    } 
 
     var d = new Date();
 
@@ -41,7 +41,7 @@ angular.module('clientApp')
 
     });
 
-    var promise = $http.get(endpoints.pledgeUrl + '/employee/' + $scope.eid + '?buster=' + d.getTime());
+    var promise = $http.get(endpoints.pledgeUrl + '/employee/' + $scope.employeeID + '?buster=' + d.getTime());
     promise.then(function(data){
 
         //console.log(data);
@@ -49,40 +49,104 @@ angular.module('clientApp')
 
         //Flags to set required fields on the form.
         $scope.leadershipCircleFlag = false;
+        $scope.fastTrackFlag = false;
 
-        $scope.familyGiftFlag = !$scope.obj.spouseAmt ? false:true;
+        $scope.familyGiftFlag = $scope.obj.spouseAmt == 0 ? false:true;
         $scope.familyGiftFlag = !$scope.obj.spouse ? false:true;
         $scope.familyGiftFlag = !$scope.obj.spouseEmployer ? false:true;
 
-        if($scope.obj.fastTrackPlan != undefined || !_.isNull($scope.obj.fastTrackPlan)){
+
+        //Checks if the user is already enrolled in the fast track plan.
+        if($scope.obj.fastTrackPlan != undefined || !_.isNull($scope.obj.fastTrackPlan) || $scope.obj.fastTrackPlan != 'nothing'){
           $scope.fastTrackPlanType = $scope.obj.fastTrackPlan;
-          $scope.fastTrackFlag = false;
           $scope.fastTrackPlanFlag = true;
+
         }
 
-        //$scope.fastTrackPlanFlag = !$scope.obj.fastTrackPlan ? false:true;
+        if(_.isNull($scope.obj.fastTrackPlan) || $scope.obj.fastTrackPlan == 'nothing'){
+          $scope.fastTrackPlanFlag = false;
+          $scope.fastTrackFlag = false;
+        } else {
+          $scope.fastTrackPlanFlag = true;
+          $scope.fastTrackFlag = true;
 
-        $scope.communityPlanFlag = true;
+          $scope.resetDeduction();
+        }
 
+        //Setting the value for the excellence club field.
+        if($scope.obj.excellenceTwoPctFlag){
+          $scope.biweekly = true;
+          $scope.showBiweeklyDropdown = true;
+          $scope.biweeklyAmount = "two-percent";
+        }
+
+        if($scope.obj.excellenceOnePctFlag){
+          $scope.biweekly = true;
+          $scope.showBiweeklyDropdown = true;
+          $scope.biweeklyAmount = "one-percent";
+        }
+
+        //if(!_.isNull($scope.obj.biweeklyDeductionDescription) && !_.isUndefined($scope.obj.//biweeklyDeductionDescription)){
+        //  $scope.biweekly = true;
+        //  $scope.showBiweeklyDropdown = true;
+        //  $scope.biweeklyAmount = 'otherAmount';
+        //}
+
+        //Setting the community Plan Flag to true.
+        $scope.communityPlanFlag = $scope.obj.communityPlan;
+        $scope.obj.communityPlanPercentage = $scope.obj.communityPlanPercentage == '' ? 0 : $scope.obj.communityPlanPercentage;
+
+        if($scope.obj.communityPlanPercentage > 0){
+          $scope.validatePercentages ();
+        }
+
+        if($scope.obj.educationPercentage > 0){
+          $scope.validatePercentages();
+        }
+
+        if($scope.obj.financialStabilityPercentage > 0){
+          $scope.validatePercentages();
+        }
+
+        if($scope.obj.healthPercentage > 0){
+          $scope.validatePercentages();
+        }
+
+
+        //Setting bi-weekly deduction type.
         if($scope.obj.biweeklyDeduction > 0){
           $scope.deductionType = 'biweekly';
+          $scope.showBiweeklyDropdown = true;
+
+          if(!$scope.obj.excellenceOnePctFlag && !$scope.obj.excellenceTwoPctFlag){
+            $scope.obj.otherAmount = true;
+            $scope.biweeklyAmount = 'otherAmount';
+          }
         } 
+        //else {
+        //  $scope.biweeklyAmount = 'reset';
+        //}
 
         if($scope.obj.oneTimeDeduction > 0){
           $scope.deductionType = 'onetime';
         }
 
         if($scope.obj.oneTimeDeduction == 0 && $scope.obj.biweeklyDeduction == 0){
-          $scope.deductionType = 'reset';
+          if(!$scope.obj.excellenceOnePctFlag || !$scope.obj.excellenceTwoPctFlag){
+            $scope.deductionType = 'reset';
+          }
         }
 
-        //Set the flag for focusAreas to true if the user has entered a percentage for any of the following three fields. 
-        //if($scope.obj.educationPercentage > 0 || $scope.obj.//financialStabilityPercentage > 0 || $scope.obj.healthPercentage > 0){
-        //  $scope.focusAreas = true;
-        //}
+
         
         //Set the flag for other organizations to true if the organizationDonations array has a value.
-        $scope.otherOrgFlag = $scope.obj.organizationDonations.length > 0 ? true:false;
+        //$scope.otherOrgFlag = $scope.obj.organizationDonations.length > 0 ? true:false;
+
+        if(_.isUndefined($scope.obj.otherOrganization)){
+          $scope.obj.otherOrganization = false;
+        }
+        
+        $scope.otherOrgFlag = $scope.obj.otherOrganization;
 
         if($scope.otherOrgFlag){
 
@@ -107,7 +171,9 @@ angular.module('clientApp')
               $scope.thirdOrg = $scope.addOrganization();
             }
 
-        }
+            $scope.validatePercentages();
+
+        } 
 
         $scope.calculateTotalAnnualDonation();
 
@@ -129,47 +195,88 @@ angular.module('clientApp')
 
     });
 
+    $scope.setFastTrackDonation = function(){
+
+      if(!$scope.fastTrackFlag){
+        $scope.ftDonationAmount = null;
+        return false;
+      }
+
+      var plans = [
+      {
+        'name': 'cornerstone',
+        'value': 500
+      },
+      {
+        'name': 'pillar',
+        'value': 1000
+      },
+      {
+        'name': 'pioneer',
+        'value': 2500
+      },
+      {
+        'name': 'tocqueville',
+        'value': 5000
+      }
+      ];
+
+      $scope.ftDonationAmount = _.find(plans, function(plan){
+        return plan.name == $scope.fastTrackPlanType;
+      })
+    }
+
     //Use both one time and biweekly values to calculate the total donation amount.
 
     $scope.calculateTotalAnnualDonation = function(){
 
-        //if(otd.indexOf(',') > -1){
-          $scope.otDonation = "" + $scope.obj.oneTimeDeduction;
-          $scope.otDonation.replace(/\,/g,'');
-        //}
-
-        //if(bwd.indexOf(',') > -1){
-          $scope.bwDonation = "" + $scope.obj.biweeklyDeduction;
-          $scope.bwDonation.replace(/\,/g,'');
-        //}
-
-
         //Making sure a value is defined.
-        if($scope.obj.oneTimeDeduction == undefined){
+        if(_.isNull($scope.obj.oneTimeDeduction) || $scope.obj.oneTimeDeduction == undefined){
           $scope.obj.oneTimeDeduction = 0;
         }
 
-        if($scope.obj.biweeklyDeduction == undefined){
+        if(_.isNull($scope.obj.biweeklyDeduction) || $scope.obj.biweeklyDeduction == undefined){
           $scope.obj.biweeklyDeduction = 0;
         }
 
 
         $scope.obj.oneTimeDeduction = $scope.obj.oneTimeDeduction == '' ? 0 : $scope.obj.oneTimeDeduction;
-        //var biweekly = $scope.obj.biweeklyDeduction == '' ? 0 : $scope.obj.biweeklyDeduction;
         $scope.obj.biweeklyDeduction = $scope.obj.biweeklyDeduction == '' ? 0 : $scope.obj.biweeklyDeduction;
 
-        //$scope.obj.spouseAmt = $scope.obj.spouseAmt = '' ? 0: $scope.obj.spouseAmt;
+        //if($scope.fastTrackFlag){
+        $scope.setFastTrackDonation();
+        //}
+        
+        $scope.fastTrackAmount = $scope.ftDonationAmount ? $scope.ftDonationAmount.value : 0;
 
-        $scope.donationAmount = parseFloat($scope.obj.oneTimeDeduction) + parseFloat($scope.obj.spouseAmt) + (parseFloat($scope.obj.biweeklyDeduction) * 26);
+
+        $scope.donationAmount = parseFloat($scope.obj.oneTimeDeduction) + parseFloat($scope.obj.spouseAmt) + (parseFloat($scope.obj.biweeklyDeduction) * 26) + parseFloat($scope.fastTrackAmount);
+
     }
 
+    $scope.setFastTrack = function(){
+      $scope.changeFastTrack();
 
-    $scope.exitFastTrack = function(){
-      if(!$scope.obj.fastTrackFlag){
-        $scope.fastTrackPlanType = '';
-        $scope.obj.fastTrackPlan = false;
+      if($scope.fastTrackFlag){
+        $scope.resetDeduction();
+        $scope.deductionType = 'reset';
+        $scope.showBiweeklyDropdown = false;
       }
     }
+
+
+    $scope.changeFastTrack = function(){
+      if(!$scope.fastTrackPlanFlag){
+        $scope.fastTrackPlanType = '';
+        $scope.fastTrackFlag = false;
+        $scope.fastTrackAmount = 0;
+        $scope.calculateTotalAnnualDonation();
+      } else {
+        $scope.fastTrackFlag = true;
+      }
+
+    }
+
 
     $scope.addOrganizationFromData = function(json){
       var newOrg = pledge.new_organization(json);
@@ -225,18 +332,13 @@ angular.module('clientApp')
         $scope.unitedway_form.oneTimeDeductionDescription.$setValidity("selectOne", true);
       }
 
-      if($scope.obj.biWeeklyDeduction > 0 && !$scope.obj.biweeklyDeduction){
-        $scope.unitedway_form.biweeklyDeductionDescription.$setValidity("selectOne", false);
-      } else {
-        $scope.unitedway_form.biweeklyDeduction.$setValidity("selectOne", true);
-      }
     }
 
     $scope.validateDeduction = function(){
 
-      $scope.calculateTotalAnnualDonation();
+      $scope.validateDeductionType();
 
-      //$scope.validateDeductionType();
+      $scope.calculateTotalAnnualDonation();
 
       if($scope.donationAmount < 1000){
         $scope.leadershipCircleFlag = 0;
@@ -247,12 +349,30 @@ angular.module('clientApp')
     $scope.resetDeduction = function(){
         $scope.obj.biweeklyDeduction = 0;
         $scope.obj.oneTimeDeduction = 0;
-        $scope.obj.biweeklyDeductionDescription = null;
+        //$scope.obj.biweeklyDeductionDescription = null;
         $scope.obj.oneTimeDeductionDescription = null;
         $scope.leadershipCircleFlag = false;
+        $scope.biweeklyAmount = 'reset';
+        $scope.showBiweeklyDropdown = $scope.deductionType == 'biweekly' ? true : false;
+        $scope.obj.excellenceOnePctFlag = false;
+        $scope.obj.excellenceTwoPctFlag = false;
 
         $scope.calculateTotalAnnualDonation();
     }
+
+
+    $scope.resetBiWeeklyAmount = function(){
+      //if($scope.deductionType == 'biweekly'){
+        if($scope.biweeklyAmount == "otherAmount"){
+          $scope.obj.excellenceOnePctFlag = false;
+          $scope.obj.excellenceTwoPctFlag = false;
+        }
+
+        $scope.obj.biweeklyDeduction = 0;
+        $scope.calculateTotalAnnualDonation();
+      //}
+    }
+
  
 
     $scope.save = function(){
@@ -301,18 +421,62 @@ angular.module('clientApp')
         $scope.obj.spouseAmt = removeCommas($scope.obj.spouseAmt);
       }
 
+
+      //Check the donation amount and make sure there's a value entered if the percentages have values as well.
+      if($scope.otherOrgFlag || $scope.communityPlanFlag){
+        
+        if(_.isNull($scope.donationAmount) || $scope.donationAmount === 0){
+          $scope.noAmountFlag = true;
+          $scope.unitedway_form.donationTest.$setValidity("noAmount", false);
+        }
+      }
+
+
+
+
+
+
+
       //Calculate amount and create object to display on thank you page.
-      var amount = (parseFloat($scope.obj.biweeklyDeduction) * 26) + parseFloat($scope.obj.oneTimeDeduction);
+      var amount;
 
       $scope.setDonationFrequency();
 
       $scope.obj.fastTrackPlan = $scope.fastTrackPlanType;
+      $scope.obj.deductiontype = $scope.deductionType;
+
+
+      $scope.obj.otherOrganization = $scope.otherOrgFlag;
+      $scope.obj.communityPlan = $scope.communityPlanFlag;
+
+
+      if(!$scope.biweeklyAmount == 'one-percent' || !$scope.biweeklyAmount == 'two-percent'){
+        amount = (parseFloat($scope.obj.biweeklyDeduction) * 26) + parseFloat($scope.obj.oneTimeDeduction);
+      } else {
+        amount = $scope.biweeklyAmount == 'one-percent' ? '1% of your salary' : '2% of your salary';
+      }
 
       var donation = {
         'donor': $scope.employee.firstName + ' ' + $scope.employee.lastName,
         'amount': amount,
-        'frequency': $scope.donationFrequency
+        'frequency': $scope.donationFrequency,
+        'otherOrg': $scope.obj.otherOrganization
       };
+
+      if($scope.biweeklyAmount == "one-percent"){
+        $scope.obj.excellenceOnePctFlag = true;
+        $scope.obj.excellenceTwoPctFlag = false;
+        $scope.obj.biweeklyDeduction = 0;
+        $scope.obj.oneTimeDeduction = 0;
+      }
+
+      if($scope.biweeklyAmount == "two-percent"){
+        $scope.obj.excellenceTwoPctFlag = true;
+        $scope.obj.excellenceOnePctFlag = false;
+        $scope.obj.biweeklyDeduction = 0;
+        $scope.obj.oneTimeDeduction = 0;
+      }
+
 
       //Save object to localstorage to access it from thank you page.
       window.localStorage.setItem('donation', JSON.stringify(donation));
@@ -330,15 +494,16 @@ angular.module('clientApp')
     }
 
     $scope.setDonationFrequency = function() {
-      //if($scope.obj.biweeklyDeduction > 0 && $scope.obj.oneTimeDeduction > 0)
-      //{
-      //  $scope.donationFrequency = "bi-weekly contribution of $" + $scope.obj.//biweeklyDeduction + " and one time contribution of $" + $scope.obj.//oneTimeDeduction + " are ";
-      //}
 
-      if($scope.obj.biweeklyDeduction == 0 && $scope.obj.oneTimeDeduction == 0){
-        $scope.deductionType = 'reset';
+      if($scope.biweeklyAmount == 'one-percent'){
+        $scope.deductionType = 'biweekly';
+        $scope.donationFrequency = "contribution of 1% of your salary is";
       }
 
+      if($scope.biweeklyAmount == 'two-percent'){
+        $scope.deductionType = 'biweekly';
+        $scope.donationFrequency = "contribution of 2% of your salary is";
+      }
 
       if($scope.obj.biweeklyDeduction > 0){
         $scope.deductionType = 'biweekly';
@@ -405,9 +570,12 @@ angular.module('clientApp')
       }
     }
 
-
     $scope.resetCommunityPlan = function(){
       $scope.obj.communityPlanPercentage = 0;
+
+      //if($scope.orgTotal > 0){
+        $scope.validatePercentages();
+      //}
     }
 
     $scope.resetLeadershipCircle = function(){
@@ -455,42 +623,68 @@ angular.module('clientApp')
         $scope.orgTotal = $scope.total;
       }
 
-      $scope.unitedway_form.orgPercentages.$setValidity("percentages", $scope.orgTotal == 100);
+      if ($scope.orgTotal == 0) {
+        $scope.orgValidity = true;
+      }
+
+      if($scope.communityPlanFlag && $scope.total == 0){
+        $scope.orgValidity = false;
+      }
+
+      if($scope.orgTotal > 0 && $scope.orgTotal != 100){
+        $scope.orgValidity = false;
+      }
+
+      if($scope.orgTotal == 100){
+        $scope.orgValidity = true;
+      }
+
+      if($scope.otherOrgFlag || $scope.communityPlanFlag){
+        //If either flag is set to true, then check the donation amount.
+        if(_.isNull($scope.donationAmount) || $scope.donationAmount === 0){
+
+          //If there is no donation amount specified, make sure it's not because
+          //they joined the excellence club.
+          if($scope.biweeklyAmount != "one-percent" && $scope.biweeklyAmount != "two-percent"){
+
+            //If they haven't joined the excellence club, then set the form to be invalid.
+            $scope.unitedway_form.donationTest.$setValidity("noAmount", false);
+          }
+        }
+      } else {
+        //If neither flag is checked, then the form is valid even if there's no donation.
+          $scope.unitedway_form.donationTest.$setValidity("noAmount", true);
+      }
+
+      $scope.unitedway_form.orgPercentages.$setValidity("percentages", $scope.orgValidity);
   }
 
-    $scope.percentageTotal = function(){
+  $scope.percentageTotal = function(){
 
-        //Ensuring default values for the inputs.
-        var communityPercent = $scope.obj.communityPlanPercentage == '' ? 0 : $scope.obj.communityPlanPercentage;
-        var educationPercent = $scope.obj.educationPercentage == '' ? 0 : $scope.obj.educationPercentage;
-        var financialStabilityPercent = $scope.obj.financialStabilityPercentage == '' ? 0 : $scope.obj.financialStabilityPercentage;
-        var healthPercent = $scope.obj.healthPercentage == '' ? 0 : $scope.obj.healthPercentage;
+      //Ensuring default values for the inputs.
+      var communityPercent = $scope.obj.communityPlanPercentage == '' ? 0 : $scope.obj.communityPlanPercentage;
+      var educationPercent = $scope.obj.educationPercentage == '' ? 0 : $scope.obj.educationPercentage;
+      var financialStabilityPercent = $scope.obj.financialStabilityPercentage == '' ? 0 : $scope.obj.financialStabilityPercentage;
+      var healthPercent = $scope.obj.healthPercentage == '' ? 0 : $scope.obj.healthPercentage;
 
-        $scope.total = parseInt(communityPercent) + parseInt(educationPercent) + parseInt(financialStabilityPercent) + parseInt(healthPercent);
+      $scope.total = parseInt(communityPercent) + parseInt(educationPercent) + parseInt(financialStabilityPercent) + parseInt(healthPercent);
 
-        //console.log('community: ', parseInt(communityPercent));
-        //console.log('education: ', parseInt(educationPercent));
-        //console.log('financial: ', parseInt(financialStabilityPercent));
-        //console.log('health: ', parseInt(healthPercent));
-//
-        //console.log('Percentage total:', $scope.total);
-
-    }
+  }
 
 
 
-    $scope.otherPercentageTotal = function(){
+  $scope.otherPercentageTotal = function(){
 
-        //Ensuring default values for the inputs.
-        var firstOrgPercent = $scope.firstOrg.percentage == '' ? 0 : $scope.firstOrg.percentage;
-        var secondOrgPercent = $scope.secondOrg.percentage == '' ? 0 : $scope.secondOrg.percentage;
-        var thirdOrgPercent = $scope.thirdOrg.percentage == '' ? 0 : $scope.thirdOrg.percentage;
+      //Ensuring default values for the inputs.
+      var firstOrgPercent = $scope.firstOrg.percentage == '' ? 0 : $scope.firstOrg.percentage;
+      var secondOrgPercent = $scope.secondOrg.percentage == '' ? 0 : $scope.secondOrg.percentage;
+      var thirdOrgPercent = $scope.thirdOrg.percentage == '' ? 0 : $scope.thirdOrg.percentage;
 
-        $scope.orgTotal = parseInt(firstOrgPercent) + parseInt(secondOrgPercent) + parseInt(thirdOrgPercent);
+      $scope.orgTotal = parseInt(firstOrgPercent) + parseInt(secondOrgPercent) + parseInt(thirdOrgPercent);
 
-        //console.log('Other Percentage total:', $scope.total);
+      //console.log('Other Percentage total:', $scope.total);
 
-    }
+  }
 
 
 

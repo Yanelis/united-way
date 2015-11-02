@@ -16,14 +16,16 @@ function employee_obj(json){
   this.firstName = null;
   this.lastName = null;
   this.department = null;
+  this.email = null;
 
   if(!_.isNull(json) && !_.isUndefined(json)){
     this.firstName = json.firstName;
     this.lastName = json.lastName;
     this.department = json.Department;
+    this.email = json.email;
 
   }
-}
+} 
 
 function pledge_obj(json){
   this.id = null;
@@ -34,7 +36,7 @@ function pledge_obj(json){
   this.oneTimeDeduction = 0;
   
   this.oneTimeDeductionDescription = null;
-  this.biweeklyDeductionDescription = null;
+  this.deductiontype = null;
   this.ename = null;
   this.eLastName = null;
   this.eDept = null;
@@ -42,6 +44,9 @@ function pledge_obj(json){
   this.willAndEstate = false;
   this.willAndEstateInfo = false;
   this.loyalContributor = false;
+  this.excellenceOnePctFlag = null;
+  this.excellenceTwoPctFlag = null;
+  this.otherOrganization = false;
 
 
   this.spouse = null;
@@ -59,17 +64,16 @@ function pledge_obj(json){
 
   if(!_.isNull(json) && !_.isUndefined(json)){
 
-
     this.id = json.id;
     this.eid = json.eid;
     this.organizationDonations = json.organizationDonations;
+    this.deductiontype = json.deductiontype;
 
     this.email = json.email;
-    this.biweeklyDeduction = json.biweeklyDeduction;
-    this.oneTimeDeduction = json.oneTimeDeduction;
+    this.biweeklyDeduction = parseFloat(json.biweeklyDeduction).toFixed(2);
+    this.oneTimeDeduction = parseFloat(json.oneTimeDeduction).toFixed(2);
 
     this.oneTimeDeductionDescription = json.oneTimeDeductionDescription;
-    this.biweeklyDeductionDescription = json.biweeklyDeductionDescription;
     this.ename = json.ename;
     this.eLastName = json.eLastName;
     this.eDept = json.eDept;
@@ -77,10 +81,13 @@ function pledge_obj(json){
     this.willAndEstate = json.willAndEstate;
     this.willAndEstateInfo = json.willAndEstateInfo;
     this.loyalContributor = json.loyalContributor;
+    this.excellenceOnePctFlag = json.excellenceOnePctFlag;
+    this.excellenceTwoPctFlag = json.excellenceTwoPctFlag;
+    this.otherOrganization = json.otherOrganization;
 
     this.spouse = json.spouse;
     this.spouseEmployer = json.spouseEmployer;
-    this.spouseAmt = json.spouseAmt;
+    this.spouseAmt = parseFloat(json.spouseAmt).toFixed(2);
     this.fastTrackPlan = json.fastTrackPlan;
     this.communityPlan = json.communityPlan;
     this.communityPlanPercentage = json.communityPlanPercentage;
