@@ -56,8 +56,10 @@ public class DonationController {
 
             Context context = mail.prepareContext(donation);
             String body = mail.processTemplate(context, "DonationTemplate");
+
             String jsonMessage = mail.buildMessage(donation.getEmail(), "noreply@miamidade.gov","United Way", body, "Thank You for Your United Way donation!");
             String response = mail.emailRequest(jsonMessage);
+
         }catch(Exception ex){
             System.out.println("email didn't go trough");
             ex.printStackTrace();
@@ -105,10 +107,12 @@ public class DonationController {
 
 
         UnitedWayDonation donation = new UnitedWayDonation();
-        donation.setEmail("SANCHOO@miamidade.gov");
+        //donation.setEmail("SANCHOO@miamidade.gov");
+        donation.setEmail("dawong@miamidade.gov");
         donation.setEid("199586");
-        donation.setBiweeklyDeduction(55.33);
-
+        donation.setBiweeklyDeduction(1.00);
+        //donation.setExcellenceOnePctFlag(true);
+        //donation.setExcellenceTwoPctFlag(true);
         Context context = mail.prepareContext(donation);
         String body = mail.processTemplate(context, "DonationTemplate");
         String jsonMessage = mail.buildMessage(donation.getEmail(), "noreply@miamidade.gov","United Way", body, "Thank You for Your United Way donation!");
@@ -118,6 +122,8 @@ public class DonationController {
 
         return new ResponseEntity<String>(response, HttpStatus.OK);
     }
+
+
 
 
 

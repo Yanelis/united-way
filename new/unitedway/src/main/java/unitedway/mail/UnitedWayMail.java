@@ -17,6 +17,8 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import unitedway.models.UnitedWayDonation;
 import unitedway.services.UserService;
 
+import java.text.DecimalFormat;
+
 
 @Component
 public class UnitedWayMail {
@@ -38,18 +40,38 @@ public class UnitedWayMail {
         Context context = new Context();
         context.setVariable("name", json.at("firstName").asString() + " " + json.at("lastName").asString());
 
+        DecimalFormat df = new DecimalFormat("0.00");
+
         if(donation.getBiweeklyDeduction() != null && donation.getBiweeklyDeduction() > 0){
 
             context.setVariable("type", "bi-weekly");
-            context.setVariable("donation", donation.getBiweeklyDeduction());
-
+            context.setVariable("donation", df.format(donation.getBiweeklyDeduction()));
+            context.setVariable("percentsign", "");
+            context.setVariable("dollarsign", "$");
 
         }
         else if(donation.getOneTimeDeduction() != null && donation.getOneTimeDeduction() > 0)
         {
             context.setVariable("type", "one-time");
-            context.setVariable("donation", donation.getOneTimeDeduction());
+            context.setVariable("donation", df.format(donation.getOneTimeDeduction()));
+            context.setVariable("percentsign", "");
+            context.setVariable("dollarsign", "$");
         }
+        else if(donation.isExcellenceOnePctFlag() == true)
+        {
+            context.setVariable("type", "bi-weekly");
+            context.setVariable("donation", "1");
+            context.setVariable("percentsign", "%");
+            context.setVariable("dollarsign", "");
+        }
+        else if (donation.isExcellenceTwoPctFlag() == true)
+        {
+            context.setVariable("type", "bi-weekly");
+            context.setVariable("donation", "2");
+            context.setVariable("percentsign", "%");
+            context.setVariable("dollarsign", "");
+        }
+
 
 
         return context;

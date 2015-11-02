@@ -27,7 +27,9 @@ a.Email_address,
 cast(SUBSTRING(a.FEIN, 0,6)+'.'+ SUBSTRING(a.FEIN, 6,2) as decimal(7,2)) as biweeklyDeduction,
 cast(SUBSTRING(a.Business_name, 0,6)+'.'+ SUBSTRING(a.Business_name, 6,2) as decimal(7,2)) as oneTimeDeduction,
 '' as biweeklyDeductionDescription,
-case when a.onetimeDedGiftFlag = 'Y' then
+case when a.onetimeDedGift
+
+Flag = 'Y' then
 'Payroll'
 when a.onetimeCashGiftFlag = 'Y' then
 'Cash'
@@ -43,7 +45,10 @@ end as oneTimeDeductionDescription,
 '' as deductionType,
 a.Phone_ext as spouse,
 a.RFPYear as spouseEmployer,
-cast(substring(a.ExtAttr,0,7) + '.' + substring(a.ExtAttr,7,2) as decimal(8,2)) as spouseAmt,
+cast(substring(a.ExtAttr,0,7) + '.' +
+
+
+ substring(a.ExtAttr,7,2) as decimal(8,2)) as spouseAmt,
 case
 when a.cornerstoneGiftFlag = 'Y'
 then 'cornerstone'
