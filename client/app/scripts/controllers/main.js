@@ -61,7 +61,6 @@ angular.module('clientApp')
           $scope.familyGiftFlag = false;
         }
 
-
         if(/^\s+$/.test($scope.obj.spouseEmployer) || !$scope.obj.spouseEmployer){
           $scope.familyGiftFlag = false;
         }
@@ -162,13 +161,18 @@ angular.module('clientApp')
 
         if($scope.otherOrgFlag){
 
+            //This will sort the orgs by the length of the name. This is to make sure that empty strings don't appear in the first box.
+            $scope.obj.organizationDonations.sort(function(a,b){
+              return b.organization.length - a.organization.length;
+            })
+
+
             if(!_.isUndefined($scope.obj.organizationDonations[0])){
               $scope.firstOrg = $scope.obj.organizationDonations[0];
             } else {
               $scope.firstOrg = $scope.addOrganization();
             }
 
-  
   
             if(!_.isUndefined($scope.obj.organizationDonations[1])){
               $scope.secondOrg = $scope.obj.organizationDonations[1];
@@ -207,6 +211,8 @@ angular.module('clientApp')
         $location.path("/error");
 
     });
+
+    
 
     $scope.setFastTrackDonation = function(){
 
