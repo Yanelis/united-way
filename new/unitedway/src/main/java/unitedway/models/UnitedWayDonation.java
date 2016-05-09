@@ -104,6 +104,10 @@ public class UnitedWayDonation implements Serializable {
 
 
 
+    @Column(nullable = true)
+    private boolean otherOrganization;
+
+
 
     public UnitedWayDonation() {}
 
@@ -325,6 +329,13 @@ public class UnitedWayDonation implements Serializable {
         this.source = source;
     }
 
+    public boolean isOtherOrganization() {
+        return otherOrganization;
+    }
+
+    public void setOtherOrganization(boolean otherOrganization) {
+        this.otherOrganization = otherOrganization;
+    }
 
     /* public void addUnitedWayOrganization(UnitedWayOrganization obj){
         if(organizationDonations == null)

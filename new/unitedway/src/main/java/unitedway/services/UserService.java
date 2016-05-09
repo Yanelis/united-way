@@ -2,6 +2,7 @@ package unitedway.services;
 
 import mjson.Json;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -17,20 +18,24 @@ import java.util.Map;
 public class UserService {
 
     @Autowired
+    @Qualifier("secondaryTemplate")
     JdbcTemplate template;
+
+
+
 
     public Json getEmployeeInfo(String eid){
         //drop the e
         eid = eid.replace("e","");
         //apend 0s
-        for(int i = eid.length(); i < 8; i++)
-            eid = "0"+eid;
+        //for(int i = eid.length(); i < 8; i++)
+        //    eid = "0"+eid;
 
 
 
         Json json = Json.object();
         ColumnMapRowMapper rowMapper = new ColumnMapRowMapper();
-        List<Map<String, Object>> rows = template.query("select firstName, lastName, Department from dbo.united_way_original_data where EntityID = ?", rowMapper, eid);
+        List<Map<String, Object>> rows = template.query("select Fname as firstName, Lname as lastName, DEPARTMENT as Department, WK_email as email from dbo.UserList where UserID = ?", rowMapper, eid);
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         if(!rows.isEmpty() && rows !=  null) {
