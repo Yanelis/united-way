@@ -31,6 +31,7 @@ module.exports = function(config) {
       'app/bower_components/underscore/underscore.js',
       'app/bower_components/angular-messages/angular-messages.js',
       'app/bower_components/angular-cache-buster/angular-cache-buster.js',
+      'app/bower_components/angular-fcsa-number/src/fcsaNumber.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
